@@ -1,0 +1,52 @@
+# ══════════════════════════════════════════════════════════════════════════
+# requirements.txt — Gait Recognition Híbrido v2
+# GPU target: NVIDIA GTX 1650 (CUDA 11.8 / 12.1)
+# Python : 3.10+
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── PyTorch con CUDA (instalar PRIMERO con el comando de abajo) ────────────
+# https://pytorch.org/get-started/locally/
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+# ── Si ya tienes CUDA 12.1: ───────────────────────────────────────────────
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+torch>=2.1.0
+torchvision>=0.16.0
+
+# ── Detección de pose ─────────────────────────────────────────────────────
+mediapipe>=0.10.9           # Detector principal (MediaPipe Pose)
+ultralytics>=8.1.0          # Opcional: YOLOv8-pose (--detector yolo)
+
+# ── Visión por computadora ────────────────────────────────────────────────
+opencv-python>=4.9.0        # Captura, siluetas y visualización
+opencv-contrib-python>=4.9.0  # BackgroundSubtractorMOG2 (incluido en base, por seguridad)
+
+# ── Cómputo numérico ──────────────────────────────────────────────────────
+numpy>=1.26.0
+scipy>=1.12.0               # Opcional: métricas de distancia avanzadas
+
+# ── Utilidades ────────────────────────────────────────────────────────────
+tqdm>=4.66.0                # Barras de progreso en preprocesamiento
+h5py>=3.10.0                # Opcional: guardar features en formato HDF5
+Pillow>=10.2.0              # Manipulación de imágenes auxiliar
+
+# ── Entorno (recomendado para notebooks/debugging) ────────────────────────
+# ipykernel>=6.29.0
+# matplotlib>=3.8.0
+
+# ══════════════════════════════════════════════════════════════════════════
+# INSTALACIÓN RÁPIDA (GTX 1650 / CUDA 11.8):
+#
+#   1. Crear entorno virtual:
+#      python -m venv venv && venv\Scripts\activate   (Windows)
+#      python -m venv venv && source venv/bin/activate  (Linux/Mac)
+#
+#   2. Instalar PyTorch con CUDA:
+#      pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+#   3. Instalar el resto:
+#      pip install -r requirements.txt
+#
+#   4. Verificar GPU:
+#      python -c "import torch; print(torch.cuda.get_device_name(0))"
+#      # Debe imprimir: NVIDIA GeForce GTX 1650
+# ══════════════════════════════════════════════════════════════════════════

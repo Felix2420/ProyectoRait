@@ -1,0 +1,450 @@
+{
+  "description": "Late fusion GaitBase + ST-GCN lite (score averaging)",
+  "checkpoints": {
+    "gaitbase": "gaitbase_ft_multisession_best_iter1200.pt",
+    "stgcn": "stgcn_lite_best.pt"
+  },
+  "best_alpha_gaitbase": 1.0,
+  "all_results": [
+    {
+      "alpha_gaitbase": 0.0,
+      "alpha_stgcn": 1.0,
+      "NN": {
+        "EER": 0.6111,
+        "tau_EER": 0.9127,
+        "TAR_FAR0": 0.1111,
+        "tau_FAR0": 0.9791,
+        "TAR_FAR1": 0.1111,
+        "tau_FAR1": 0.9791,
+        "gap_mean": 0.0194,
+        "rank1": 0.4444,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.6316,
+        "tau_EER": 0.9084,
+        "TAR_FAR0": 0.1053,
+        "tau_FAR0": 0.9782,
+        "TAR_FAR1": 0.1053,
+        "tau_FAR1": 0.9782,
+        "gap_mean": 0.0204,
+        "rank1": 0.3684,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.6216,
+        "tau_EER": 0.9126,
+        "TAR_FAR0": 0.1081,
+        "tau_FAR0": 0.9791,
+        "TAR_FAR1": 0.1081,
+        "tau_FAR1": 0.9791,
+        "gap_mean": 0.0199,
+        "rank1": 0.4054,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.1,
+      "alpha_stgcn": 0.9,
+      "NN": {
+        "EER": 0.5556,
+        "tau_EER": 0.9192,
+        "TAR_FAR0": 0.1111,
+        "tau_FAR0": 0.9773,
+        "TAR_FAR1": 0.1111,
+        "tau_FAR1": 0.9773,
+        "gap_mean": 0.0196,
+        "rank1": 0.5,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.6316,
+        "tau_EER": 0.9139,
+        "TAR_FAR0": 0.1053,
+        "tau_FAR0": 0.9771,
+        "TAR_FAR1": 0.1053,
+        "tau_FAR1": 0.9771,
+        "gap_mean": 0.0198,
+        "rank1": 0.3684,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.5946,
+        "tau_EER": 0.9192,
+        "TAR_FAR0": 0.1081,
+        "tau_FAR0": 0.9773,
+        "TAR_FAR1": 0.1081,
+        "tau_FAR1": 0.9773,
+        "gap_mean": 0.0197,
+        "rank1": 0.4324,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.2,
+      "alpha_stgcn": 0.8,
+      "NN": {
+        "EER": 0.5556,
+        "tau_EER": 0.9203,
+        "TAR_FAR0": 0.1111,
+        "tau_FAR0": 0.9755,
+        "TAR_FAR1": 0.1111,
+        "tau_FAR1": 0.9755,
+        "gap_mean": 0.0199,
+        "rank1": 0.5,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.6316,
+        "tau_EER": 0.9195,
+        "TAR_FAR0": 0.1053,
+        "tau_FAR0": 0.9763,
+        "TAR_FAR1": 0.1053,
+        "tau_FAR1": 0.9763,
+        "gap_mean": 0.0191,
+        "rank1": 0.3684,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.5946,
+        "tau_EER": 0.9203,
+        "TAR_FAR0": 0.1081,
+        "tau_FAR0": 0.9763,
+        "TAR_FAR1": 0.1081,
+        "tau_FAR1": 0.9763,
+        "gap_mean": 0.0195,
+        "rank1": 0.4324,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.3,
+      "alpha_stgcn": 0.7,
+      "NN": {
+        "EER": 0.5556,
+        "tau_EER": 0.9214,
+        "TAR_FAR0": 0.1667,
+        "tau_FAR0": 0.9738,
+        "TAR_FAR1": 0.1667,
+        "tau_FAR1": 0.9738,
+        "gap_mean": 0.0202,
+        "rank1": 0.5,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.6316,
+        "tau_EER": 0.925,
+        "TAR_FAR0": 0.1053,
+        "tau_FAR0": 0.9755,
+        "TAR_FAR1": 0.1053,
+        "tau_FAR1": 0.9755,
+        "gap_mean": 0.0185,
+        "rank1": 0.3684,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.5946,
+        "tau_EER": 0.9251,
+        "TAR_FAR0": 0.1351,
+        "tau_FAR0": 0.9755,
+        "TAR_FAR1": 0.1351,
+        "tau_FAR1": 0.9755,
+        "gap_mean": 0.0193,
+        "rank1": 0.4324,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.4,
+      "alpha_stgcn": 0.6,
+      "NN": {
+        "EER": 0.5556,
+        "tau_EER": 0.931,
+        "TAR_FAR0": 0.2222,
+        "tau_FAR0": 0.9719,
+        "TAR_FAR1": 0.2222,
+        "tau_FAR1": 0.9719,
+        "gap_mean": 0.0203,
+        "rank1": 0.5,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.6316,
+        "tau_EER": 0.9306,
+        "TAR_FAR0": 0.1053,
+        "tau_FAR0": 0.9746,
+        "TAR_FAR1": 0.1053,
+        "tau_FAR1": 0.9746,
+        "gap_mean": 0.0178,
+        "rank1": 0.3684,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.5946,
+        "tau_EER": 0.931,
+        "TAR_FAR0": 0.1351,
+        "tau_FAR0": 0.9746,
+        "TAR_FAR1": 0.1351,
+        "tau_FAR1": 0.9746,
+        "gap_mean": 0.019,
+        "rank1": 0.4324,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.5,
+      "alpha_stgcn": 0.5,
+      "NN": {
+        "EER": 0.5556,
+        "tau_EER": 0.9412,
+        "TAR_FAR0": 0.2778,
+        "tau_FAR0": 0.9702,
+        "TAR_FAR1": 0.2778,
+        "tau_FAR1": 0.9702,
+        "gap_mean": 0.0203,
+        "rank1": 0.5,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.5263,
+        "tau_EER": 0.9367,
+        "TAR_FAR0": 0.1579,
+        "tau_FAR0": 0.9738,
+        "TAR_FAR1": 0.1579,
+        "tau_FAR1": 0.9738,
+        "gap_mean": 0.0178,
+        "rank1": 0.5263,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.5405,
+        "tau_EER": 0.9412,
+        "TAR_FAR0": 0.2162,
+        "tau_FAR0": 0.9738,
+        "TAR_FAR1": 0.2162,
+        "tau_FAR1": 0.9738,
+        "gap_mean": 0.019,
+        "rank1": 0.5135,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.6,
+      "alpha_stgcn": 0.4,
+      "NN": {
+        "EER": 0.4444,
+        "tau_EER": 0.949,
+        "TAR_FAR0": 0.3889,
+        "tau_FAR0": 0.9683,
+        "TAR_FAR1": 0.3889,
+        "tau_FAR1": 0.9683,
+        "gap_mean": 0.0204,
+        "rank1": 0.5556,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.5263,
+        "tau_EER": 0.9417,
+        "TAR_FAR0": 0.2105,
+        "tau_FAR0": 0.9729,
+        "TAR_FAR1": 0.2105,
+        "tau_FAR1": 0.9729,
+        "gap_mean": 0.0181,
+        "rank1": 0.5263,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.4865,
+        "tau_EER": 0.949,
+        "TAR_FAR0": 0.2432,
+        "tau_FAR0": 0.9729,
+        "TAR_FAR1": 0.2432,
+        "tau_FAR1": 0.9729,
+        "gap_mean": 0.0192,
+        "rank1": 0.5405,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.7,
+      "alpha_stgcn": 0.3,
+      "NN": {
+        "EER": 0.3889,
+        "tau_EER": 0.953,
+        "TAR_FAR0": 0.4444,
+        "tau_FAR0": 0.969,
+        "TAR_FAR1": 0.4444,
+        "tau_FAR1": 0.969,
+        "gap_mean": 0.0207,
+        "rank1": 0.6667,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.4737,
+        "tau_EER": 0.9514,
+        "TAR_FAR0": 0.3684,
+        "tau_FAR0": 0.9729,
+        "TAR_FAR1": 0.3684,
+        "tau_FAR1": 0.9729,
+        "gap_mean": 0.019,
+        "rank1": 0.6842,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.4324,
+        "tau_EER": 0.953,
+        "TAR_FAR0": 0.3514,
+        "tau_FAR0": 0.9729,
+        "TAR_FAR1": 0.3514,
+        "tau_FAR1": 0.9729,
+        "gap_mean": 0.0198,
+        "rank1": 0.6757,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.8,
+      "alpha_stgcn": 0.2,
+      "NN": {
+        "EER": 0.3333,
+        "tau_EER": 0.9607,
+        "TAR_FAR0": 0.6111,
+        "tau_FAR0": 0.9706,
+        "TAR_FAR1": 0.6111,
+        "tau_FAR1": 0.9706,
+        "gap_mean": 0.0218,
+        "rank1": 0.7222,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.3158,
+        "tau_EER": 0.9585,
+        "TAR_FAR0": 0.4737,
+        "tau_FAR0": 0.9747,
+        "TAR_FAR1": 0.4737,
+        "tau_FAR1": 0.9747,
+        "gap_mean": 0.0213,
+        "rank1": 0.7368,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.3514,
+        "tau_EER": 0.9604,
+        "TAR_FAR0": 0.4595,
+        "tau_FAR0": 0.9747,
+        "TAR_FAR1": 0.4595,
+        "tau_FAR1": 0.9747,
+        "gap_mean": 0.0215,
+        "rank1": 0.7297,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 0.9,
+      "alpha_stgcn": 0.1,
+      "NN": {
+        "EER": 0.2778,
+        "tau_EER": 0.9644,
+        "TAR_FAR0": 0.6667,
+        "tau_FAR0": 0.974,
+        "TAR_FAR1": 0.6667,
+        "tau_FAR1": 0.974,
+        "gap_mean": 0.022,
+        "rank1": 0.7778,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.2105,
+        "tau_EER": 0.9624,
+        "TAR_FAR0": 0.4737,
+        "tau_FAR0": 0.9766,
+        "TAR_FAR1": 0.4737,
+        "tau_FAR1": 0.9766,
+        "gap_mean": 0.023,
+        "rank1": 0.8421,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.2432,
+        "tau_EER": 0.9644,
+        "TAR_FAR0": 0.5405,
+        "tau_FAR0": 0.9766,
+        "TAR_FAR1": 0.5405,
+        "tau_FAR1": 0.9766,
+        "gap_mean": 0.0225,
+        "rank1": 0.8108,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    },
+    {
+      "alpha_gaitbase": 1.0,
+      "alpha_stgcn": 0.0,
+      "NN": {
+        "EER": 0.0556,
+        "tau_EER": 0.9784,
+        "TAR_FAR0": 0.8889,
+        "tau_FAR0": 0.9795,
+        "TAR_FAR1": 0.8889,
+        "tau_FAR1": 0.9795,
+        "gap_mean": 0.0225,
+        "rank1": 0.9444,
+        "n_genuine": 18,
+        "n_impostor": 18
+      },
+      "NR": {
+        "EER": 0.1053,
+        "tau_EER": 0.9789,
+        "TAR_FAR0": 0.8421,
+        "tau_FAR0": 0.9807,
+        "TAR_FAR1": 0.8421,
+        "tau_FAR1": 0.9807,
+        "gap_mean": 0.0208,
+        "rank1": 0.9474,
+        "n_genuine": 19,
+        "n_impostor": 19
+      },
+      "ALL": {
+        "EER": 0.0811,
+        "tau_EER": 0.9788,
+        "TAR_FAR0": 0.8649,
+        "tau_FAR0": 0.9807,
+        "TAR_FAR1": 0.8649,
+        "tau_FAR1": 0.9807,
+        "gap_mean": 0.0217,
+        "rank1": 0.9459,
+        "n_genuine": 37,
+        "n_impostor": 37
+      }
+    }
+  ]
+}

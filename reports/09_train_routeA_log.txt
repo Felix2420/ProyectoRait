@@ -1,0 +1,104 @@
+======================================================================
+{
+  "seed": 42,
+  "batch_p": 4,
+  "batch_k": 2,
+  "frames_fixed": 30,
+  "lr": 0.01,
+  "momentum": 0.9,
+  "weight_decay": 0.0005,
+  "total_iter": 1500,
+  "milestones": [
+    750,
+    1250
+  ],
+  "gamma": 0.1,
+  "log_iter": 50,
+  "eval_iter": 200,
+  "triplet_margin": 0.2,
+  "triplet_weight": 1.0,
+  "ce_weight": 1.0,
+  "ce_scale": 16.0,
+  "ce_smoothing": 0.1,
+  "early_stop_patience": 6,
+  "early_stop_min_iter": 1250,
+  "warmup_iter": 200,
+  "num_workers": 0
+}
+======================================================================
+[W427 23:39:48.000000000 socket.cpp:752] [c10d] The client socket has failed to connect to [DESKTOP-437M19V]:29502 (system error: 10049 - La dirección solicitada no es válida en este contexto.).
+[init] device=cuda
+[init] GPU=NVIDIA GeForce RTX 2060  VRAM=6143 MB
+[init] train=13 val=3 test=3
+2026-04-27 23:39:49.686637: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-04-27 23:39:50.794255: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+xFormers not available
+xFormers not available
+[init] SkeletonGait++ params=13,333,856
+[init] desde gaitbase_ft_multisession_best_iter1200.pt: 76 keys  params transferidos=6,897,485 (51.7%)
+[init] [load] strict=True OK
+[2026-04-27 23:39:55] [INFO]: -------- Train Pid List --------
+[2026-04-27 23:39:55] [INFO]: [brayannajera, carloscarrillo, ..., rodrigoruiz]
+[data] train_ds: 51 secuencias, 13 sujetos
+[data] types encontrados: ['normal_s1', 'normal_s2', 'rapido_s1', 'rapido_s2']
+[warmup] congelados 9 tensores heredados de GaitBase durante 200 iter
+
+[eval-pre] evaluando pre-finetune cross-session en val...
+[eval-pre] NR rank1=33.3%  margen=+0.0006
+[eval-pre] NN rank1=100.0%  margen=+0.0014
+R:\pase_lista\.venv\Lib\site-packages\torch\optim\lr_scheduler.py:224: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn(
+[it    50/1500] lr=0.0100 tri=0.3564 ce=2.6837 active=0.291 ce_acc=0.203 (741 ms/it)
+[it   100/1500] lr=0.0100 tri=0.2984 ce=2.2501 active=0.240 ce_acc=0.333 (711 ms/it)
+[it   150/1500] lr=0.0100 tri=0.2490 ce=1.8129 active=0.188 ce_acc=0.498 (693 ms/it)
+[it   200/1500] lr=0.0100 tri=0.1955 ce=1.5939 active=0.140 ce_acc=0.571 (682 ms/it)
+[eval@200] NR rank1=33.3%  margen=+0.0006 (min=-0.0009) | NN rank1=100.0%  margen=+0.0010
+[eval@200] sin mejora (iter<1250, patience no cambia)
+[warmup-end @ 201] descongelados 9 tensores; optimizer rebuildeado
+[it   250/1500] lr=0.0100 tri=0.1872 ce=1.3926 active=0.095 ce_acc=0.669 (723 ms/it)
+[it   300/1500] lr=0.0100 tri=0.1373 ce=1.1760 active=0.053 ce_acc=0.759 (753 ms/it)
+[it   350/1500] lr=0.0100 tri=0.1165 ce=1.0308 active=0.035 ce_acc=0.829 (768 ms/it)
+[it   400/1500] lr=0.0100 tri=0.0801 ce=0.9348 active=0.021 ce_acc=0.875 (778 ms/it)
+[eval@400] NR rank1=100.0%  margen=+0.0026 (min=+0.0016) | NN rank1=100.0%  margen=+0.0037
+[eval@400] >> nuevo mejor margen NR, guardando
+[it   450/1500] lr=0.0100 tri=0.0881 ce=0.9375 active=0.022 ce_acc=0.871 (792 ms/it)
+[it   500/1500] lr=0.0100 tri=0.0504 ce=0.8383 active=0.011 ce_acc=0.920 (798 ms/it)
+[it   550/1500] lr=0.0100 tri=0.0482 ce=0.8277 active=0.010 ce_acc=0.925 (802 ms/it)
+[it   600/1500] lr=0.0100 tri=0.0405 ce=0.7561 active=0.007 ce_acc=0.961 (805 ms/it)
+[eval@600] NR rank1=66.7%  margen=+0.0033 (min=-0.0015) | NN rank1=66.7%  margen=+0.0044
+[eval@600] >> nuevo mejor margen NR, guardando
+[it   650/1500] lr=0.0100 tri=0.0287 ce=0.7436 active=0.004 ce_acc=0.965 (813 ms/it)
+[it   700/1500] lr=0.0100 tri=0.0209 ce=0.7211 active=0.003 ce_acc=0.972 (816 ms/it)
+[it   750/1500] lr=0.0010 tri=0.0184 ce=0.7003 active=0.003 ce_acc=0.982 (818 ms/it)
+[it   800/1500] lr=0.0010 tri=0.0090 ce=0.6739 active=0.001 ce_acc=0.988 (820 ms/it)
+[eval@800] NR rank1=100.0%  margen=+0.0047 (min=+0.0045) | NN rank1=100.0%  margen=+0.0058
+[eval@800] >> nuevo mejor margen NR, guardando
+[it   850/1500] lr=0.0010 tri=0.0077 ce=0.6607 active=0.001 ce_acc=0.992 (826 ms/it)
+[it   900/1500] lr=0.0010 tri=0.0089 ce=0.6517 active=0.001 ce_acc=0.995 (827 ms/it)
+[it   950/1500] lr=0.0010 tri=0.0042 ce=0.6428 active=0.001 ce_acc=0.997 (828 ms/it)
+[it  1000/1500] lr=0.0010 tri=0.0094 ce=0.6442 active=0.001 ce_acc=0.996 (828 ms/it)
+[eval@1000] NR rank1=100.0%  margen=+0.0050 (min=+0.0048) | NN rank1=100.0%  margen=+0.0060
+[eval@1000] >> nuevo mejor margen NR, guardando
+[it  1050/1500] lr=0.0010 tri=0.0051 ce=0.6397 active=0.001 ce_acc=0.997 (830 ms/it)
+[it  1100/1500] lr=0.0010 tri=0.0021 ce=0.6356 active=0.000 ce_acc=0.998 (847 ms/it)
+[it  1150/1500] lr=0.0010 tri=0.0039 ce=0.6376 active=0.001 ce_acc=0.995 (865 ms/it)
+[it  1200/1500] lr=0.0010 tri=0.0038 ce=0.6353 active=0.001 ce_acc=0.997 (880 ms/it)
+[eval@1200] NR rank1=100.0%  margen=+0.0048 (min=+0.0043) | NN rank1=100.0%  margen=+0.0058
+[eval@1200] sin mejora (iter<1250, patience no cambia)
+[it  1250/1500] lr=0.0001 tri=0.0014 ce=0.6349 active=0.000 ce_acc=0.998 (895 ms/it)
+[it  1300/1500] lr=0.0001 tri=0.0040 ce=0.6334 active=0.001 ce_acc=0.998 (908 ms/it)
+[it  1350/1500] lr=0.0001 tri=0.0052 ce=0.6324 active=0.001 ce_acc=0.998 (921 ms/it)
+[it  1400/1500] lr=0.0001 tri=0.0023 ce=0.6300 active=0.000 ce_acc=0.998 (932 ms/it)
+[eval@1400] NR rank1=100.0%  margen=+0.0049 (min=+0.0047) | NN rank1=100.0%  margen=+0.0060
+[eval@1400] sin mejora, patience=5
+[it  1450/1500] lr=0.0001 tri=0.0023 ce=0.6329 active=0.000 ce_acc=0.998 (944 ms/it)
+[it  1500/1500] lr=0.0001 tri=0.0036 ce=0.6306 active=0.001 ce_acc=0.998 (953 ms/it)
+
+[ckpt] mejor modelo guardado en checkpoints\finetune\skeletongaitpp_best_iter1000.pt
+
+[eval-test] evaluando mejor modelo cross-session en test (intocado)...
+[eval-test NN] rank1=66.7%  rank5=100.0%  margen=+0.0005 (min=-0.0094)
+[eval-test NR] rank1=66.7%  rank5=100.0%  margen=+0.0026 (min=-0.0038)
+[done] VRAM pico: 5218 MB
+[done] tiempo total: 23.8 min
+[done] reporte: reports\09_finetune_skeletongaitpp_results.json

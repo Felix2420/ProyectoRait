@@ -1,0 +1,597 @@
+{
+  "config": {
+    "seed": 42,
+    "batch_p": 4,
+    "batch_k": 2,
+    "frames_fixed": 30,
+    "lr": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "total_iter": 1500,
+    "milestones": [
+      750,
+      1250
+    ],
+    "gamma": 0.1,
+    "log_iter": 50,
+    "eval_iter": 200,
+    "triplet_margin": 0.2,
+    "triplet_weight": 1.0,
+    "ce_weight": 1.0,
+    "ce_scale": 16.0,
+    "ce_smoothing": 0.1,
+    "early_stop_patience": 6,
+    "early_stop_min_iter": 1250,
+    "warmup_iter": 200,
+    "num_workers": 0
+  },
+  "model_cfg": {
+    "Backbone": {
+      "in_channels": 3,
+      "blocks": [
+        1,
+        4,
+        4,
+        1
+      ],
+      "C": 2
+    },
+    "SeparateBNNecks": {
+      "class_num": 13
+    },
+    "use_emb2": false
+  },
+  "multimodal_root": "R:\\pase_lista\\ProyectoChino\\data\\pkl_multimodal",
+  "train_n_sequences": 51,
+  "best_iter": 1000,
+  "best_val_margin_nr": 0.005047698970884085,
+  "test": {
+    "subjects_nn": [
+      "alexbojorquez",
+      "jesusvalenzuela",
+      "ricardomora"
+    ],
+    "subjects_nr": [
+      "alexbojorquez",
+      "jesusvalenzuela",
+      "ricardomora"
+    ],
+    "NN": {
+      "n_subjects": 3,
+      "rank1": 0.6666666666666666,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9892160892486572,
+      "mean_sim_best_wrong": 0.9887205958366394,
+      "mean_margin": 0.0004954735632054508,
+      "min_margin": -0.009372949600219727
+    },
+    "NR": {
+      "n_subjects": 3,
+      "rank1": 0.6666666666666666,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9899511337280273,
+      "mean_sim_best_wrong": 0.9873772263526917,
+      "mean_margin": 0.0025738875847309828,
+      "min_margin": -0.0037893056869506836
+    }
+  },
+  "val_history": [
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.993596076965332,
+        "mean_sim_best_wrong": 0.992229700088501,
+        "mean_margin": 0.0013663768768310547,
+        "min_margin": 0.0007205009460449219
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 0.3333333333333333,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9917342066764832,
+        "mean_sim_best_wrong": 0.9911296963691711,
+        "mean_margin": 0.0006045103073120117,
+        "min_margin": -0.0009617805480957031
+      },
+      "iter": 0
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9974308013916016,
+        "mean_sim_best_wrong": 0.9963852763175964,
+        "mean_margin": 0.0010455449810251594,
+        "min_margin": 0.00036919116973876953
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 0.3333333333333333,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9966726303100586,
+        "mean_sim_best_wrong": 0.9961075782775879,
+        "mean_margin": 0.0005651116371154785,
+        "min_margin": -0.0009440183639526367
+      },
+      "iter": 200
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9949120879173279,
+        "mean_sim_best_wrong": 0.9912158846855164,
+        "mean_margin": 0.0036962826270610094,
+        "min_margin": 0.001804351806640625
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.993621826171875,
+        "mean_sim_best_wrong": 0.9910550117492676,
+        "mean_margin": 0.0025668542366474867,
+        "min_margin": 0.0016414523124694824
+      },
+      "iter": 400
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 0.6666666666666666,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9924571514129639,
+        "mean_sim_best_wrong": 0.9880899786949158,
+        "mean_margin": 0.004367232322692871,
+        "min_margin": -0.001124739646911621
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 0.6666666666666666,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.990450382232666,
+        "mean_sim_best_wrong": 0.987189531326294,
+        "mean_margin": 0.0032609105110168457,
+        "min_margin": -0.0014663934707641602
+      },
+      "iter": 600
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9922859072685242,
+        "mean_sim_best_wrong": 0.9865077137947083,
+        "mean_margin": 0.005778193473815918,
+        "min_margin": 0.0032731294631958008
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9907930493354797,
+        "mean_sim_best_wrong": 0.9860499501228333,
+        "mean_margin": 0.004743059631437063,
+        "min_margin": 0.004519939422607422
+      },
+      "iter": 800
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9919829368591309,
+        "mean_sim_best_wrong": 0.9859834313392639,
+        "mean_margin": 0.005999445915222168,
+        "min_margin": 0.003331422805786133
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9903390407562256,
+        "mean_sim_best_wrong": 0.9852913022041321,
+        "mean_margin": 0.005047698970884085,
+        "min_margin": 0.004823625087738037
+      },
+      "iter": 1000
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9921093583106995,
+        "mean_sim_best_wrong": 0.9863020777702332,
+        "mean_margin": 0.00580732012167573,
+        "min_margin": 0.003055274486541748
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9904353618621826,
+        "mean_sim_best_wrong": 0.9856791496276855,
+        "mean_margin": 0.0047562322579324245,
+        "min_margin": 0.0043242573738098145
+      },
+      "iter": 1200
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9921205639839172,
+        "mean_sim_best_wrong": 0.9861340522766113,
+        "mean_margin": 0.0059865317307412624,
+        "min_margin": 0.0034398436546325684
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9905290007591248,
+        "mean_sim_best_wrong": 0.9856012463569641,
+        "mean_margin": 0.004927674774080515,
+        "min_margin": 0.004731535911560059
+      },
+      "iter": 1400
+    }
+  ],
+  "train_history": [
+    {
+      "iter": 50,
+      "lr": 0.01,
+      "triplet": 0.35638494431972506,
+      "ce": 2.6836923861503603,
+      "active": 0.2908333403617144,
+      "ce_acc": 0.20265625
+    },
+    {
+      "iter": 100,
+      "lr": 0.01,
+      "triplet": 0.2983780726790428,
+      "ce": 2.2501244235038755,
+      "active": 0.2398567782342434,
+      "ce_acc": 0.33265625
+    },
+    {
+      "iter": 150,
+      "lr": 0.01,
+      "triplet": 0.24896438002586366,
+      "ce": 1.8129116487503052,
+      "active": 0.1875520895421505,
+      "ce_acc": 0.49828125
+    },
+    {
+      "iter": 200,
+      "lr": 0.01,
+      "triplet": 0.19553430020809173,
+      "ce": 1.5939202201366425,
+      "active": 0.13968750312924386,
+      "ce_acc": 0.57109375
+    },
+    {
+      "iter": 250,
+      "lr": 0.01,
+      "triplet": 0.18720235906541347,
+      "ce": 1.392574714422226,
+      "active": 0.0946354191377759,
+      "ce_acc": 0.66875
+    },
+    {
+      "iter": 300,
+      "lr": 0.01,
+      "triplet": 0.1372744223475456,
+      "ce": 1.1759616899490357,
+      "active": 0.05256510579958558,
+      "ce_acc": 0.7590625
+    },
+    {
+      "iter": 350,
+      "lr": 0.01,
+      "triplet": 0.11651427451521158,
+      "ce": 1.0307931530475616,
+      "active": 0.03533854282461107,
+      "ce_acc": 0.8290625
+    },
+    {
+      "iter": 400,
+      "lr": 0.01,
+      "triplet": 0.08006385071203112,
+      "ce": 0.9347694230079651,
+      "active": 0.0208593754703179,
+      "ce_acc": 0.87515625
+    },
+    {
+      "iter": 450,
+      "lr": 0.01,
+      "triplet": 0.08808374051004648,
+      "ce": 0.9375308418273925,
+      "active": 0.021861979686655104,
+      "ce_acc": 0.8709375
+    },
+    {
+      "iter": 500,
+      "lr": 0.01,
+      "triplet": 0.05043127470649779,
+      "ce": 0.8382600843906403,
+      "active": 0.011002604431705549,
+      "ce_acc": 0.91953125
+    },
+    {
+      "iter": 550,
+      "lr": 0.01,
+      "triplet": 0.04819510957226157,
+      "ce": 0.8276969838142395,
+      "active": 0.010455729442182928,
+      "ce_acc": 0.92484375
+    },
+    {
+      "iter": 600,
+      "lr": 0.01,
+      "triplet": 0.0404974799323827,
+      "ce": 0.7561002063751221,
+      "active": 0.007135416880482808,
+      "ce_acc": 0.960625
+    },
+    {
+      "iter": 650,
+      "lr": 0.01,
+      "triplet": 0.02870261179283261,
+      "ce": 0.7436385309696197,
+      "active": 0.004388020931510255,
+      "ce_acc": 0.9653125
+    },
+    {
+      "iter": 700,
+      "lr": 0.01,
+      "triplet": 0.020921995621174572,
+      "ce": 0.7210777163505554,
+      "active": 0.0031901042745448647,
+      "ce_acc": 0.97234375
+    },
+    {
+      "iter": 750,
+      "lr": 0.001,
+      "triplet": 0.018412863090634345,
+      "ce": 0.7003358709812164,
+      "active": 0.0027343750651925803,
+      "ce_acc": 0.98171875
+    },
+    {
+      "iter": 800,
+      "lr": 0.001,
+      "triplet": 0.008991241492331027,
+      "ce": 0.6738648045063019,
+      "active": 0.0010807292023673654,
+      "ce_acc": 0.9878125
+    },
+    {
+      "iter": 850,
+      "lr": 0.001,
+      "triplet": 0.0076617952063679695,
+      "ce": 0.6606919252872467,
+      "active": 0.00101562503259629,
+      "ce_acc": 0.99234375
+    },
+    {
+      "iter": 900,
+      "lr": 0.001,
+      "triplet": 0.008892607185989618,
+      "ce": 0.6516814243793487,
+      "active": 0.0010677083651535212,
+      "ce_acc": 0.995
+    },
+    {
+      "iter": 950,
+      "lr": 0.001,
+      "triplet": 0.004196260962635279,
+      "ce": 0.6428281319141388,
+      "active": 0.0006901041814126075,
+      "ce_acc": 0.9971875
+    },
+    {
+      "iter": 1000,
+      "lr": 0.001,
+      "triplet": 0.00942635716870427,
+      "ce": 0.6442430067062378,
+      "active": 0.0011979166988749057,
+      "ce_acc": 0.995625
+    },
+    {
+      "iter": 1050,
+      "lr": 0.001,
+      "triplet": 0.005060613751411438,
+      "ce": 0.6396529042720794,
+      "active": 0.000846354195382446,
+      "ce_acc": 0.99703125
+    },
+    {
+      "iter": 1100,
+      "lr": 0.001,
+      "triplet": 0.0020737737603485585,
+      "ce": 0.6356306219100952,
+      "active": 0.00015625000465661288,
+      "ce_acc": 0.99796875
+    },
+    {
+      "iter": 1150,
+      "lr": 0.001,
+      "triplet": 0.0038961129356175662,
+      "ce": 0.6376484429836273,
+      "active": 0.0006119791767559945,
+      "ce_acc": 0.99546875
+    },
+    {
+      "iter": 1200,
+      "lr": 0.001,
+      "triplet": 0.0037766942381858826,
+      "ce": 0.635306088924408,
+      "active": 0.0005208333407063037,
+      "ce_acc": 0.99703125
+    },
+    {
+      "iter": 1250,
+      "lr": 0.0001,
+      "triplet": 0.0014181519486010075,
+      "ce": 0.6348559153079987,
+      "active": 0.00022135417675599455,
+      "ce_acc": 0.99796875
+    },
+    {
+      "iter": 1300,
+      "lr": 0.0001,
+      "triplet": 0.004016095381230116,
+      "ce": 0.6333600556850434,
+      "active": 0.0005338541837409138,
+      "ce_acc": 0.9975
+    },
+    {
+      "iter": 1350,
+      "lr": 0.0001,
+      "triplet": 0.005195148270577193,
+      "ce": 0.6324121820926666,
+      "active": 0.0007291666918899864,
+      "ce_acc": 0.99765625
+    },
+    {
+      "iter": 1400,
+      "lr": 0.0001,
+      "triplet": 0.0023308523185551168,
+      "ce": 0.6299592590332032,
+      "active": 0.0002343750058207661,
+      "ce_acc": 0.9984375
+    },
+    {
+      "iter": 1450,
+      "lr": 0.0001,
+      "triplet": 0.002326302584260702,
+      "ce": 0.6328732287883758,
+      "active": 0.0003125000081490725,
+      "ce_acc": 0.9975
+    },
+    {
+      "iter": 1500,
+      "lr": 0.0001,
+      "triplet": 0.0036253775842487812,
+      "ce": 0.630607305765152,
+      "active": 0.0005208333488553763,
+      "ce_acc": 0.99796875
+    }
+  ],
+  "train_subjects": [
+    "brayannajera",
+    "carloscarrillo",
+    "carlospadilla",
+    "cesarvasquez",
+    "gilbertofelix",
+    "jesusantonioaguilarfelix",
+    "jesuscazarez",
+    "jorgeespinoza",
+    "josefelix",
+    "juliouriarte",
+    "luislopez",
+    "robertocastaño",
+    "rodrigoruiz"
+  ],
+  "val_subjects": [
+    "carlostorres",
+    "hectorsanchez",
+    "robertpereira"
+  ],
+  "test_subjects": [
+    "alexbojorquez",
+    "jesusvalenzuela",
+    "ricardomora"
+  ],
+  "vram_peak_mb": 5217.67626953125,
+  "total_minutes": 23.83
+}

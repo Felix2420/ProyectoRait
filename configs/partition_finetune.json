@@ -1,0 +1,25 @@
+{
+  "TRAIN_SET": [
+    "brayannajera",
+    "carloscarrillo",
+    "carlospadilla",
+    "cesarvasquez",
+    "gilbertofelix",
+    "jesusantonioaguilarfelix",
+    "jesuscazarez",
+    "jorgeespinoza",
+    "josefelix",
+    "juliouriarte",
+    "luislopez",
+    "robertocastaño",
+    "rodrigoruiz"
+  ],
+  "TEST_SET": [
+    "alexbojorquez",
+    "carlostorres",
+    "hectorsanchez",
+    "jesusvalenzuela",
+    "ricardomora",
+    "robertpereira"
+  ]
+}

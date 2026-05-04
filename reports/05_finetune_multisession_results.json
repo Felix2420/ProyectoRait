@@ -1,0 +1,580 @@
+{
+  "config": {
+    "seed": 42,
+    "batch_p": 4,
+    "batch_k": 2,
+    "frames_fixed": 30,
+    "lr": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "total_iter": 1500,
+    "milestones": [
+      750,
+      1250
+    ],
+    "gamma": 0.1,
+    "log_iter": 50,
+    "eval_iter": 200,
+    "triplet_margin": 0.2,
+    "triplet_weight": 1.0,
+    "ce_weight": 1.0,
+    "ce_scale": 16.0,
+    "ce_smoothing": 0.1,
+    "early_stop_patience": 3,
+    "num_workers": 0
+  },
+  "pretrained_ckpt": "GaitBase_Gait3D_120000.pt",
+  "pkl_root_train": "C:\\Proyecto3\\ProyectoChino\\data\\pkl_multisession",
+  "train_n_sequences": 51,
+  "best_iter": 1200,
+  "best_val_margin_nr": 0.011797487735748291,
+  "test": {
+    "subjects_nn": [
+      "alexbojorquez",
+      "jesusvalenzuela",
+      "ricardomora"
+    ],
+    "subjects_nr": [
+      "alexbojorquez",
+      "jesusvalenzuela",
+      "ricardomora"
+    ],
+    "NN": {
+      "n_subjects": 3,
+      "rank1": 0.6666666666666666,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9816544055938721,
+      "mean_sim_best_wrong": 0.975259006023407,
+      "mean_margin": 0.006395419593900442,
+      "min_margin": -0.0027521252632141113
+    },
+    "NR": {
+      "n_subjects": 3,
+      "rank1": 0.6666666666666666,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9793627262115479,
+      "mean_sim_best_wrong": 0.9748345017433167,
+      "mean_margin": 0.004528164863586426,
+      "min_margin": -0.0036463141441345215
+    }
+  },
+  "val_history": [
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 0.6666666666666666,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9893078804016113,
+        "mean_sim_best_wrong": 0.9879562854766846,
+        "mean_margin": 0.0013515949249267578,
+        "min_margin": -0.002424955368041992
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 0.6666666666666666,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9851362705230713,
+        "mean_sim_best_wrong": 0.984591543674469,
+        "mean_margin": 0.0005447069997899234,
+        "min_margin": -0.00176239013671875
+      },
+      "iter": 0
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9842886328697205,
+        "mean_sim_best_wrong": 0.9729800224304199,
+        "mean_margin": 0.011308510787785053,
+        "min_margin": 0.00043588876724243164
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9791976809501648,
+        "mean_sim_best_wrong": 0.9696331024169922,
+        "mean_margin": 0.009564518928527832,
+        "min_margin": 0.00497746467590332
+      },
+      "iter": 200
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9839434027671814,
+        "mean_sim_best_wrong": 0.9715843200683594,
+        "mean_margin": 0.01235900353640318,
+        "min_margin": 0.0010886788368225098
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.978903591632843,
+        "mean_sim_best_wrong": 0.9683248400688171,
+        "mean_margin": 0.010578751564025879,
+        "min_margin": 0.004583835601806641
+      },
+      "iter": 400
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9835426211357117,
+        "mean_sim_best_wrong": 0.9702123999595642,
+        "mean_margin": 0.013330201618373394,
+        "min_margin": 0.0019968748092651367
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9783584475517273,
+        "mean_sim_best_wrong": 0.9670915007591248,
+        "mean_margin": 0.011266927234828472,
+        "min_margin": 0.0035958290100097656
+      },
+      "iter": 600
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9831503033638,
+        "mean_sim_best_wrong": 0.9693337082862854,
+        "mean_margin": 0.01381655503064394,
+        "min_margin": 0.002106010913848877
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9783894419670105,
+        "mean_sim_best_wrong": 0.966667890548706,
+        "mean_margin": 0.01172157097607851,
+        "min_margin": 0.004788100719451904
+      },
+      "iter": 800
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9832485318183899,
+        "mean_sim_best_wrong": 0.9696804881095886,
+        "mean_margin": 0.01356804370880127,
+        "min_margin": 0.0018222332000732422
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9785186648368835,
+        "mean_sim_best_wrong": 0.9669618606567383,
+        "mean_margin": 0.011556744575500488,
+        "min_margin": 0.004615366458892822
+      },
+      "iter": 1000
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9830896258354187,
+        "mean_sim_best_wrong": 0.9693002700805664,
+        "mean_margin": 0.013789355754852295,
+        "min_margin": 0.0018413066864013672
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9783213138580322,
+        "mean_sim_best_wrong": 0.9665238261222839,
+        "mean_margin": 0.011797487735748291,
+        "min_margin": 0.004761755466461182
+      },
+      "iter": 1200
+    },
+    {
+      "subjects_nn": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "subjects_nr": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "NN": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9831216335296631,
+        "mean_sim_best_wrong": 0.969344437122345,
+        "mean_margin": 0.013777196407318115,
+        "min_margin": 0.0019428730010986328
+      },
+      "NR": {
+        "n_subjects": 3,
+        "rank1": 1.0,
+        "rank5": 1.0,
+        "mean_sim_correct": 0.9783289432525635,
+        "mean_sim_best_wrong": 0.9665558934211731,
+        "mean_margin": 0.01177304983139038,
+        "min_margin": 0.004849255084991455
+      },
+      "iter": 1400
+    }
+  ],
+  "train_history": [
+    {
+      "iter": 50,
+      "lr": 0.01,
+      "triplet": 0.07634601823054254,
+      "ce": 1.1641883230209351,
+      "active": 0.03898437619674951,
+      "ce_acc": 0.77734375
+    },
+    {
+      "iter": 100,
+      "lr": 0.01,
+      "triplet": 0.016927464567124843,
+      "ce": 0.6984525012969971,
+      "active": 0.003033854259410873,
+      "ce_acc": 0.98390625
+    },
+    {
+      "iter": 150,
+      "lr": 0.01,
+      "triplet": 0.004556715041399002,
+      "ce": 0.6323732149600982,
+      "active": 0.0009114583593327553,
+      "ce_acc": 0.9978125
+    },
+    {
+      "iter": 200,
+      "lr": 0.01,
+      "triplet": 0.001981341205537319,
+      "ce": 0.6058043348789215,
+      "active": 0.00024739583721384407,
+      "ce_acc": 0.99921875
+    },
+    {
+      "iter": 250,
+      "lr": 0.01,
+      "triplet": 0.0007577196136116981,
+      "ce": 0.5919229066371918,
+      "active": 0.00010416666744276881,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 300,
+      "lr": 0.01,
+      "triplet": 0.00038380296900868415,
+      "ce": 0.5849702692031861,
+      "active": 0.00010416666977107525,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 350,
+      "lr": 0.01,
+      "triplet": 0.0008938649855554104,
+      "ce": 0.5822588622570037,
+      "active": 0.00011718750349245965,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 400,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5787952375411988,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 450,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5772454476356507,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 500,
+      "lr": 0.01,
+      "triplet": 2.3644603788852693e-06,
+      "ce": 0.5745724582672119,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 550,
+      "lr": 0.01,
+      "triplet": 0.0003090362064540386,
+      "ce": 0.5742669093608856,
+      "active": 3.906250116415322e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 600,
+      "lr": 0.01,
+      "triplet": 0.0004600488394498825,
+      "ce": 0.5730294263362885,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 650,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5717805469036102,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 700,
+      "lr": 0.01,
+      "triplet": 3.825867548584938e-05,
+      "ce": 0.5700138449668884,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 750,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5692850208282471,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 800,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5675635361671447,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 850,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5667868649959564,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 900,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.565954715013504,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 950,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5657824373245239,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1000,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.566001455783844,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1050,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5660198056697845,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1100,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5653771770000457,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1150,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5657104933261872,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1200,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.565846118927002,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1250,
+      "lr": 0.0001,
+      "triplet": 0.0,
+      "ce": 0.5658904612064362,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1300,
+      "lr": 0.0001,
+      "triplet": 4.079008474946022e-05,
+      "ce": 0.5657657563686371,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 0.99984375
+    },
+    {
+      "iter": 1350,
+      "lr": 0.0001,
+      "triplet": 0.0,
+      "ce": 0.5656122827529907,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1400,
+      "lr": 0.0001,
+      "triplet": 0.0,
+      "ce": 0.5655276942253112,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1450,
+      "lr": 0.0001,
+      "triplet": 0.0,
+      "ce": 0.5651166772842408,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1500,
+      "lr": 0.0001,
+      "triplet": 0.0,
+      "ce": 0.5653798389434814,
+      "active": 0.0,
+      "ce_acc": 1.0
+    }
+  ],
+  "train_subjects": [
+    "brayannajera",
+    "carloscarrillo",
+    "carlospadilla",
+    "cesarvasquez",
+    "gilbertofelix",
+    "jesusantonioaguilarfelix",
+    "jesuscazarez",
+    "jorgeespinoza",
+    "josefelix",
+    "juliouriarte",
+    "luislopez",
+    "robertocastaño",
+    "rodrigoruiz"
+  ],
+  "val_subjects": [
+    "carlostorres",
+    "hectorsanchez",
+    "robertpereira"
+  ],
+  "test_subjects": [
+    "alexbojorquez",
+    "jesusvalenzuela",
+    "ricardomora"
+  ],
+  "vram_peak_mb": 1246.0126953125,
+  "total_minutes": 177.26
+}

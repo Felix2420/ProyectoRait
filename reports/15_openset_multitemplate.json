@@ -1,0 +1,195 @@
+{
+  "model": "GaitBase",
+  "checkpoint": "gaitbase_ft_multisession_best_iter1200.pt",
+  "matching": "multi-template + max-sim",
+  "protocol": "Leave-Condition-Out (LCO)",
+  "n_subjects": 19,
+  "n_pkls": 75,
+  "protocols": {
+    "normal_s1": {
+      "n_genuine": 19,
+      "n_impostor": 19,
+      "rank1_top1_correct": 1.0,
+      "EER": 0.0,
+      "tau_EER": 0.9847,
+      "genuine_stats": {
+        "mean": 0.9933,
+        "min": 0.9877,
+        "max": 0.9957,
+        "std": 0.002
+      },
+      "impostor_stats": {
+        "mean": 0.971,
+        "min": 0.9371,
+        "max": 0.9847,
+        "std": 0.0106
+      },
+      "gap_mean": 0.0223,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=1%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=5%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        }
+      }
+    },
+    "normal_s2": {
+      "n_genuine": 18,
+      "n_impostor": 18,
+      "rank1_top1_correct": 1.0,
+      "EER": 0.0,
+      "tau_EER": 0.984,
+      "genuine_stats": {
+        "mean": 0.9936,
+        "min": 0.9905,
+        "max": 0.9972,
+        "std": 0.0017
+      },
+      "impostor_stats": {
+        "mean": 0.971,
+        "min": 0.9378,
+        "max": 0.984,
+        "std": 0.0106
+      },
+      "gap_mean": 0.0226,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.984,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=1%": {
+          "tau": 0.984,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=5%": {
+          "tau": 0.984,
+          "FAR": 0.0,
+          "TAR": 1.0
+        }
+      }
+    },
+    "rapido_s1": {
+      "n_genuine": 19,
+      "n_impostor": 19,
+      "rank1_top1_correct": 1.0,
+      "EER": 0.0,
+      "tau_EER": 0.9847,
+      "genuine_stats": {
+        "mean": 0.9934,
+        "min": 0.9877,
+        "max": 0.9957,
+        "std": 0.002
+      },
+      "impostor_stats": {
+        "mean": 0.9722,
+        "min": 0.9398,
+        "max": 0.9847,
+        "std": 0.0105
+      },
+      "gap_mean": 0.0212,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=1%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=5%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        }
+      }
+    },
+    "rapido_s2": {
+      "n_genuine": 19,
+      "n_impostor": 19,
+      "rank1_top1_correct": 1.0,
+      "EER": 0.0,
+      "tau_EER": 0.984,
+      "genuine_stats": {
+        "mean": 0.9935,
+        "min": 0.9905,
+        "max": 0.9972,
+        "std": 0.0018
+      },
+      "impostor_stats": {
+        "mean": 0.972,
+        "min": 0.9398,
+        "max": 0.984,
+        "std": 0.01
+      },
+      "gap_mean": 0.0215,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.984,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=1%": {
+          "tau": 0.984,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=5%": {
+          "tau": 0.984,
+          "FAR": 0.0,
+          "TAR": 1.0
+        }
+      }
+    },
+    "ALL": {
+      "n_genuine": 75,
+      "n_impostor": 75,
+      "rank1_top1_correct": 1.0,
+      "EER": 0.0,
+      "tau_EER": 0.9847,
+      "genuine_stats": {
+        "mean": 0.9934,
+        "min": 0.9877,
+        "max": 0.9972,
+        "std": 0.0019
+      },
+      "impostor_stats": {
+        "mean": 0.9716,
+        "min": 0.9371,
+        "max": 0.9847,
+        "std": 0.0104
+      },
+      "gap_mean": 0.0219,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=1%": {
+          "tau": 0.9847,
+          "FAR": 0.0,
+          "TAR": 1.0
+        },
+        "FAR<=5%": {
+          "tau": 0.984,
+          "FAR": 0.04,
+          "TAR": 1.0
+        }
+      }
+    }
+  }
+}

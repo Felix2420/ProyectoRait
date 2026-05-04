@@ -1,0 +1,36 @@
+# Core dependencies
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
+
+# Computer Vision & Image Processing
+opencv-python==4.8.1.5
+opencv-contrib-python==4.8.1.5
+scikit-image==0.21.0
+pillow==10.0.1
+
+# Scientific Computing
+numpy==1.24.3
+scipy==1.11.2
+pandas==2.0.3
+
+# Data Processing
+pyyaml==6.0
+tqdm==4.66.1
+
+# Machine Learning & Experiments
+tensorboard==2.14.0
+wandb==0.15.8
+
+# Utilities
+six==1.16.0
+
+# OpenGait (si usas como submodule o instalación local)
+# Descomentar si está instalado:
+# opengait @ git+https://github.com/ShiqiYu/OpenGait.git
+
+# Development (opcional)
+pytest==7.4.2
+black==23.9.1
+flake8==6.1.0
+mypy==1.5.1

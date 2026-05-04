@@ -1,0 +1,122 @@
+{
+  "model": "SkeletonGaitPP",
+  "checkpoint": "skeletongaitpp_best_iter1000.pt",
+  "tag": "skeletongaitpp_routeA",
+  "multimodal_root": "R:\\pase_lista\\ProyectoChino\\data\\pkl_multimodal",
+  "n_gallery": 19,
+  "n_probes_NN": 18,
+  "n_probes_NR": 19,
+  "protocols": {
+    "NN": {
+      "n_genuine": 18,
+      "n_impostor": 18,
+      "genuine_sim_stats": {
+        "min": 0.9897,
+        "max": 0.9973,
+        "mean": 0.9945,
+        "std": 0.002
+      },
+      "impostor_sim_stats": {
+        "min": 0.9764,
+        "max": 0.9936,
+        "mean": 0.9869,
+        "std": 0.005
+      },
+      "gap_mean": 0.0076,
+      "EER": 0.1667,
+      "tau_EER": 0.9921,
+      "rank1_top1_correct": 0.9444,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.9936,
+          "FAR": 0.0,
+          "TAR": 0.7778
+        },
+        "FAR<=1%": {
+          "tau": 0.9936,
+          "FAR": 0.0,
+          "TAR": 0.7778
+        },
+        "FAR<=5%": {
+          "tau": 0.9936,
+          "FAR": 0.0,
+          "TAR": 0.7778
+        }
+      }
+    },
+    "NR": {
+      "n_genuine": 19,
+      "n_impostor": 19,
+      "genuine_sim_stats": {
+        "min": 0.9883,
+        "max": 0.9965,
+        "mean": 0.9936,
+        "std": 0.0021
+      },
+      "impostor_sim_stats": {
+        "min": 0.9783,
+        "max": 0.9958,
+        "mean": 0.986,
+        "std": 0.0046
+      },
+      "gap_mean": 0.0076,
+      "EER": 0.1579,
+      "tau_EER": 0.9903,
+      "rank1_top1_correct": 0.9474,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.9958,
+          "FAR": 0.0,
+          "TAR": 0.1053
+        },
+        "FAR<=1%": {
+          "tau": 0.9958,
+          "FAR": 0.0,
+          "TAR": 0.1053
+        },
+        "FAR<=5%": {
+          "tau": 0.9958,
+          "FAR": 0.0,
+          "TAR": 0.1053
+        }
+      }
+    },
+    "ALL": {
+      "n_genuine": 37,
+      "n_impostor": 37,
+      "genuine_sim_stats": {
+        "min": 0.9883,
+        "max": 0.9973,
+        "mean": 0.994,
+        "std": 0.0021
+      },
+      "impostor_sim_stats": {
+        "min": 0.9764,
+        "max": 0.9958,
+        "mean": 0.9865,
+        "std": 0.0048
+      },
+      "gap_mean": 0.0076,
+      "EER": 0.1892,
+      "tau_EER": 0.9913,
+      "rank1_top1_correct": 0.9459,
+      "op_points": {
+        "FAR=0%": {
+          "tau": 0.9958,
+          "FAR": 0.0,
+          "TAR": 0.1892
+        },
+        "FAR<=1%": {
+          "tau": 0.9958,
+          "FAR": 0.0,
+          "TAR": 0.1892
+        },
+        "FAR<=5%": {
+          "tau": 0.9936,
+          "FAR": 0.027,
+          "TAR": 0.6757
+        }
+      }
+    }
+  }
+}

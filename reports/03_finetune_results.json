@@ -1,0 +1,324 @@
+{
+  "config": {
+    "seed": 42,
+    "batch_p": 4,
+    "batch_k": 2,
+    "frames_fixed": 30,
+    "lr": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "total_iter": 1500,
+    "milestones": [
+      750,
+      1250
+    ],
+    "gamma": 0.1,
+    "log_iter": 50,
+    "eval_iter": 200,
+    "triplet_margin": 0.2,
+    "triplet_weight": 1.0,
+    "ce_weight": 1.0,
+    "ce_scale": 16.0,
+    "ce_smoothing": 0.1,
+    "early_stop_patience": 3,
+    "num_workers": 0
+  },
+  "pretrained_ckpt": "GaitBase_Gait3D_120000.pt",
+  "best_iter": 400,
+  "best_val_margin": 0.017660995945334435,
+  "test": {
+    "n_subjects": 3,
+    "rank1": 1.0,
+    "rank5": 1.0,
+    "mean_sim_correct": 0.9938395023345947,
+    "mean_sim_best_wrong": 0.98573237657547,
+    "mean_margin": 0.00810706615447998,
+    "min_margin": 0.0068680644035339355,
+    "subjects": [
+      "alexbojorquez",
+      "jesusvalenzuela",
+      "ricardomora"
+    ]
+  },
+  "val_history": [
+    {
+      "n_subjects": 3,
+      "rank1": 1.0,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9895067811012268,
+      "mean_sim_best_wrong": 0.9833356738090515,
+      "mean_margin": 0.006171186920255423,
+      "min_margin": 0.0019599199295043945,
+      "subjects": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "iter": 0
+    },
+    {
+      "n_subjects": 3,
+      "rank1": 1.0,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9931812286376953,
+      "mean_sim_best_wrong": 0.9770787358283997,
+      "mean_margin": 0.016102531924843788,
+      "min_margin": 0.014749407768249512,
+      "subjects": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "iter": 200
+    },
+    {
+      "n_subjects": 3,
+      "rank1": 1.0,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9927757382392883,
+      "mean_sim_best_wrong": 0.975114643573761,
+      "mean_margin": 0.017660995945334435,
+      "min_margin": 0.01712965965270996,
+      "subjects": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "iter": 400
+    },
+    {
+      "n_subjects": 3,
+      "rank1": 1.0,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9928283095359802,
+      "mean_sim_best_wrong": 0.9758641719818115,
+      "mean_margin": 0.0169641375541687,
+      "min_margin": 0.01634800434112549,
+      "subjects": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "iter": 600
+    },
+    {
+      "n_subjects": 3,
+      "rank1": 1.0,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9926726222038269,
+      "mean_sim_best_wrong": 0.9752771854400635,
+      "mean_margin": 0.017395377159118652,
+      "min_margin": 0.016721725463867188,
+      "subjects": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "iter": 800
+    },
+    {
+      "n_subjects": 3,
+      "rank1": 1.0,
+      "rank5": 1.0,
+      "mean_sim_correct": 0.9927317500114441,
+      "mean_sim_best_wrong": 0.9755623936653137,
+      "mean_margin": 0.01716933585703373,
+      "min_margin": 0.01645570993423462,
+      "subjects": [
+        "carlostorres",
+        "hectorsanchez",
+        "robertpereira"
+      ],
+      "iter": 1000
+    }
+  ],
+  "train_history": [
+    {
+      "iter": 50,
+      "lr": 0.01,
+      "triplet": 0.02095367785077542,
+      "ce": 1.0416918885707855,
+      "active": 0.010611979390960187,
+      "ce_acc": 0.8396875
+    },
+    {
+      "iter": 100,
+      "lr": 0.01,
+      "triplet": 0.0008009460289031267,
+      "ce": 0.6395995616912842,
+      "active": 0.00033854167209938167,
+      "ce_acc": 0.99703125
+    },
+    {
+      "iter": 150,
+      "lr": 0.01,
+      "triplet": 6.661973893642425e-05,
+      "ce": 0.597372909784317,
+      "active": 5.2083334885537625e-05,
+      "ce_acc": 0.99984375
+    },
+    {
+      "iter": 200,
+      "lr": 0.01,
+      "triplet": 0.00048444269225001336,
+      "ce": 0.5857341241836548,
+      "active": 0.00010416666977107525,
+      "ce_acc": 0.99984375
+    },
+    {
+      "iter": 250,
+      "lr": 0.01,
+      "triplet": 4.952708259224892e-05,
+      "ce": 0.5788986074924469,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 300,
+      "lr": 0.01,
+      "triplet": 3.1656958162784575e-06,
+      "ce": 0.5749870109558105,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 350,
+      "lr": 0.01,
+      "triplet": 0.0002944045513868332,
+      "ce": 0.5734040176868439,
+      "active": 9.114583604969084e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 400,
+      "lr": 0.01,
+      "triplet": 2.0537711679935453e-06,
+      "ce": 0.5701664519309998,
+      "active": 1.3020833721384406e-05,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 450,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5688557529449463,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 500,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.566965639591217,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 550,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5662492978572845,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 600,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5656800842285157,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 650,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5645331382751465,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 700,
+      "lr": 0.01,
+      "triplet": 0.0,
+      "ce": 0.5639719557762146,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 750,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5637883174419404,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 800,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5631363368034363,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 850,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5621385741233825,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 900,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5619170987606048,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 950,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5617345643043518,
+      "active": 0.0,
+      "ce_acc": 1.0
+    },
+    {
+      "iter": 1000,
+      "lr": 0.001,
+      "triplet": 0.0,
+      "ce": 0.5615782749652862,
+      "active": 0.0,
+      "ce_acc": 1.0
+    }
+  ],
+  "train_subjects": [
+    "brayannajera",
+    "carloscarrillo",
+    "carlospadilla",
+    "cesarvasquez",
+    "gilbertofelix",
+    "jesusantonioaguilarfelix",
+    "jesuscazarez",
+    "jorgeespinoza",
+    "josefelix",
+    "juliouriarte",
+    "luislopez",
+    "robertocastaño",
+    "rodrigoruiz"
+  ],
+  "val_subjects": [
+    "carlostorres",
+    "hectorsanchez",
+    "robertpereira"
+  ],
+  "test_subjects": [
+    "alexbojorquez",
+    "jesusvalenzuela",
+    "ricardomora"
+  ],
+  "vram_peak_mb": 1245.8486328125,
+  "total_minutes": 98.93
+}

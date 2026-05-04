@@ -1,0 +1,228 @@
+{
+  "subjects": [
+    "alexbojorquez",
+    "brayannajera",
+    "carloscarrillo",
+    "carlospadilla",
+    "carlostorres",
+    "cesarvasquez",
+    "gilbertofelix",
+    "hectorsanchez",
+    "jesusantonioaguilarfelix",
+    "jesuscazarez",
+    "jesusvalenzuela",
+    "jorgeespinoza",
+    "josefelix",
+    "juliouriarte",
+    "luislopez",
+    "ricardomora",
+    "robertocastaño",
+    "robertpereira",
+    "rodrigoruiz"
+  ],
+  "checkpoint": "gaitbase_ft_multisession_best_iter1200.pt",
+  "class_num": 13,
+  "tau_phase5": 0.9807,
+  "feat_dim": [
+    256,
+    16
+  ],
+  "n_subjects": 19,
+  "k_max": 4,
+  "n_sequences_used": {
+    "alexbojorquez": 4,
+    "brayannajera": 4,
+    "carloscarrillo": 4,
+    "carlospadilla": 4,
+    "carlostorres": 4,
+    "cesarvasquez": 4,
+    "gilbertofelix": 4,
+    "hectorsanchez": 4,
+    "jesusantonioaguilarfelix": 3,
+    "jesuscazarez": 4,
+    "jesusvalenzuela": 4,
+    "jorgeespinoza": 4,
+    "josefelix": 4,
+    "juliouriarte": 4,
+    "luislopez": 4,
+    "ricardomora": 4,
+    "robertocastaño": 4,
+    "robertpereira": 4,
+    "rodrigoruiz": 4
+  },
+  "per_subject_files": {
+    "alexbojorquez": [
+      "data/pkl_multisession/alexbojorquez/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/alexbojorquez/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/alexbojorquez/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/alexbojorquez/rapido_s2/090/seq00.pkl"
+    ],
+    "brayannajera": [
+      "data/pkl_multisession/brayannajera/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/brayannajera/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/brayannajera/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/brayannajera/rapido_s2/090/seq00.pkl"
+    ],
+    "carloscarrillo": [
+      "data/pkl_multisession/carloscarrillo/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/carloscarrillo/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/carloscarrillo/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/carloscarrillo/rapido_s2/090/seq00.pkl"
+    ],
+    "carlospadilla": [
+      "data/pkl_multisession/carlospadilla/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/carlospadilla/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/carlospadilla/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/carlospadilla/rapido_s2/090/seq00.pkl"
+    ],
+    "carlostorres": [
+      "data/pkl_multisession/carlostorres/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/carlostorres/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/carlostorres/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/carlostorres/rapido_s2/090/seq00.pkl"
+    ],
+    "cesarvasquez": [
+      "data/pkl_multisession/cesarvasquez/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/cesarvasquez/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/cesarvasquez/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/cesarvasquez/rapido_s2/090/seq00.pkl"
+    ],
+    "gilbertofelix": [
+      "data/pkl_multisession/gilbertofelix/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/gilbertofelix/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/gilbertofelix/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/gilbertofelix/rapido_s2/090/seq00.pkl"
+    ],
+    "hectorsanchez": [
+      "data/pkl_multisession/hectorsanchez/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/hectorsanchez/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/hectorsanchez/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/hectorsanchez/rapido_s2/090/seq00.pkl"
+    ],
+    "jesusantonioaguilarfelix": [
+      "data/pkl_multisession/jesusantonioaguilarfelix/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/jesusantonioaguilarfelix/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/jesusantonioaguilarfelix/rapido_s2/090/seq00.pkl"
+    ],
+    "jesuscazarez": [
+      "data/pkl_multisession/jesuscazarez/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/jesuscazarez/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/jesuscazarez/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/jesuscazarez/rapido_s2/090/seq00.pkl"
+    ],
+    "jesusvalenzuela": [
+      "data/pkl_multisession/jesusvalenzuela/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/jesusvalenzuela/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/jesusvalenzuela/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/jesusvalenzuela/rapido_s2/090/seq00.pkl"
+    ],
+    "jorgeespinoza": [
+      "data/pkl_multisession/jorgeespinoza/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/jorgeespinoza/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/jorgeespinoza/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/jorgeespinoza/rapido_s2/090/seq00.pkl"
+    ],
+    "josefelix": [
+      "data/pkl_multisession/josefelix/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/josefelix/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/josefelix/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/josefelix/rapido_s2/090/seq00.pkl"
+    ],
+    "juliouriarte": [
+      "data/pkl_multisession/juliouriarte/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/juliouriarte/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/juliouriarte/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/juliouriarte/rapido_s2/090/seq00.pkl"
+    ],
+    "luislopez": [
+      "data/pkl_multisession/luislopez/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/luislopez/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/luislopez/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/luislopez/rapido_s2/090/seq00.pkl"
+    ],
+    "ricardomora": [
+      "data/pkl_multisession/ricardomora/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/ricardomora/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/ricardomora/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/ricardomora/rapido_s2/090/seq00.pkl"
+    ],
+    "robertocastaño": [
+      "data/pkl_multisession/robertocastaño/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/robertocastaño/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/robertocastaño/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/robertocastaño/rapido_s2/090/seq00.pkl"
+    ],
+    "robertpereira": [
+      "data/pkl_multisession/robertpereira/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/robertpereira/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/robertpereira/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/robertpereira/rapido_s2/090/seq00.pkl"
+    ],
+    "rodrigoruiz": [
+      "data/pkl_multisession/rodrigoruiz/normal_s1/090/seq00.pkl",
+      "data/pkl_multisession/rodrigoruiz/normal_s2/090/seq00.pkl",
+      "data/pkl_multisession/rodrigoruiz/rapido_s1/090/seq00.pkl",
+      "data/pkl_multisession/rodrigoruiz/rapido_s2/090/seq00.pkl"
+    ]
+  },
+  "build_strategy": "multi-template per subject (no averaging). Runtime matcher uses max sim over the K templates of each subject. Preserves inter-subject separation; covers intra-subject variance (clothing, speed, session).",
+  "inter_subject_sim_under_max_sim": {
+    "max": 0.9847,
+    "max_pair": [
+      "jesusvalenzuela",
+      "robertpereira"
+    ],
+    "mean_off_diagonal": 0.9492,
+    "top5_closest_pairs": [
+      {
+        "pair": [
+          "jesusvalenzuela",
+          "robertpereira"
+        ],
+        "max_sim": 0.9847
+      },
+      {
+        "pair": [
+          "jesusvalenzuela",
+          "juliouriarte"
+        ],
+        "max_sim": 0.984
+      },
+      {
+        "pair": [
+          "hectorsanchez",
+          "ricardomora"
+        ],
+        "max_sim": 0.9827
+      },
+      {
+        "pair": [
+          "luislopez",
+          "robertpereira"
+        ],
+        "max_sim": 0.9817
+      },
+      {
+        "pair": [
+          "alexbojorquez",
+          "ricardomora"
+        ],
+        "max_sim": 0.9811
+      }
+    ]
+  },
+  "leave_one_out_simulation": {
+    "n_probes": 75,
+    "rank1_top1_correct": 1.0,
+    "genuine": {
+      "mean": 0.9934,
+      "min": 0.9877
+    },
+    "impostor": {
+      "mean": 0.9716,
+      "max": 0.9847
+    },
+    "gap_mean": 0.0219
+  },
+  "calibration_caveat": "Tau=0.9807 fue calibrado en Fase 5 con gallery=normal_s1 (1 template/sujeto, matching directo). Con multi-template + max-sim los rangos de sim cambian. Recalibrar tau usando esta gallery: ejecutar openset_eval con probes externos y matcher max-sim, o validar en 6.5 contra camara real."
+}

@@ -1,0 +1,39 @@
+# Config del pipeline de inferencia (Fase 6).
+# Paths relativos a la raíz del repo.
+
+camera:
+  source: 0
+  target_fps: 15
+
+detector:
+  weights: yolo11n.pt
+  conf: 0.35
+  iou: 0.5
+
+tracker:
+  warmup_frames: 15
+  reset_frames: 15
+  iou_min: 0.3
+
+segmenter:
+  downsample_ratio: 0.25
+
+sequence:
+  window: 60
+  stride: 30
+
+embedder:
+  ckpt: checkpoints/finetune/gaitbase_ft_multisession_best_iter1200.pt
+  class_num: 13
+
+matcher:
+  gallery_npy: gallery/embeddings.npy
+  valid_mask_npy: gallery/valid_mask.npy
+  index_json: gallery/index.json
+  tau: 0.9847   # recalibrado en 6.2b (FAR=0%, TAR=100%, ALL LCO)
+
+confirmation:
+  n_consecutive: 2
+
+logging:
+  csv_dir: logs

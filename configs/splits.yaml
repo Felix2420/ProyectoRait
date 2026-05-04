@@ -1,0 +1,117 @@
+meta:
+  n_subjects: 19
+  seed: 42
+  raw_root: "C:\\Proyecto3\\Proyecto-Reconocedor-IA\\Dataset Crudo"
+  phase: Fase 2 paso 2 — splits definidos
+  ranking_rule: "sha256(f'{seed}:{subject}')[:16] como int → orden creciente"
+subject_disjoint:
+  purpose: evaluar capacidad de generalización del modelo a IDs no vistas
+  n:
+    train: 13
+    val: 3
+    test: 3
+  train:
+    - jorgeespinoza
+    - gilbertofelix
+    - jesusantonioaguilarfelix
+    - josefelix
+    - carloscarrillo
+    - juliouriarte
+    - jesuscazarez
+    - robertocastaño
+    - luislopez
+    - brayannajera
+    - cesarvasquez
+    - carlospadilla
+    - rodrigoruiz
+  val:
+    - hectorsanchez
+    - robertpereira
+    - carlostorres
+  test:
+    - jesusvalenzuela
+    - alexbojorquez
+    - ricardomora
+video_disjoint:
+  purpose: evaluar funcionalidad del sistema de pase de lista (N=19)
+  gallery_condition: normal
+  probe_condition: rapido
+  gallery:
+    - subject: alexbojorquez
+      video: normal_1.mp4
+    - subject: brayannajera
+      video: normal_1.mp4
+    - subject: carloscarrillo
+      video: normal_1.mp4
+    - subject: carlospadilla
+      video: normal_1.mp4
+    - subject: carlostorres
+      video: normal_1.mp4
+    - subject: cesarvasquez
+      video: normal_2.mp4
+    - subject: gilbertofelix
+      video: normal_1.mp4
+    - subject: hectorsanchez
+      video: normal_1.mp4
+    - subject: jesusantonioaguilarfelix
+      video: normal_1.mp4
+    - subject: jesuscazarez
+      video: normal_1.mp4
+    - subject: jesusvalenzuela
+      video: normal_1.mp4
+    - subject: jorgeespinoza
+      video: normal_1.mp4
+    - subject: josefelix
+      video: normal_1.mp4
+    - subject: juliouriarte
+      video: normal_1.mp4
+    - subject: luislopez
+      video: normal_1.mp4
+    - subject: ricardomora
+      video: normal_1.mp4
+    - subject: robertocastaño
+      video: normal_1.mp4
+    - subject: robertpereira
+      video: normal_1.mp4
+    - subject: rodrigoruiz
+      video: normal_1.mp4
+  probe:
+    - subject: alexbojorquez
+      video: rapido_1.mp4
+    - subject: brayannajera
+      video: rapido_1.mp4
+    - subject: carloscarrillo
+      video: rapido_1.mp4
+    - subject: carlospadilla
+      video: rapido_1.mp4
+    - subject: carlostorres
+      video: rapido_1.mp4
+    - subject: cesarvasquez
+      video: rapido_1.mp4
+    - subject: gilbertofelix
+      video: rapido_1.mp4
+    - subject: hectorsanchez
+      video: rapido_1.mp4
+    - subject: jesusantonioaguilarfelix
+      video: rapido_2.mp4
+    - subject: jesuscazarez
+      video: rapido_1.mp4
+    - subject: jesusvalenzuela
+      video: rapido_1.mp4
+    - subject: jorgeespinoza
+      video: rapido_2.mp4
+    - subject: josefelix
+      video: rapido_1.mp4
+    - subject: juliouriarte
+      video: rapido_1.mp4
+    - subject: luislopez
+      video: rapido_1.mp4
+    - subject: ricardomora
+      video: rapido_1.mp4
+    - subject: robertocastaño
+      video: rapido_1.mp4
+    - subject: robertpereira
+      video: rapido_1.mp4
+    - subject: rodrigoruiz
+      video: rapido_1.mp4
+  missing: []

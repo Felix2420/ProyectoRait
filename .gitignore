@@ -1,0 +1,87 @@
+# Dataset (privado, no versionado)
+data/
+*.pkl
+*.npy
+*.mp4
+*.avi
+*.mov
+
+# Checkpoints pesados (>100MB cada uno)
+checkpoints/*.pt
+!checkpoints/.keep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Logs y outputs
+logs/
+runs/
+outputs/
+*.log
+*.csv
+*.tsv
+wandb/
+tensorboard_logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Credentials (nunca versionear)
+.env
+.env.local
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# Temporales
+*.tmp
+*.temp
+.cache/
