@@ -6,8 +6,7 @@ data/
 *.avi
 *.mov
 
-# Checkpoints pesados (>100MB cada uno)
-checkpoints/*.pt
+# Checkpoints — manejados por Git LFS
 !checkpoints/.keep
 
 # Python
