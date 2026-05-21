@@ -17,11 +17,12 @@ log = logging.getLogger("pipeline.detect")
 
 class PersonDetector:
     def __init__(self, weights: Path, conf: float = 0.35,
-                 iou: float = 0.5, device: str | None = None) -> None:
+                 iou: float = 0.5, imgsz: int = 640, device: str | None = None) -> None:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.conf = conf
         self.iou = iou
-        log.info("YOLO weights=%s device=%s", weights, self.device)
+        self.imgsz = imgsz
+        log.info("YOLO weights=%s device=%s imgsz=%d", weights, self.device, imgsz)
         self.model = YOLO(str(weights))
 
     def detect(self, frame_bgr: np.ndarray) -> Optional[BBox]:
@@ -29,6 +30,7 @@ class PersonDetector:
         res = self.model.predict(
             frame_bgr, classes=[0], verbose=False,
             device=self.device, conf=self.conf, iou=self.iou,
+            imgsz=self.imgsz,
         )
         if not res or len(res[0].boxes) == 0:
             return None

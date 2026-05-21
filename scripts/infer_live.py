@@ -172,7 +172,8 @@ def main() -> int:
                   backend=args.backend)
     det = PersonDetector(weights=resolve(cfg["detector"]["weights"]),
                          conf=cfg["detector"]["conf"],
-                         iou=cfg["detector"]["iou"])
+                         iou=cfg["detector"]["iou"],
+                         imgsz=cfg["detector"].get("imgsz", 640))
     fsm = TrackerFSM(warmup_frames=cfg["tracker"]["warmup_frames"],
                      reset_frames=cfg["tracker"]["reset_frames"],
                      iou_min=cfg["tracker"]["iou_min"])
@@ -180,7 +181,8 @@ def main() -> int:
     buf = SequenceBuffer(window=cfg["sequence"]["window"],
                          stride=cfg["sequence"]["stride"])
     emb = GaitEmbedder(ckpt=resolve(cfg["embedder"]["ckpt"]),
-                       class_num=cfg["embedder"]["class_num"])
+                       class_num=cfg["embedder"]["class_num"],
+                       compile=cfg["embedder"].get("compile", False))
     mch = GalleryMatcher(gallery_npy=resolve(cfg["matcher"]["gallery_npy"]),
                          valid_mask_npy=resolve(cfg["matcher"]["valid_mask_npy"]),
                          index_json=resolve(cfg["matcher"]["index_json"]),

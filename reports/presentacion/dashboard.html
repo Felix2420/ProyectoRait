@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gait Recognition Dashboard · Pase de Lista por Marcha</title>
+<style>
+  :root{
+    --bg:#05070f;
+    --bg2:#0a0e1f;
+    --panel:rgba(18,24,42,.55);
+    --panel-2:rgba(22,28,48,.75);
+    --panel-br:rgba(120,180,255,.12);
+    --txt:#e7ecff;
+    --dim:#8993b8;
+    --dim2:#5b6486;
+    --cyan:#22d3ee;
+    --violet:#8b5cf6;
+    --green:#34d399;
+    --amber:#f59e0b;
+    --pink:#f472b6;
+    --red:#ef4444;
+    --blue:#3b82f6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter','Segoe UI',system-ui,sans-serif;
+    background:var(--bg);color:var(--txt);
+    overflow-x:hidden;
+    line-height:1.6;
+    background:
+      radial-gradient(1400px 800px at 10% -10%,rgba(139,92,246,.12),transparent 60%),
+      radial-gradient(1200px 700px at 90% 10%,rgba(34,211,238,.08),transparent 60%),
+      var(--bg);
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#0a0e1f}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--violet),var(--cyan));border-radius:5px}
+  code,.mono{font-family:'JetBrains Mono','Consolas',monospace}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(5,7,15,.7);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--panel-br);
+    padding:14px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  nav .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+  nav .brand .logo{
+    width:36px;height:36px;border-radius:10px;
+    background:linear-gradient(135deg,var(--violet),var(--cyan));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 20px rgba(139,92,246,.4);
+  }
+  nav .links{display:flex;gap:6px;flex-wrap:wrap}
+  nav .links a{
+    color:var(--dim);text-decoration:none;font-size:13px;font-weight:500;
+    padding:6px 12px;border-radius:8px;transition:.2s;
+  }
+  nav .links a:hover{color:var(--txt);background:rgba(139,92,246,.15)}
+  nav .status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--green);font-family:'JetBrains Mono',monospace}
+  nav .status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* SECTIONS */
+  section{padding:100px 60px;max-width:1400px;margin:0 auto;position:relative}
+  .sect-label{
+    display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--cyan);font-family:'JetBrains Mono',monospace;margin-bottom:14px;
+    padding:4px 12px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);border-radius:999px;
+  }
+  h2{font-size:42px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;line-height:1.1}
+  h2 .grad{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sect-desc{font-size:16px;color:var(--dim);max-width:760px;margin-bottom:50px}
+
+  /* fade in */
+  .reveal{opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.2,.7,.3,1)}
+  .reveal.show{opacity:1;transform:none}
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding-top:120px;position:relative;
+  }
+  .hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55}
+  .hero .inner{position:relative;z-index:2;max-width:1100px}
+  .hero h1{font-size:84px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-bottom:24px}
+  .hero h1 .grad{background:linear-gradient(120deg,#22d3ee 0%,#8b5cf6 50%,#f472b6 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 40px rgba(139,92,246,.3))}
+  .hero p.sub{font-size:20px;color:var(--dim);max-width:720px;margin:0 auto 40px}
+  .hero .badges{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:50px}
+  .pill{
+    padding:10px 20px;border-radius:999px;
+    background:var(--panel);border:1px solid var(--panel-br);
+    backdrop-filter:blur(10px);
+    font-size:13px;font-weight:600;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .pill.violet{border-color:rgba(139,92,246,.4);background:rgba(139,92,246,.1)}
+  .pill.cyan{border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.1)}
+  .pill.green{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.1)}
+  .pill .d{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+  .hero .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto;padding:30px;background:var(--panel);border:1px solid var(--panel-br);border-radius:24px;backdrop-filter:blur(20px)}
+  .hero .stat .v{font-size:42px;font-weight:800;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .stat .k{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+  .hero .scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:var(--dim);font-size:12px;letter-spacing:2px;animation:bob 2s infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ===== PROBLEMA ===== */
+  .cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:20px;padding:28px;backdrop-filter:blur(20px);
+    transition:.3s;position:relative;overflow:hidden;
+  }
+  .card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.4);box-shadow:0 20px 60px rgba(139,92,246,.15)}
+  .card .icon{font-size:32px;margin-bottom:14px}
+  .card h3{font-size:18px;font-weight:700;margin-bottom:10px}
+  .card p{font-size:14px;color:var(--dim);line-height:1.6}
+  .card.cyan::before{content:"";position:absolute;top:0;left:0;width:60px;height:3px;background:var(--cyan);box-shadow:0 0 20px var(--cyan)}
+  .card.violet::before{content:"";position:absolute;top:0;left:0;width:60px;height:3px;background:var(--violet);box-shadow:0 0 20px var(--violet)}
+  .card.green::before{content:"";position:absolute;top:0;left:0;width:60px;height:3px;background:var(--green);box-shadow:0 0 20px var(--green)}
+
+  .vs-table{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;overflow:hidden;backdrop-filter:blur(15px)}
+  .vs-col{padding:30px}
+  .vs-col h3{font-size:20px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .vs-col.gait{border-right:1px solid var(--panel-br);background:linear-gradient(135deg,rgba(52,211,153,.06),transparent)}
+  .vs-col.face{background:linear-gradient(135deg,rgba(245,158,11,.04),transparent)}
+  .vs-col ul{list-style:none}
+  .vs-col li{padding:8px 0;font-size:14px;color:var(--dim);display:flex;align-items:start;gap:10px;border-bottom:1px dashed rgba(120,180,255,.08)}
+  .vs-col li:last-child{border:0}
+  .vs-col.gait li::before{content:"✓";color:var(--green);font-weight:700;flex-shrink:0}
+  .vs-col.face li::before{content:"✗";color:var(--amber);font-weight:700;flex-shrink:0}
+
+  /* ===== PIPELINE ===== */
+  .pipeline-board{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:24px;padding:40px;backdrop-filter:blur(20px);position:relative;overflow:hidden;
+  }
+  .pipeline-board::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(120,180,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(120,180,255,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+  }
+  .pipeline-flow{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:14px;align-items:stretch;z-index:1}
+  .pstep{
+    background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(34,211,238,.04));
+    border:1px solid rgba(139,92,246,.25);
+    border-radius:16px;padding:18px 14px;text-align:center;
+    transition:.3s;cursor:pointer;position:relative;
+  }
+  .pstep:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 30px rgba(34,211,238,.25)}
+  .pstep .num{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid var(--violet);color:var(--violet);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+  .pstep .ico{font-size:32px;margin:6px 0 8px;display:block}
+  .pstep h4{font-size:13px;font-weight:700;margin-bottom:6px}
+  .pstep .tech{font-size:10px;color:var(--cyan);font-family:'JetBrains Mono',monospace;margin-bottom:8px;letter-spacing:.5px}
+  .pstep .io{font-size:10px;color:var(--dim);font-family:'JetBrains Mono',monospace;line-height:1.5}
+  .pstep .io b{color:var(--pink)}
+  .pstep:nth-child(1){border-color:rgba(34,211,238,.4)}
+  .pstep:nth-child(2){border-color:rgba(245,158,11,.4)}
+  .pstep:nth-child(3){border-color:rgba(244,114,182,.4)}
+  .pstep:nth-child(4){border-color:rgba(139,92,246,.5);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(139,92,246,.04))}
+  .pstep:nth-child(5){border-color:rgba(34,211,238,.4)}
+  .pstep:nth-child(6){border-color:rgba(244,114,182,.4)}
+  .pstep:nth-child(7){border-color:rgba(52,211,153,.45);background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(52,211,153,.04))}
+
+  .flow-arrows{position:absolute;top:50%;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan) 50%,transparent);opacity:.2;z-index:0}
+  .flow-particle{position:absolute;top:50%;width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 12px var(--cyan);transform:translateY(-50%);animation:run 4s infinite linear}
+  @keyframes run{0%{left:0%}100%{left:100%}}
+
+  .pipeline-detail{margin-top:30px;padding:24px;background:var(--bg2);border:1px solid var(--panel-br);border-radius:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim);line-height:1.8;display:none}
+  .pipeline-detail.show{display:block;animation:fadein .3s}
+  @keyframes fadein{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+  .pipeline-detail .line{display:block}
+  .pipeline-detail .k{color:var(--cyan)}
+  .pipeline-detail .v{color:var(--pink)}
+
+  /* ===== EXTRACCIÓN DE SILUETAS ===== */
+  .sil-board{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:24px;padding:40px;backdrop-filter:blur(20px);
+    position:relative;overflow:hidden;
+  }
+  .sil-board::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(34,211,238,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(34,211,238,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+  }
+  .sil-flow{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  }
+  .sil-card{
+    background:var(--bg2);border:1px solid var(--panel-br);
+    border-radius:18px;padding:18px;backdrop-filter:blur(15px);
+    transition:.3s;position:relative;overflow:hidden;
+  }
+  .sil-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(34,211,238,.12)}
+  .sil-card:nth-child(1){border-color:rgba(34,211,238,.3)}
+  .sil-card:nth-child(2){border-color:rgba(245,158,11,.3)}
+  .sil-card:nth-child(3){border-color:rgba(244,114,182,.3)}
+  .sil-card:nth-child(4){border-color:rgba(52,211,153,.35);background:linear-gradient(135deg,rgba(52,211,153,.06),var(--bg2))}
+  .sil-head{
+    display:flex;align-items:center;gap:12px;margin-bottom:14px;
+  }
+  .sil-num{
+    width:32px;height:32px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-weight:800;
+    font-size:14px;color:#000;flex-shrink:0;
+  }
+  .sil-card:nth-child(1) .sil-num{background:var(--cyan)}
+  .sil-card:nth-child(2) .sil-num{background:var(--amber)}
+  .sil-card:nth-child(3) .sil-num{background:var(--pink)}
+  .sil-card:nth-child(4) .sil-num{background:var(--green)}
+  .sil-head h4{font-size:16px;font-weight:700;line-height:1.2}
+  .sil-head h4 small{display:block;font-size:11px;color:var(--dim);font-weight:500;font-family:'JetBrains Mono',monospace;margin-top:2px;letter-spacing:.3px}
+
+  .sil-canvas{
+    width:100%;aspect-ratio:1/1.1;border-radius:14px;
+    overflow:hidden;position:relative;margin-bottom:14px;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .sil-canvas svg{width:100%;height:100%;display:block;position:relative;z-index:1}
+
+  .cv-rgb{background:linear-gradient(180deg,#1f2d4a 0%,#34456e 50%,#1a2540 100%)}
+  .cv-det{background:linear-gradient(180deg,#1f2d4a 0%,#34456e 50%,#1a2540 100%)}
+  .cv-mat{background:radial-gradient(circle at 50% 55%, #1a2540 0%, #060814 100%)}
+  .cv-bin{background:#000;position:relative}
+  .cv-bin::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(34,211,238,.12) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(34,211,238,.12) 1px,transparent 1px);
+    background-size:10px 10px;
+    z-index:0;
+  }
+
+  .sil-tag-conf{
+    position:absolute;top:8px;left:8px;
+    font-size:10px;color:#000;background:var(--amber);
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    padding:3px 8px;border-radius:5px;z-index:3;
+  }
+  .sil-tag-alpha{
+    position:absolute;top:8px;left:8px;
+    font-size:10px;color:var(--pink);background:rgba(0,0,0,.7);
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    padding:3px 8px;border-radius:5px;z-index:3;
+    border:1px solid rgba(244,114,182,.5);
+  }
+  .sil-tag-dim{
+    position:absolute;bottom:8px;right:8px;
+    font-size:10px;color:var(--cyan);font-family:'JetBrains Mono',monospace;
+    background:rgba(0,0,0,.7);padding:3px 8px;border-radius:5px;
+    z-index:3;letter-spacing:.3px;font-weight:600;
+  }
+
+  .sil-card p{font-size:13px;color:var(--dim);line-height:1.55;margin-bottom:12px}
+  .sil-meta{
+    background:rgba(0,0,0,.3);border-radius:10px;padding:10px 12px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;
+  }
+  .sil-meta .k{color:var(--cyan)}
+  .sil-meta .v{color:var(--txt)}
+
+  .sil-formula{
+    margin-top:30px;padding:24px 30px;
+    background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(34,211,238,.03));
+    border:1px solid rgba(52,211,153,.25);border-radius:16px;
+    display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+    position:relative;z-index:1;
+  }
+  .sil-formula .label{
+    font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:2px;
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+  }
+  .sil-formula .math{
+    font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--txt);
+    padding:8px 16px;background:rgba(0,0,0,.35);border-radius:10px;
+    border:1px solid rgba(34,211,238,.2);
+  }
+  .sil-formula .math .op{color:var(--pink)}
+  .sil-formula .math .var{color:var(--cyan)}
+  .sil-formula .note{font-size:13px;color:var(--dim);flex:1;min-width:200px}
+
+  /* OFFLINE variant */
+  .sil-flow.five{grid-template-columns:repeat(5,1fr)}
+  .sil-board.offline::before{
+    background-image:
+      linear-gradient(rgba(139,92,246,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(139,92,246,.05) 1px,transparent 1px);
+    background-size:40px 40px;
+  }
+  .sil-board.offline .sil-card:nth-child(1){border-color:rgba(245,158,11,.3)}
+  .sil-board.offline .sil-card:nth-child(2){border-color:rgba(34,211,238,.3)}
+  .sil-board.offline .sil-card:nth-child(3){border-color:rgba(244,114,182,.3)}
+  .sil-board.offline .sil-card:nth-child(4){border-color:rgba(52,211,153,.35)}
+  .sil-board.offline .sil-card:nth-child(5){
+    border-color:rgba(139,92,246,.5);
+    background:linear-gradient(135deg,rgba(139,92,246,.12),var(--bg2));
+  }
+  .sil-board.offline .sil-card:nth-child(1) .sil-num{background:var(--amber)}
+  .sil-board.offline .sil-card:nth-child(2) .sil-num{background:var(--cyan)}
+  .sil-board.offline .sil-card:nth-child(3) .sil-num{background:var(--pink)}
+  .sil-board.offline .sil-card:nth-child(4) .sil-num{background:var(--green)}
+  .sil-board.offline .sil-card:nth-child(5) .sil-num{background:var(--violet);color:#fff}
+  .sil-board.offline .sil-formula{
+    background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(34,211,238,.03));
+    border-color:rgba(139,92,246,.3);
+  }
+  .sil-board.offline .sil-formula .label{color:var(--violet)}
+
+  .cv-mp4{background:linear-gradient(160deg,#1a1040 0%,#2a1a5c 50%,#120c30 100%)}
+  .cv-frames{background:linear-gradient(160deg,#1a1040 0%,#2a1a5c 50%,#120c30 100%)}
+  .cv-disk{background:linear-gradient(160deg,#0f2010 0%,#1a3a20 60%,#0a1a0a 100%)}
+  .cv-pkl{background:linear-gradient(160deg,#0f1525 0%,#1a2040 60%,#0a0f20 100%)}
+
+  .sil-tag-violet{
+    position:absolute;top:8px;left:8px;
+    font-size:10px;color:var(--violet);background:rgba(0,0,0,.7);
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    padding:3px 8px;border-radius:5px;z-index:3;
+    border:1px solid rgba(139,92,246,.5);
+  }
+  .sil-tag-green{
+    position:absolute;top:8px;left:8px;
+    font-size:10px;color:var(--green);background:rgba(0,0,0,.7);
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    padding:3px 8px;border-radius:5px;z-index:3;
+    border:1px solid rgba(52,211,153,.5);
+  }
+  .sil-tag-amber{
+    position:absolute;bottom:8px;left:8px;
+    font-size:10px;color:var(--amber);background:rgba(0,0,0,.7);
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+    padding:3px 8px;border-radius:5px;z-index:3;
+    border:1px solid rgba(245,158,11,.5);
+  }
+
+  /* ===== STACK ===== */
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+  .tech{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:16px;padding:20px;backdrop-filter:blur(15px);
+    transition:.3s;cursor:pointer;text-align:center;
+  }
+  .tech:hover{transform:translateY(-4px);border-color:var(--cyan)}
+  .tech .logo{font-size:36px;margin-bottom:10px}
+  .tech h4{font-size:15px;font-weight:700;margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+  .tech p{font-size:11px;color:var(--dim);line-height:1.5}
+  .tech.py{border-color:rgba(245,158,11,.3)}
+  .tech.py h4{color:#fbbf24}
+  .tech.tor{border-color:rgba(239,68,68,.3)}
+  .tech.tor h4{color:#fb7185}
+  .tech.cuda{border-color:rgba(52,211,153,.3)}
+  .tech.cuda h4{color:var(--green)}
+  .tech.og{border-color:rgba(139,92,246,.3)}
+  .tech.og h4{color:var(--violet)}
+  .tech.yolo{border-color:rgba(34,211,238,.3)}
+  .tech.yolo h4{color:var(--cyan)}
+  .tech.rvm{border-color:rgba(244,114,182,.3)}
+  .tech.rvm h4{color:var(--pink)}
+  .tech.cv{border-color:rgba(59,130,246,.3)}
+  .tech.cv h4{color:var(--blue)}
+
+  /* ===== ARQUITECTURA ===== */
+  .arch-board{background:var(--panel);border:1px solid var(--panel-br);border-radius:24px;padding:40px;backdrop-filter:blur(20px)}
+  .arch-pipeline{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:16px;align-items:center;margin-bottom:30px}
+  .tensor{
+    background:linear-gradient(135deg,rgba(34,211,238,.1),rgba(139,92,246,.05));
+    border:1px solid rgba(34,211,238,.3);border-radius:14px;padding:18px;text-align:center;
+  }
+  .tensor .shape{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--cyan);font-weight:700;margin-bottom:6px}
+  .tensor .lbl{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
+  .arch-arrow{color:var(--violet);font-size:24px;font-weight:700}
+  .arch-arrow .op{display:block;font-size:10px;color:var(--dim);font-family:'JetBrains Mono',monospace;text-align:center;margin-top:4px;letter-spacing:.5px}
+
+  .arch-detail{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+  .arch-mod{
+    background:var(--bg2);border:1px solid var(--panel-br);border-radius:14px;padding:18px;
+  }
+  .arch-mod h5{font-size:13px;color:var(--violet);font-family:'JetBrains Mono',monospace;margin-bottom:8px}
+  .arch-mod p{font-size:12px;color:var(--dim);line-height:1.6}
+
+  /* ===== DATASET ===== */
+  .ds-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:stretch}
+  .ds-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-content:start}
+  .ds-stat{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:16px;padding:24px;backdrop-filter:blur(15px);
+  }
+  .ds-stat .v{font-size:36px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--cyan)}
+  .ds-stat .k{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+  .ds-stat .ctx{font-size:11px;color:var(--dim2);margin-top:6px}
+
+  .timeline{background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;padding:30px;backdrop-filter:blur(15px)}
+  .timeline h3{font-size:16px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:20px}
+  .tline{position:relative;padding-left:30px;border-left:2px solid var(--panel-br)}
+  .tline-item{position:relative;padding-bottom:18px}
+  .tline-item:last-child{padding-bottom:0}
+  .tline-item::before{content:"";position:absolute;left:-37px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--violet);box-shadow:0 0 12px var(--violet)}
+  .tline-item.done::before{background:var(--green);border-color:var(--green);box-shadow:0 0 12px var(--green)}
+  .tline-item h5{font-size:14px;font-weight:700;margin-bottom:4px}
+  .tline-item p{font-size:12px;color:var(--dim);font-family:'JetBrains Mono',monospace}
+  .tline-item .met{font-size:11px;color:var(--cyan);margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+  /* ===== COMPARATIVA ===== */
+  .cmp-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;overflow:hidden;backdrop-filter:blur(15px)}
+  .cmp-table thead{background:rgba(139,92,246,.1)}
+  .cmp-table th{padding:18px 20px;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);font-family:'JetBrains Mono',monospace;border-bottom:1px solid var(--panel-br)}
+  .cmp-table td{padding:16px 20px;font-size:14px;border-bottom:1px solid var(--panel-br)}
+  .cmp-table tr:last-child td{border-bottom:0}
+  .cmp-table tr:hover{background:rgba(139,92,246,.05)}
+  .cmp-table .name{font-weight:700;font-family:'JetBrains Mono',monospace}
+  .tag-ok{color:var(--green);background:rgba(52,211,153,.1);padding:4px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600}
+  .tag-no{color:var(--amber);background:rgba(245,158,11,.1);padding:4px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600}
+  .tag-prod{color:var(--violet);background:rgba(139,92,246,.15);padding:4px 10px;border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;border:1px solid rgba(139,92,246,.4)}
+
+  /* ===== KEYPOINTS FAIL ===== */
+  .kp-why{
+    display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:30px;
+  }
+  .kp-panel{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:20px;padding:28px;backdrop-filter:blur(15px);
+  }
+  .kp-panel h3{
+    font-size:14px;font-weight:700;text-transform:uppercase;
+    letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .kp-panel.bad h3{color:var(--red)}
+  .kp-panel.good h3{color:var(--green)}
+  .kp-panel.bad{border-color:rgba(239,68,68,.25);background:linear-gradient(135deg,rgba(239,68,68,.04),var(--panel))}
+  .kp-panel.good{border-color:rgba(52,211,153,.25);background:linear-gradient(135deg,rgba(52,211,153,.04),var(--panel))}
+  .kp-canvas{
+    width:100%;aspect-ratio:3/2;border-radius:14px;overflow:hidden;
+    background:#000;position:relative;margin-bottom:16px;
+    border:1px solid rgba(255,255,255,.07);
+  }
+  .kp-canvas svg{width:100%;height:100%;display:block}
+  .kp-verdict{
+    display:flex;align-items:center;gap:10px;padding:12px 16px;
+    border-radius:10px;font-size:13px;font-family:'JetBrains Mono',monospace;
+  }
+  .kp-panel.bad .kp-verdict{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:var(--red)}
+  .kp-panel.good .kp-verdict{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);color:var(--green)}
+
+  .kp-reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:30px}
+  .kp-reason{
+    background:var(--panel);border:1px solid rgba(239,68,68,.2);
+    border-radius:16px;padding:22px;backdrop-filter:blur(15px);
+    position:relative;overflow:hidden;
+  }
+  .kp-reason::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+  .kp-reason .rnum{
+    font-size:36px;font-weight:900;font-family:'JetBrains Mono',monospace;
+    color:rgba(239,68,68,.2);position:absolute;top:12px;right:16px;line-height:1;
+  }
+  .kp-reason h4{font-size:15px;font-weight:700;color:var(--red);margin-bottom:10px}
+  .kp-reason p{font-size:13px;color:var(--dim);line-height:1.6}
+  .kp-reason .impact{
+    margin-top:14px;padding:8px 12px;background:rgba(239,68,68,.07);
+    border-radius:8px;font-size:12px;color:var(--red);
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  .kp-result{
+    display:flex;gap:20px;align-items:stretch;flex-wrap:wrap;
+    padding:28px 32px;
+    background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(139,92,246,.04));
+    border:1px solid rgba(239,68,68,.2);border-radius:18px;
+  }
+  .kp-result .label{
+    font-size:11px;color:var(--red);text-transform:uppercase;
+    letter-spacing:2px;font-family:'JetBrains Mono',monospace;
+    font-weight:700;margin-bottom:6px;
+  }
+  .kp-result .nums{display:flex;gap:30px;flex-wrap:wrap;align-items:center}
+  .kp-result .metric-cmp{text-align:center;padding:0 20px;border-right:1px solid rgba(255,255,255,.07)}
+  .kp-result .metric-cmp:last-child{border:0}
+  .kp-result .val{font-size:28px;font-weight:800;font-family:'JetBrains Mono',monospace}
+  .kp-result .val.bad{color:var(--red)}
+  .kp-result .val.good{color:var(--green)}
+  .kp-result .sub{font-size:11px;color:var(--dim);margin-top:4px}
+  .kp-result .arrow{font-size:28px;color:var(--dim2);align-self:center}
+  .kp-result .conclusion{
+    flex:1;min-width:220px;font-size:14px;color:var(--dim);
+    line-height:1.6;align-self:center;padding-left:20px;
+    border-left:1px solid rgba(255,255,255,.07);
+  }
+
+  /* ===== OPEN-SET ===== */
+  .os-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .os-chart{background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;padding:30px;backdrop-filter:blur(15px)}
+  .os-chart h3{font-size:14px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:20px}
+  .os-chart svg{width:100%;height:auto;display:block}
+
+  .os-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+  .os-met{
+    background:var(--panel);border:1px solid var(--panel-br);border-radius:14px;padding:20px;text-align:center;backdrop-filter:blur(15px);
+  }
+  .os-met .v{font-size:28px;font-weight:800;font-family:'JetBrains Mono',monospace}
+  .os-met .k{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+  .os-met.eer .v{color:var(--cyan)}
+  .os-met.tar .v{color:var(--green)}
+  .os-met.far .v{color:var(--amber)}
+
+  /* ===== INFERENCIA ===== */
+  .live-board{background:var(--panel);border:1px solid var(--panel-br);border-radius:24px;padding:40px;backdrop-filter:blur(20px)}
+  .live-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:start}
+  .fsm{padding:24px;background:var(--bg2);border:1px solid var(--panel-br);border-radius:16px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;color:var(--dim)}
+  .fsm .state{display:inline-block;padding:2px 8px;border-radius:6px;font-weight:700;margin:0 4px}
+  .fsm .state.idle{background:rgba(120,180,255,.1);color:var(--dim)}
+  .fsm .state.acc{background:rgba(245,158,11,.15);color:var(--amber)}
+  .fsm .state.dec{background:rgba(139,92,246,.18);color:var(--violet)}
+  .fsm .state.ok{background:rgba(52,211,153,.18);color:var(--green)}
+  .fsm .arr{color:var(--cyan)}
+
+  .terminal{background:#000;border:1px solid var(--panel-br);border-radius:16px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .terminal .bar{background:#1a1f33;padding:10px 14px;display:flex;gap:6px;align-items:center}
+  .terminal .bar .dot{width:11px;height:11px;border-radius:50%}
+  .terminal .bar .dot:nth-child(1){background:#ff5f57}
+  .terminal .bar .dot:nth-child(2){background:#febc2e}
+  .terminal .bar .dot:nth-child(3){background:#28c840}
+  .terminal .bar .title{color:var(--dim);margin-left:14px;font-size:11px}
+  .terminal .body{padding:16px 18px;color:#a3e635;line-height:1.7}
+  .terminal .body .ts{color:#64748b}
+  .terminal .body .k{color:var(--cyan)}
+  .terminal .body .ok{color:var(--green)}
+  .terminal .body .warn{color:var(--amber)}
+
+  /* ===== ROADMAP ===== */
+  .roadmap{position:relative;padding:30px 0}
+  .road-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;position:relative}
+  .road{
+    background:var(--panel);border:1px solid var(--panel-br);
+    border-radius:14px;padding:16px 12px;text-align:center;backdrop-filter:blur(15px);
+    position:relative;cursor:pointer;transition:.3s;
+  }
+  .road:hover{transform:translateY(-4px);border-color:var(--cyan)}
+  .road.done{border-color:rgba(52,211,153,.4);background:linear-gradient(135deg,rgba(52,211,153,.08),transparent)}
+  .road.curr{border-color:rgba(139,92,246,.5);background:linear-gradient(135deg,rgba(139,92,246,.15),transparent);box-shadow:0 0 30px rgba(139,92,246,.25)}
+  .road.pend{opacity:.5}
+  .road .num{font-size:24px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--violet)}
+  .road.done .num{color:var(--green)}
+  .road.curr .num{color:var(--cyan)}
+  .road h5{font-size:11px;font-weight:700;margin:6px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+  .road p{font-size:10px;color:var(--dim);line-height:1.4}
+  .road .status{position:absolute;top:6px;right:6px;font-size:14px}
+
+  /* ===== RESULTS ===== */
+  .res-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:30px}
+  .res-panel{background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;padding:30px;backdrop-filter:blur(15px)}
+  .res-panel h3{font-size:14px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+  .res-list{list-style:none}
+  .res-list li{padding:12px 0;border-bottom:1px dashed rgba(120,180,255,.08);font-size:14px;color:var(--dim);display:flex;align-items:start;gap:12px}
+  .res-list li:last-child{border:0}
+  .res-list li::before{content:"●";color:var(--green);font-size:10px;flex-shrink:0;margin-top:6px}
+  .res-list.warn li::before{color:var(--amber)}
+  .res-list.future li::before{color:var(--violet)}
+
+  /* FOOTER */
+  footer{padding:50px 60px;text-align:center;border-top:1px solid var(--panel-br);margin-top:60px;color:var(--dim);font-size:13px;font-family:'JetBrains Mono',monospace}
+  footer .grad{background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  @media (max-width:900px){
+    section{padding:60px 24px}
+    .hero h1{font-size:48px}
+    .pipeline-flow,.arch-pipeline,.os-grid,.live-grid,.res-grid,.ds-grid,.cards-3,.vs-table{grid-template-columns:1fr;display:grid}
+    .road-grid{grid-template-columns:repeat(2,1fr)}
+    .arch-detail{grid-template-columns:1fr 1fr}
+    nav .links{display:none}
+    .hero .stats{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="brand">
+    <div class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><circle cx="12" cy="5" r="2"/><path d="M12 7v4l-3 4 3 5"/><path d="M12 11l3 4-2 5"/></svg>
+    </div>
+    <span>GaitID</span>
+  </div>
+  <div class="links">
+    <a href="#hero">Inicio</a>
+    <a href="#problema">Problema</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#siluetas">Siluetas live</a>
+    <a href="#preproc">Siluetas offline</a>
+    <a href="#stack">Stack</a>
+    <a href="#arch">Arquitectura</a>
+    <a href="#dataset">Dataset</a>
+    <a href="#train">Entrenamiento</a>
+    <a href="#cmp">Modelos</a>
+    <a href="#keypoints">Keypoints ✗</a>
+    <a href="#openset">Open-Set</a>
+    <a href="#live">En Vivo</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#resultados">Resultados</a>
+  </div>
+  <div class="status">SYS ONLINE</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="bg"></canvas>
+  <div class="inner">
+    <div class="badges">
+      <div class="pill cyan"><span class="d"></span>Open-Set Gait Recognition</div>
+      <div class="pill violet"><span class="d" style="background:#8b5cf6;box-shadow:0 0 10px #8b5cf6"></span>GaitBase · OpenGait</div>
+      <div class="pill green"><span class="d"></span>Sistema en Producción</div>
+    </div>
+    <h1>Pase de Lista por<br><span class="grad">Marcha Humana</span></h1>
+    <p class="sub">Sistema de visión computacional que identifica personas por su forma de caminar, con verificación open-set para rechazar intrusos no enrolados.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="v" data-count="8.11" data-decimals="2">0</div><div class="k">EER (%)</div></div>
+      <div class="stat"><div class="v" data-count="94.7" data-decimals="1">0</div><div class="k">Rank-1 (%)</div></div>
+      <div class="stat"><div class="v" data-count="86.5" data-decimals="1">0</div><div class="k">TAR @ FAR=0</div></div>
+      <div class="stat"><div class="v" data-count="19" data-decimals="0">0</div><div class="k">Sujetos</div></div>
+    </div>
+  </div>
+  <div class="scroll">⌄ SCROLL ⌄</div>
+</section>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="reveal">
+    <span class="sect-label">01 · El Problema</span>
+    <h2>¿Por qué <span class="grad">marcha</span> y no rostro?</h2>
+    <p class="sect-desc">El reconocimiento facial falla con mascarillas, oclusión, mala iluminación o resolución baja. La marcha es <b style="color:var(--cyan)">no cooperativa</b>, funciona a distancia y persiste con la ropa.</p>
+  </div>
+
+  <div class="cards-3 reveal">
+    <div class="card cyan">
+      <div class="icon">🚶</div>
+      <h3>Identificación a distancia</h3>
+      <p>La forma de caminar es una firma biométrica observable a 5-10 metros sin colaboración del sujeto. Útil en accesos, vigilancia y registro automático de asistencia.</p>
+    </div>
+    <div class="card violet">
+      <div class="icon">🎭</div>
+      <h3>Robusto a oclusión</h3>
+      <p>Mascarilla, gorra, gafas, distancia: ninguna afecta. La marcha integra cadencia, postura y zancada — patrones temporales completos del cuerpo.</p>
+    </div>
+    <div class="card green">
+      <div class="icon">🔓</div>
+      <h3>Open-set real</h3>
+      <p>No solo clasifica entre 19 conocidos: <b style="color:var(--green)">acepta o rechaza</b> con un threshold calibrado. Si nadie en la galería se parece lo suficiente → "no enrolado".</p>
+    </div>
+  </div>
+
+  <div class="vs-table reveal">
+    <div class="vs-col gait">
+      <h3>🚶 Marcha (este sistema)</h3>
+      <ul>
+        <li>Funciona a 5-10 m sin cooperación</li>
+        <li>Robusto a oclusión facial (mascarilla, gorra)</li>
+        <li>Identifica con silueta binaria (privacidad)</li>
+        <li>Patrón temporal difícil de falsificar</li>
+        <li>No requiere alta resolución</li>
+      </ul>
+    </div>
+    <div class="vs-col face">
+      <h3>👤 Reconocimiento facial</h3>
+      <ul>
+        <li>Necesita rostro frontal y cooperación</li>
+        <li>Falla con mascarillas o mala luz</li>
+        <li>Conserva rasgos personales (PII)</li>
+        <li>Vulnerable a fotos / deepfake</li>
+        <li>Necesita resolución alta del rostro</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="reveal">
+    <span class="sect-label">02 · Sección clave</span>
+    <h2>Pipeline <span class="grad">end-to-end</span> en vivo</h2>
+    <p class="sect-desc">De la cámara a la identidad en menos de 4 segundos. Cada bloque es un modelo o módulo independiente — clic en cada paso para detalles técnicos.</p>
+  </div>
+
+  <div class="pipeline-board reveal">
+    <div class="pipeline-flow">
+      <div class="flow-arrows"></div>
+      <div class="flow-particle" style="animation-delay:0s"></div>
+      <div class="flow-particle" style="animation-delay:1.3s"></div>
+      <div class="flow-particle" style="animation-delay:2.6s"></div>
+
+      <div class="pstep" data-detail="cam">
+        <span class="num">1</span><span class="ico">📹</span>
+        <h4>Cámara</h4>
+        <div class="tech">C920 · 15 fps</div>
+        <div class="io"><b>out:</b> RGB<br>1280×720</div>
+      </div>
+      <div class="pstep" data-detail="yolo">
+        <span class="num">2</span><span class="ico">🎯</span>
+        <h4>YOLOv11n</h4>
+        <div class="tech">Ultralytics</div>
+        <div class="io"><b>out:</b> bbox<br>persona</div>
+      </div>
+      <div class="pstep" data-detail="rvm">
+        <span class="num">3</span><span class="ico">✂️</span>
+        <h4>RVM</h4>
+        <div class="tech">MobileNetV3</div>
+        <div class="io"><b>out:</b> silueta<br>64 × 44</div>
+      </div>
+      <div class="pstep" data-detail="gait">
+        <span class="num">4</span><span class="ico">🧠</span>
+        <h4>GaitBase</h4>
+        <div class="tech">ResNet-9</div>
+        <div class="io"><b>out:</b> embedding<br>4096-D</div>
+      </div>
+      <div class="pstep" data-detail="cos">
+        <span class="num">5</span><span class="ico">📐</span>
+        <h4>Cosine</h4>
+        <div class="tech">vs gallery</div>
+        <div class="io"><b>out:</b> sim<br>max sobre K</div>
+      </div>
+      <div class="pstep" data-detail="thr">
+        <span class="num">6</span><span class="ico">⚖️</span>
+        <h4>Threshold</h4>
+        <div class="tech">τ = 0.9847</div>
+        <div class="io"><b>out:</b> ID<br>o "unknown"</div>
+      </div>
+      <div class="pstep" data-detail="att">
+        <span class="num">7</span><span class="ico">✅</span>
+        <h4>Attendance</h4>
+        <div class="tech">FSM · N=2</div>
+        <div class="io"><b>out:</b> CSV<br>ts + id + sim</div>
+      </div>
+    </div>
+
+    <div class="pipeline-detail" id="detail">
+      <span class="line"><span class="k">step:</span> <span class="v">cámara</span></span>
+      <span class="line"><span class="k">device:</span> Logitech C920 USB 2.0</span>
+      <span class="line"><span class="k">resolución:</span> 1280×720 @ 15 fps</span>
+      <span class="line"><span class="k">framework:</span> OpenCV VideoCapture</span>
+      <span class="line"><span class="k">salida:</span> tensor RGB uint8</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRACCIÓN DE SILUETAS -->
+<section id="siluetas">
+  <div class="reveal">
+    <span class="sect-label">02b · Visión por dentro</span>
+    <h2>De RGB a <span class="grad">silueta binaria</span></h2>
+    <p class="sect-desc">El corazón del pipeline: convertir un frame de cámara en la silueta 64×44 que come GaitBase. Cuatro pasos, dos redes neuronales, una transformación visual completa.</p>
+  </div>
+
+  <div class="sil-board reveal">
+    <div class="sil-flow">
+
+      <!-- PASO 1 — Frame RGB -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">1</div>
+          <h4>Frame RGB<small>captura cruda</small></h4>
+        </div>
+        <div class="sil-canvas cv-rgb">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <!-- escena de fondo -->
+            <rect x="0" y="0" width="100" height="105" fill="url(#bgWall)"/>
+            <defs>
+              <linearGradient id="bgWall" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2a3a5e"/>
+                <stop offset="100%" stop-color="#3d4d75"/>
+              </linearGradient>
+            </defs>
+            <!-- suelo -->
+            <rect x="0" y="105" width="100" height="25" fill="#22304d"/>
+            <line x1="0" y1="105" x2="100" y2="105" stroke="#5a6f9c" stroke-width=".5" opacity=".6"/>
+            <!-- líneas suelo perspectiva -->
+            <line x1="20" y1="130" x2="45" y2="105" stroke="#5a6f9c" stroke-width=".3" opacity=".4"/>
+            <line x1="80" y1="130" x2="55" y2="105" stroke="#5a6f9c" stroke-width=".3" opacity=".4"/>
+            <!-- sombra -->
+            <ellipse cx="50" cy="108" rx="18" ry="2.5" fill="#000" opacity=".4"/>
+            <!-- persona -->
+            <circle cx="52" cy="22" r="7" fill="#e0b48a"/>
+            <path d="M45 19 Q45 13 52 13 Q60 13 60 20 L60 23 Q58 17 52 17 Q47 17 45 22 Z" fill="#2b1d12"/>
+            <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z" fill="#2563eb"/>
+            <rect x="50" y="29" width="4" height="3" fill="#e0b48a"/>
+            <path d="M44 32 L38 50 L36 62" stroke="#1e40af" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <circle cx="36" cy="63" r="2.5" fill="#e0b48a"/>
+            <path d="M60 32 L66 48 L64 58" stroke="#2563eb" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <circle cx="64" cy="59" r="2.5" fill="#e0b48a"/>
+            <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z" fill="#1a1a2e"/>
+            <path d="M47 75 L42 95 L40 105" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <path d="M56 75 L62 92 L66 104" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <ellipse cx="40" cy="106" rx="4.5" ry="2" fill="#000"/>
+            <ellipse cx="66" cy="105" rx="4.5" ry="2" fill="#000"/>
+          </svg>
+          <span class="sil-tag-dim">1280×720</span>
+        </div>
+        <p>Captura directa de la cámara Logitech C920 a 15 fps. La escena incluye fondo, iluminación variable y la persona caminando lateralmente.</p>
+        <div class="sil-meta">
+          <span class="k">device:</span> <span class="v">Logitech C920</span><br>
+          <span class="k">resolution:</span> <span class="v">1280×720</span><br>
+          <span class="k">format:</span> <span class="v">BGR uint8</span>
+        </div>
+      </div>
+
+      <!-- PASO 2 — YOLO Detección -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">2</div>
+          <h4>Detección<small>YOLOv11n · bbox</small></h4>
+        </div>
+        <div class="sil-canvas cv-det">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <rect x="0" y="0" width="100" height="105" fill="#2d3a5c" opacity=".7"/>
+            <rect x="0" y="105" width="100" height="25" fill="#22304d"/>
+            <line x1="0" y1="105" x2="100" y2="105" stroke="#5a6f9c" stroke-width=".5" opacity=".6"/>
+            <ellipse cx="50" cy="108" rx="18" ry="2.5" fill="#000" opacity=".4"/>
+            <!-- persona -->
+            <circle cx="52" cy="22" r="7" fill="#e0b48a"/>
+            <path d="M45 19 Q45 13 52 13 Q60 13 60 20 L60 23 Q58 17 52 17 Q47 17 45 22 Z" fill="#2b1d12"/>
+            <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z" fill="#2563eb"/>
+            <rect x="50" y="29" width="4" height="3" fill="#e0b48a"/>
+            <path d="M44 32 L38 50 L36 62" stroke="#1e40af" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <circle cx="36" cy="63" r="2.5" fill="#e0b48a"/>
+            <path d="M60 32 L66 48 L64 58" stroke="#2563eb" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <circle cx="64" cy="59" r="2.5" fill="#e0b48a"/>
+            <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z" fill="#1a1a2e"/>
+            <path d="M47 75 L42 95 L40 105" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <path d="M56 75 L62 92 L66 104" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <ellipse cx="40" cy="106" rx="4.5" ry="2" fill="#000"/>
+            <ellipse cx="66" cy="105" rx="4.5" ry="2" fill="#000"/>
+            <!-- bbox HUD -->
+            <rect x="30" y="12" width="42" height="98" fill="none" stroke="#f59e0b" stroke-width="1.4" stroke-dasharray="4,2"/>
+            <path d="M30 19 L30 12 L37 12" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <path d="M72 12 L72 19" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <path d="M65 12 L72 12" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <path d="M30 103 L30 110 L37 110" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <path d="M72 110 L72 103" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <path d="M65 110 L72 110" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <!-- center cross -->
+            <line x1="51" y1="59" x2="51" y2="63" stroke="#f59e0b" stroke-width=".8"/>
+            <line x1="49" y1="61" x2="53" y2="61" stroke="#f59e0b" stroke-width=".8"/>
+          </svg>
+          <span class="sil-tag-conf">person 0.94</span>
+          <span class="sil-tag-dim">bbox xyxy</span>
+        </div>
+        <p>YOLOv11n detecta a la persona en el frame y devuelve un bbox con score de confianza. Solo se procesa la bbox de mayor área — una persona a la vez.</p>
+        <div class="sil-meta">
+          <span class="k">model:</span> <span class="v">yolo11n.pt</span><br>
+          <span class="k">class:</span> <span class="v">0 (person)</span><br>
+          <span class="k">conf_thr:</span> <span class="v">≥ 0.5</span>
+        </div>
+      </div>
+
+      <!-- PASO 3 — RVM Matting -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">3</div>
+          <h4>Matting<small>RVM · alpha continuo</small></h4>
+        </div>
+        <div class="sil-canvas cv-mat">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <radialGradient id="alphaG" cx="50%" cy="48%" r="55%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+                <stop offset="65%" stop-color="#d8dff0" stop-opacity=".9"/>
+                <stop offset="100%" stop-color="#a8b1cc" stop-opacity=".15"/>
+              </radialGradient>
+              <filter id="blur2" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="1"/>
+              </filter>
+            </defs>
+            <g filter="url(#blur2)" fill="url(#alphaG)">
+              <circle cx="52" cy="22" r="7.5"/>
+              <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              <path d="M44 32 L38 50 L36 62 L33 64 L36 64 L40 50 L46 35 Z"/>
+              <path d="M60 32 L66 48 L64 58 L61 60 L64 60 L68 50 L62 33 Z"/>
+              <circle cx="36" cy="63" r="3"/>
+              <circle cx="64" cy="59" r="3"/>
+              <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z"/>
+              <path d="M47 75 L42 95 L40 105 L36 107 L44 107 L46 92 L51 76 Z"/>
+              <path d="M56 75 L62 92 L66 104 L70 105 L62 106 L58 90 L53 76 Z"/>
+              <ellipse cx="40" cy="106" rx="4.8" ry="2.2"/>
+              <ellipse cx="66" cy="105" rx="4.8" ry="2.2"/>
+            </g>
+            <!-- anotaciones alpha -->
+            <text x="8" y="38" fill="#f472b6" font-size="6" font-family="monospace" opacity=".9">α=0.98</text>
+            <line x1="22" y1="36" x2="42" y2="35" stroke="#f472b6" stroke-width=".5" opacity=".7" stroke-dasharray="1,1"/>
+            <text x="74" y="78" fill="#f472b6" font-size="6" font-family="monospace" opacity=".9">α=0.04</text>
+            <line x1="73" y1="76" x2="66" y2="76" stroke="#f472b6" stroke-width=".5" opacity=".7" stroke-dasharray="1,1"/>
+            <text x="14" y="100" fill="#f472b6" font-size="6" font-family="monospace" opacity=".9">α=0.62</text>
+            <line x1="27" y1="98" x2="40" y2="100" stroke="#f472b6" stroke-width=".5" opacity=".7" stroke-dasharray="1,1"/>
+          </svg>
+          <span class="sil-tag-alpha">α ∈ [0,1]</span>
+          <span class="sil-tag-dim">MobileNetV3</span>
+        </div>
+        <p>Robust Video Matting genera un mapa alpha continuo: 1.0 donde hay persona, 0.0 donde es fondo, valores intermedios en los bordes. Mantiene estado recurrente entre frames.</p>
+        <div class="sil-meta">
+          <span class="k">model:</span> <span class="v">RVM MobileNetV3</span><br>
+          <span class="k">state:</span> <span class="v">r1, r2, r3, r4</span><br>
+          <span class="k">output:</span> <span class="v">fgr + pha</span>
+        </div>
+      </div>
+
+      <!-- PASO 4 — Silueta Binaria -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">4</div>
+          <h4>Silueta 64×44<small>binaria · GaitBase ready</small></h4>
+        </div>
+        <div class="sil-canvas cv-bin">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <g fill="#ffffff">
+              <circle cx="52" cy="22" r="7"/>
+              <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              <path d="M44 32 L38 50 L36 62 L40 63 L44 50 L46 36 Z"/>
+              <path d="M60 32 L66 48 L64 58 L60 59 L64 50 L62 35 Z"/>
+              <circle cx="36" cy="63" r="2.5"/>
+              <circle cx="64" cy="59" r="2.5"/>
+              <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z"/>
+              <path d="M47 75 L42 95 L40 105 L44 106 L48 92 L51 76 Z"/>
+              <path d="M56 75 L62 92 L66 104 L62 106 L58 90 L53 76 Z"/>
+              <ellipse cx="40" cy="106" rx="4.5" ry="2"/>
+              <ellipse cx="66" cy="105" rx="4.5" ry="2"/>
+            </g>
+          </svg>
+          <span class="sil-tag-dim">64 × 44 · bool</span>
+        </div>
+        <p>Binarización (α &gt; 0.5), crop al bounding box, centrado y resize a la resolución estándar de OpenGait. Listo para entrar al backbone ResNet-9.</p>
+        <div class="sil-meta">
+          <span class="k">threshold:</span> <span class="v">α &gt; 0.5</span><br>
+          <span class="k">resize:</span> <span class="v">cv2.INTER_AREA</span><br>
+          <span class="k">shape:</span> <span class="v">[T, 64, 44]</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sil-formula">
+      <span class="label">Pipeline matemático</span>
+      <div class="math">
+        <span class="var">S</span><sub>t</sub> <span class="op">=</span> resize(crop(<span class="var">α</span><sub>t</sub> <span class="op">&gt;</span> 0.5, bbox<sub>t</sub>), 64×44)
+      </div>
+      <div class="note">Por cada frame <code class="mono" style="color:var(--cyan)">t</code> se genera una silueta. Una ventana de 60 frames (4 s a 15 fps) forma el clip que va al embedder.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="reveal">
+    <span class="sect-label">03 · Stack Tecnológico</span>
+    <h2>Herramientas en <span class="grad">producción</span></h2>
+    <p class="sect-desc">Python ecosystem completo. Sin servicios cloud — todo corre local en GTX 1650 (4 GB VRAM).</p>
+  </div>
+
+  <div class="stack-grid reveal">
+    <div class="tech py"><div class="logo">🐍</div><h4>Python 3.10</h4><p>Lenguaje base, control del pipeline</p></div>
+    <div class="tech tor"><div class="logo">🔥</div><h4>PyTorch 2.x</h4><p>Inferencia de modelos, autograd, CUDA backend</p></div>
+    <div class="tech cuda"><div class="logo">⚡</div><h4>CUDA 12.1</h4><p>Aceleración GPU para YOLO, RVM y GaitBase</p></div>
+    <div class="tech og"><div class="logo">🧬</div><h4>OpenGait</h4><p>Framework SOTA de gait recognition (modelos + utils)</p></div>
+    <div class="tech yolo"><div class="logo">🎯</div><h4>YOLOv11n</h4><p>Detector ligero — bbox persona en tiempo real</p></div>
+    <div class="tech rvm"><div class="logo">✂️</div><h4>RVM</h4><p>Robust Video Matting — silueta sin chroma key</p></div>
+    <div class="tech cv"><div class="logo">📷</div><h4>OpenCV</h4><p>Captura, preprocesamiento, visualización</p></div>
+    <div class="tech"><div class="logo">📊</div><h4>NumPy</h4><p>Algebra de embeddings, normalización L2</p></div>
+  </div>
+</section>
+
+<!-- ARQUITECTURA -->
+<section id="arch">
+  <div class="reveal">
+    <span class="sect-label">04 · Arquitectura del Modelo</span>
+    <h2>GaitBase: silueta → <span class="grad">embedding 4096-D</span></h2>
+    <p class="sect-desc">Backbone temporal + pooling jerárquico. El secreto está en el <b style="color:var(--cyan)">Horizontal Pyramid Pooling</b> — divide el cuerpo en 16 franjas horizontales y embebe cada una por separado.</p>
+  </div>
+
+  <div class="arch-board reveal">
+    <div class="arch-pipeline">
+      <div class="tensor">
+        <div class="shape">[T, 64, 44]</div>
+        <div class="lbl">Silueta binaria</div>
+      </div>
+      <div class="arch-arrow">→<span class="op">ResNet-9</span></div>
+      <div class="tensor">
+        <div class="shape">[T, 512, 8, 6]</div>
+        <div class="lbl">Feature maps</div>
+      </div>
+      <div class="arch-arrow">→<span class="op">Set Pool</span></div>
+      <div class="tensor">
+        <div class="shape">[512, 8, 6]</div>
+        <div class="lbl">Temporal pooled</div>
+      </div>
+      <div class="arch-arrow">→<span class="op">HPP + FC</span></div>
+      <div class="tensor" style="border-color:var(--violet);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(34,211,238,.05))">
+        <div class="shape" style="color:var(--violet)">4096-D</div>
+        <div class="lbl">Embedding L2</div>
+      </div>
+    </div>
+
+    <div class="arch-detail">
+      <div class="arch-mod">
+        <h5>1. ResNet-9 Backbone</h5>
+        <p>9 capas convolucionales, in_channel=1 (silueta binaria), strides [1,2,2,1] sin maxpool. Aprende texturas espaciales del cuerpo en cada frame.</p>
+      </div>
+      <div class="arch-mod">
+        <h5>2. Set Pooling Temporal</h5>
+        <p><code class="mono">torch.max</code> sobre el eje temporal T. Convierte una secuencia de longitud variable en una sola feature-map fija — invariante a la duración del clip.</p>
+      </div>
+      <div class="arch-mod">
+        <h5>3. Horizontal Pyramid Pooling</h5>
+        <p>Divide el feature-map en <b style="color:var(--cyan)">16 franjas horizontales</b> (cabeza → pies). Cada franja se pooea independientemente: captura estructura corporal local.</p>
+      </div>
+      <div class="arch-mod">
+        <h5>4. SeparateFCs (16×)</h5>
+        <p>16 capas FC independientes (una por franja) mapean cada franja 512 → 256. Concatenadas: <b style="color:var(--violet)">256 × 16 = 4096-D</b>, L2-normalizado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRACCIÓN OFFLINE -->
+<section id="preproc">
+  <div class="reveal">
+    <span class="sect-label">04b · Preparación del Dataset</span>
+    <h2>Siluetas <span class="grad">offline</span>: de video a secuencia</h2>
+    <p class="sect-desc">Antes del entrenamiento, cada video grabado de los 19 sujetos pasa por el mismo algoritmo YOLO + RVM — pero en batch, sin presión de tiempo. El resultado: arrays <code class="mono" style="color:var(--violet)">[T, 64, 44]</code> listos para GaitBase.</p>
+  </div>
+
+  <div class="sil-board offline reveal">
+    <div class="sil-flow five">
+
+      <!-- PASO 1 — Video .mp4 -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">1</div>
+          <h4>Video grabado<small>sesión s1 / s2</small></h4>
+        </div>
+        <div class="sil-canvas cv-mp4">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <!-- fondo oscuro con degradado violeta -->
+            <rect x="0" y="0" width="100" height="130" fill="none"/>
+            <!-- icono de archivo de video estilizado -->
+            <rect x="25" y="15" width="50" height="65" rx="6" fill="rgba(139,92,246,.15)" stroke="rgba(139,92,246,.5)" stroke-width="1.5"/>
+            <!-- esquina doblada del archivo -->
+            <path d="M58 15 L75 32 L75 15 Z" fill="rgba(139,92,246,.3)"/>
+            <path d="M58 15 L58 32 L75 32" fill="none" stroke="rgba(139,92,246,.5)" stroke-width="1.5"/>
+            <!-- icono play dentro del archivo -->
+            <circle cx="50" cy="54" r="12" fill="rgba(139,92,246,.2)" stroke="rgba(139,92,246,.5)" stroke-width="1.2"/>
+            <path d="M46 49 L46 59 L57 54 Z" fill="#8b5cf6"/>
+            <!-- texto .mp4 -->
+            <text x="50" y="96" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="monospace" font-weight="700">.mp4</text>
+            <!-- líneas de "fotogramas" bajo el archivo -->
+            <rect x="15" y="106" width="14" height="10" rx="2" fill="rgba(139,92,246,.2)" stroke="rgba(139,92,246,.4)" stroke-width=".8"/>
+            <rect x="32" y="106" width="14" height="10" rx="2" fill="rgba(139,92,246,.25)" stroke="rgba(139,92,246,.4)" stroke-width=".8"/>
+            <rect x="49" y="106" width="14" height="10" rx="2" fill="rgba(139,92,246,.3)" stroke="rgba(139,92,246,.4)" stroke-width=".8"/>
+            <rect x="66" y="106" width="14" height="10" rx="2" fill="rgba(139,92,246,.2)" stroke="rgba(139,92,246,.4)" stroke-width=".8"/>
+            <text x="22" y="114" text-anchor="middle" fill="#8b5cf6" font-size="5" font-family="monospace">···</text>
+            <text x="39" y="114" text-anchor="middle" fill="#8b5cf6" font-size="5" font-family="monospace">···</text>
+            <text x="56" y="114" text-anchor="middle" fill="#8b5cf6" font-size="5" font-family="monospace">···</text>
+            <text x="73" y="114" text-anchor="middle" fill="#8b5cf6" font-size="5" font-family="monospace">···</text>
+          </svg>
+          <span class="sil-tag-violet">BGR · 30 fps</span>
+          <span class="sil-tag-dim">~5 min / sesión</span>
+        </div>
+        <p>Videos pre-grabados en la cámara C920. Dos sesiones por sujeto (ropa distinta), dos ritmos (normal / rápido), vista lateral 90°.</p>
+        <div class="sil-meta">
+          <span class="k">sujetos:</span> <span class="v">19</span><br>
+          <span class="k">sesiones:</span> <span class="v">s1, s2</span><br>
+          <span class="k">modos:</span> <span class="v">normal, rápido</span>
+        </div>
+      </div>
+
+      <!-- PASO 2 — Frame extraction -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">2</div>
+          <h4>Frame extraction<small>OpenCV · batch</small></h4>
+        </div>
+        <div class="sil-canvas cv-frames">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <!-- stacked frames representando secuencia -->
+            <!-- frame 3 (más atrás) -->
+            <rect x="22" y="28" width="52" height="68" rx="4" fill="rgba(34,211,238,.06)" stroke="rgba(34,211,238,.2)" stroke-width=".8"/>
+            <!-- frame 2 -->
+            <rect x="19" y="24" width="52" height="68" rx="4" fill="rgba(34,211,238,.08)" stroke="rgba(34,211,238,.25)" stroke-width=".8"/>
+            <!-- frame 1 (frente) -->
+            <rect x="16" y="20" width="52" height="68" rx="4" fill="rgba(34,211,238,.12)" stroke="rgba(34,211,238,.4)" stroke-width="1.2"/>
+            <!-- persona miniatura en el frame frontal -->
+            <circle cx="42" cy="34" r="4" fill="#e0b48a"/>
+            <path d="M39 39 L45 39 L46 52 L44 55 L40 55 L38 52 Z" fill="#2563eb"/>
+            <path d="M40 55 L38 62 L36 72" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <path d="M44 55 L46 62 L48 72" stroke="#1a1a2e" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <!-- número de frame -->
+            <rect x="48" y="74" width="16" height="10" rx="2" fill="rgba(34,211,238,.15)"/>
+            <text x="56" y="82" text-anchor="middle" fill="#22d3ee" font-size="6" font-family="monospace">#0042</text>
+            <!-- flecha de extracción -->
+            <path d="M50 105 L50 98" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="30" y="106" width="40" height="16" rx="4" fill="rgba(34,211,238,.1)" stroke="rgba(34,211,238,.35)" stroke-width=".8"/>
+            <text x="50" y="118" text-anchor="middle" fill="#22d3ee" font-size="7" font-family="monospace">cap.read()</text>
+          </svg>
+          <span class="sil-tag-dim">frame by frame</span>
+        </div>
+        <p>OpenCV lee el video frame a frame con <code class="mono" style="font-size:11px;color:var(--cyan)">VideoCapture.read()</code>. Sin restricción de tiempo — procesamiento offline completo.</p>
+        <div class="sil-meta">
+          <span class="k">tool:</span> <span class="v">cv2.VideoCapture</span><br>
+          <span class="k">stride:</span> <span class="v">cada frame</span><br>
+          <span class="k">format:</span> <span class="v">BGR uint8</span>
+        </div>
+      </div>
+
+      <!-- PASO 3 — YOLO + RVM -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">3</div>
+          <h4>YOLO + RVM<small>misma red, sin presión</small></h4>
+        </div>
+        <div class="sil-canvas cv-mat">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <radialGradient id="alphaG2" cx="50%" cy="48%" r="55%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+                <stop offset="65%" stop-color="#d8dff0" stop-opacity=".85"/>
+                <stop offset="100%" stop-color="#a8b1cc" stop-opacity=".1"/>
+              </radialGradient>
+              <filter id="blur3" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="1"/>
+              </filter>
+            </defs>
+            <g filter="url(#blur3)" fill="url(#alphaG2)">
+              <circle cx="52" cy="22" r="7.5"/>
+              <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              <path d="M44 32 L38 50 L36 62 L33 64 L36 64 L40 50 L46 35 Z"/>
+              <path d="M60 32 L66 48 L64 58 L61 60 L64 60 L68 50 L62 33 Z"/>
+              <circle cx="36" cy="63" r="3"/>
+              <circle cx="64" cy="59" r="3"/>
+              <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z"/>
+              <path d="M47 75 L42 95 L40 105 L36 107 L44 107 L46 92 L51 76 Z"/>
+              <path d="M56 75 L62 92 L66 104 L70 105 L62 106 L58 90 L53 76 Z"/>
+            </g>
+            <!-- bbox sutil encima -->
+            <rect x="30" y="12" width="42" height="98" fill="none" stroke="#f59e0b" stroke-width=".8" stroke-dasharray="3,2" opacity=".5"/>
+          </svg>
+          <span class="sil-tag-alpha">sin límite de tiempo</span>
+          <span class="sil-tag-dim">calidad máxima</span>
+        </div>
+        <p>El mismo par de redes que en vivo, pero sin el constraint de 15 fps. Se puede procesar a máxima calidad y revisar manualmente frames corruptos.</p>
+        <div class="sil-meta">
+          <span class="k">yolo:</span> <span class="v">yolo11n.pt</span><br>
+          <span class="k">rvm:</span> <span class="v">MobileNetV3</span><br>
+          <span class="k">batch:</span> <span class="v">1 frame/paso</span>
+        </div>
+      </div>
+
+      <!-- PASO 4 — Silueta guardada -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">4</div>
+          <h4>Silueta a disco<small>.png por frame</small></h4>
+        </div>
+        <div class="sil-canvas cv-disk">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <!-- silueta blanca pequeña arriba -->
+            <g fill="#ffffff" transform="scale(0.55) translate(38,5)">
+              <circle cx="52" cy="22" r="7"/>
+              <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              <path d="M44 32 L38 50 L36 62 L40 63 L44 50 L46 36 Z"/>
+              <path d="M60 32 L66 48 L64 58 L60 59 L64 50 L62 35 Z"/>
+              <circle cx="36" cy="63" r="2.5"/>
+              <circle cx="64" cy="59" r="2.5"/>
+              <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z"/>
+              <path d="M47 75 L42 95 L40 105 L44 106 L48 92 L51 76 Z"/>
+              <path d="M56 75 L62 92 L66 104 L62 106 L58 90 L53 76 Z"/>
+            </g>
+            <!-- flecha abajo -->
+            <line x1="50" y1="75" x2="50" y2="85" stroke="#34d399" stroke-width="1.5"/>
+            <path d="M46 83 L50 90 L54 83" fill="none" stroke="#34d399" stroke-width="1.5"/>
+            <!-- estructura de carpetas -->
+            <rect x="10" y="92" width="80" height="34" rx="4" fill="rgba(52,211,153,.07)" stroke="rgba(52,211,153,.3)" stroke-width=".8"/>
+            <text x="50" y="104" text-anchor="middle" fill="#34d399" font-size="6" font-family="monospace">sujeto/s1/normal/</text>
+            <text x="50" y="113" text-anchor="middle" fill="#34d399" font-size="6" font-family="monospace">0000.png  0001.png ...</text>
+            <text x="50" y="122" text-anchor="middle" fill="#5b6486" font-size="5.5" font-family="monospace">64×44 px · 1 canal</text>
+          </svg>
+          <span class="sil-tag-green">guardado en disco</span>
+          <span class="sil-tag-dim">64×44 · uint8</span>
+        </div>
+        <p>Cada silueta binaria se guarda como imagen <code class="mono" style="font-size:11px;color:var(--green)">0000.png</code> en la ruta <code class="mono" style="font-size:11px;color:var(--green)">sujeto/sesion/modo/</code>. Estructura compatible con OpenGait.</p>
+        <div class="sil-meta">
+          <span class="k">formato:</span> <span class="v">PNG 64×44 L</span><br>
+          <span class="k">ruta:</span> <span class="v">suj/sN/tipo/</span><br>
+          <span class="k">total:</span> <span class="v">~miles frames</span>
+        </div>
+      </div>
+
+      <!-- PASO 5 — Empaquetado .pkl -->
+      <div class="sil-card">
+        <div class="sil-head">
+          <div class="sil-num">5</div>
+          <h4>Empaquetado<small>array [T, 64, 44]</small></h4>
+        </div>
+        <div class="sil-canvas cv-pkl">
+          <svg viewBox="0 0 100 130" preserveAspectRatio="xMidYMid meet">
+            <!-- stack de siluetas representando secuencia temporal -->
+            <g opacity=".3">
+              <rect x="30" y="18" width="34" height="44" rx="2" fill="none" stroke="#8b5cf6" stroke-width=".7"/>
+              <g fill="white" transform="scale(0.33) translate(65,45)">
+                <circle cx="52" cy="22" r="7"/><path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              </g>
+            </g>
+            <g opacity=".5" transform="translate(-4,4)">
+              <rect x="30" y="18" width="34" height="44" rx="2" fill="none" stroke="#8b5cf6" stroke-width=".7"/>
+              <g fill="white" transform="scale(0.33) translate(65,45)">
+                <circle cx="52" cy="22" r="7"/><path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              </g>
+            </g>
+            <g opacity=".75" transform="translate(-8,8)">
+              <rect x="30" y="18" width="34" height="44" rx="2" fill="none" stroke="#8b5cf6" stroke-width=".9"/>
+            </g>
+            <!-- frame principal -->
+            <rect x="14" y="22" width="34" height="44" rx="2" fill="rgba(139,92,246,.12)" stroke="rgba(139,92,246,.6)" stroke-width="1.2"/>
+            <g fill="white" transform="scale(0.33) translate(38,62)">
+              <circle cx="52" cy="22" r="7"/>
+              <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+              <path d="M47 75 L42 95 L40 105 L44 106 L48 92 L51 76 Z"/>
+              <path d="M56 75 L62 92 L66 104 L62 106 L58 90 L53 76 Z"/>
+            </g>
+            <!-- etiqueta T frames -->
+            <text x="56" y="44" fill="#8b5cf6" font-size="7" font-family="monospace">T frames</text>
+            <line x1="50" y1="48" x2="55" y2="46" stroke="#8b5cf6" stroke-width=".8" opacity=".7"/>
+            <!-- flecha abajo -->
+            <line x1="50" y1="70" x2="50" y2="82" stroke="#8b5cf6" stroke-width="1.5"/>
+            <path d="M46 80 L50 87 L54 80" fill="none" stroke="#8b5cf6" stroke-width="1.5"/>
+            <!-- array shape -->
+            <rect x="8" y="89" width="84" height="34" rx="4" fill="rgba(139,92,246,.08)" stroke="rgba(139,92,246,.4)" stroke-width=".8"/>
+            <text x="50" y="102" text-anchor="middle" fill="#8b5cf6" font-size="7" font-family="monospace" font-weight="700">np.array</text>
+            <text x="50" y="112" text-anchor="middle" fill="#8b5cf6" font-size="7" font-family="monospace">[T, 64, 44]</text>
+            <text x="50" y="120" text-anchor="middle" fill="#5b6486" font-size="5.5" font-family="monospace">float32 → fine-tune</text>
+          </svg>
+          <span class="sil-tag-violet">[T, 64, 44]</span>
+          <span class="sil-tag-dim">GaitBase input</span>
+        </div>
+        <p>Los frames de una caminata completa se apilan en un array numpy <code class="mono" style="font-size:11px;color:var(--violet)">[T, 64, 44]</code>. Este clip es la unidad que entra al fine-tuning de GaitBase.</p>
+        <div class="sil-meta">
+          <span class="k">shape:</span> <span class="v">[T, 64, 44]</span><br>
+          <span class="k">dtype:</span> <span class="v">float32 / bool</span><br>
+          <span class="k">uso:</span> <span class="v">train + gallery</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sil-formula">
+      <span class="label">Diferencia clave vs inferencia</span>
+      <div class="math">
+        <span class="var" style="color:var(--amber)">offline</span>:
+        video → [<span class="var">T</span> × silhouette] →
+        <span class="var" style="color:var(--violet)">.npy</span> → fine-tune
+      </div>
+      <div class="note">Sin restricción de FPS ni latencia. Se pueden corregir, filtrar y auditar las siluetas antes de usarlas. El mismo algoritmo, en batch y con calidad máxima.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DATASET -->
+<section id="dataset">
+  <div class="reveal">
+    <span class="sect-label">05 · Dataset</span>
+    <h2>De <span class="grad">Gait3D</span> a 19 sujetos reales</h2>
+    <p class="sect-desc">Captura propia: 19 sujetos, 2 sesiones (s1, s2) con ropa distinta, 2 modos (normal y rápido), vista lateral 90°. Pretraining en Gait3D (4000 sujetos), fine-tuning con nuestros datos.</p>
+  </div>
+
+  <div class="ds-grid reveal">
+    <div class="ds-stats">
+      <div class="ds-stat">
+        <div class="v">19</div>
+        <div class="k">Sujetos enrolados</div>
+        <div class="ctx">Galería de producción</div>
+      </div>
+      <div class="ds-stat">
+        <div class="v">2</div>
+        <div class="k">Sesiones</div>
+        <div class="ctx">s1 + s2 · ropa diferente</div>
+      </div>
+      <div class="ds-stat">
+        <div class="v">90°</div>
+        <div class="k">Vista lateral</div>
+        <div class="ctx">Caminata perpendicular cámara</div>
+      </div>
+      <div class="ds-stat">
+        <div class="v">K≤4</div>
+        <div class="k">Templates / sujeto</div>
+        <div class="ctx">Multi-template, max-sim</div>
+      </div>
+      <div class="ds-stat">
+        <div class="v">4000+</div>
+        <div class="k">Pretrain</div>
+        <div class="ctx">Gait3D · 120k iters</div>
+      </div>
+      <div class="ds-stat">
+        <div class="v">1200</div>
+        <div class="k">Fine-tune iter</div>
+        <div class="ctx">Mejor checkpoint</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h3>Timeline de Entrenamiento</h3>
+      <div class="tline">
+        <div class="tline-item done">
+          <h5>Baseline pretrained</h5>
+          <p>GaitBase_Gait3D_120000.pt — sin tocar</p>
+          <div class="met">EER ~14% en nuestros sujetos</div>
+        </div>
+        <div class="tline-item done">
+          <h5>Fine-tune sesión 1</h5>
+          <p>Solo s1 — sobreajusta a ropa única</p>
+          <div class="met">EER 10% (mismo outfit)</div>
+        </div>
+        <div class="tline-item done">
+          <h5>Fine-tune multi-sesión</h5>
+          <p>s1 + s2 (ropa diferente)</p>
+          <div class="met">EER 8.11% @ iter 1200 ✓</div>
+        </div>
+        <div class="tline-item done">
+          <h5>Calibración τ open-set</h5>
+          <p>Curva FAR/TAR sobre split val</p>
+          <div class="met">τ = 0.9847 (FAR = 0%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTRENAMIENTO -->
+<section id="train">
+  <div class="reveal">
+    <span class="sect-label">06 · Entrenamiento</span>
+    <h2>De pretrained Gait3D a <span class="grad">checkpoint iter 1200</span></h2>
+    <p class="sect-desc">Fine-tuning multi-sesión sobre siluetas binarias 64×44. Inicialización desde GaitBase preentrenado en Gait3D (120k iter), <b style="color:var(--cyan)">BNNecks reinicializados</b> para los 13 sujetos de train, supervisión combinada Triplet + Cross-Entropy.</p>
+  </div>
+
+  <!-- BIG STATS -->
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:30px">
+    <div class="ds-stat"><div class="v" style="color:var(--cyan)">1200</div><div class="k">Best iter</div><div class="ctx">early-stop por margin NR</div></div>
+    <div class="ds-stat"><div class="v" style="color:var(--violet)">2h 57m</div><div class="k">Tiempo total</div><div class="ctx">1500 iter · GTX 1650</div></div>
+    <div class="ds-stat"><div class="v" style="color:var(--green)">1.25<small style="font-size:18px"> GB</small></div><div class="k">VRAM peak</div><div class="ctx">de 4 GB disponibles</div></div>
+    <div class="ds-stat"><div class="v" style="color:var(--pink)">51</div><div class="k">Secuencias</div><div class="ctx">13 sujetos × 4 cond.</div></div>
+    <div class="ds-stat"><div class="v" style="color:var(--amber)">100%</div><div class="k">Rank-1 val</div><div class="ctx">desde iter 200</div></div>
+  </div>
+
+  <!-- RECETA -->
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:30px">
+    <div class="card" style="background:var(--panel)">
+      <div class="icon">⚙️</div>
+      <h3 style="color:var(--cyan)">Optimizer</h3>
+      <div class="mono" style="font-size:13px;color:var(--dim);line-height:2;margin-top:8px">
+        <div><span style="color:var(--pink)">SGD</span></div>
+        <div>lr<span style="color:var(--violet)"> = 0.01</span></div>
+        <div>momentum<span style="color:var(--violet)"> = 0.9</span></div>
+        <div>weight_decay<span style="color:var(--violet)"> = 5e-4</span></div>
+        <div style="margin-top:8px;color:var(--cyan)">MultiStepLR</div>
+        <div>milestones<span style="color:var(--violet)"> = [750, 1250]</span></div>
+        <div>γ<span style="color:var(--violet)"> = 0.1</span> <small style="color:var(--dim2)">// lr ÷10 en cada hito</small></div>
+      </div>
+    </div>
+    <div class="card" style="background:var(--panel)">
+      <div class="icon">🎯</div>
+      <h3 style="color:var(--violet)">Losses</h3>
+      <div class="mono" style="font-size:13px;color:var(--dim);line-height:2;margin-top:8px">
+        <div><span style="color:var(--pink)">TripletLoss</span></div>
+        <div>margin<span style="color:var(--violet)"> = 0.2</span></div>
+        <div>weight<span style="color:var(--violet)"> = 1.0</span></div>
+        <div style="margin-top:8px;color:var(--cyan)">CrossEntropy</div>
+        <div>scale<span style="color:var(--violet)"> = 16</span></div>
+        <div>label_smoothing<span style="color:var(--violet)"> = 0.1</span></div>
+        <div>weight<span style="color:var(--violet)"> = 1.0</span></div>
+      </div>
+    </div>
+    <div class="card" style="background:var(--panel)">
+      <div class="icon">🎲</div>
+      <h3 style="color:var(--green)">Sampling</h3>
+      <div class="mono" style="font-size:13px;color:var(--dim);line-height:2;margin-top:8px">
+        <div><span style="color:var(--pink)">TripletSampler</span></div>
+        <div>P<span style="color:var(--violet)"> = 4</span> <small style="color:var(--dim2)">// sujetos / batch</small></div>
+        <div>K<span style="color:var(--violet)"> = 2</span> <small style="color:var(--dim2)">// secs / sujeto</small></div>
+        <div>batch_size<span style="color:var(--violet)"> = 8</span></div>
+        <div style="margin-top:8px;color:var(--cyan)">fixed_unordered</div>
+        <div>frames<span style="color:var(--violet)"> = 30</span> <small style="color:var(--dim2)">// por clip</small></div>
+        <div>AMP autocast + GradScaler</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLUJO INICIALIZACIÓN -->
+  <div class="reveal" style="background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;padding:30px;backdrop-filter:blur(15px);margin-bottom:30px">
+    <h3 style="font-size:14px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:24px">🔁 Pipeline de inicialización</h3>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:center">
+      <div style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.4);border-radius:14px;padding:18px;text-align:center">
+        <div style="font-size:32px;margin-bottom:8px">📦</div>
+        <div style="font-weight:700;font-size:14px;color:var(--cyan)">Pretrained</div>
+        <div class="mono" style="font-size:11px;color:var(--dim);margin-top:6px">GaitBase_Gait3D_120000.pt<br>4000 sujetos · 120k iter</div>
+      </div>
+      <div style="color:var(--violet);font-size:28px;text-align:center">→<div style="font-size:10px;color:var(--dim);font-family:monospace;margin-top:4px">load</div></div>
+      <div style="background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.4);border-radius:14px;padding:18px;text-align:center">
+        <div style="font-size:32px;margin-bottom:8px">✂️</div>
+        <div style="font-weight:700;font-size:14px;color:var(--pink)">Strip BNNecks</div>
+        <div class="mono" style="font-size:11px;color:var(--dim);margin-top:6px">descartar capas de clasificación<br>(4000 → 13 clases)</div>
+      </div>
+      <div style="color:var(--violet);font-size:28px;text-align:center">→<div style="font-size:10px;color:var(--dim);font-family:monospace;margin-top:4px">re-init</div></div>
+      <div style="background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.5);border-radius:14px;padding:18px;text-align:center;box-shadow:0 0 30px rgba(139,92,246,.2)">
+        <div style="font-size:32px;margin-bottom:8px">🔥</div>
+        <div style="font-weight:700;font-size:14px;color:var(--violet)">Fine-tune 1500 iter</div>
+        <div class="mono" style="font-size:11px;color:var(--dim);margin-top:6px">backbone + nuevas BNNecks<br>todo en GPU · AMP FP16</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURVAS DE LOSS -->
+  <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:30px">
+    <div class="os-chart">
+      <h3>📉 Loss CE — convergencia suave</h3>
+      <svg viewBox="0 0 420 220" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="cegrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8b5cf6" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- ejes -->
+        <line x1="50" y1="185" x2="400" y2="185" stroke="#5b6486" stroke-width="1"/>
+        <line x1="50" y1="20" x2="50" y2="185" stroke="#5b6486" stroke-width="1"/>
+        <text x="225" y="210" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle">iteración</text>
+        <text x="22" y="105" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle" transform="rotate(-90 22 105)">CE loss</text>
+
+        <!-- grid -->
+        <line x1="50" y1="60" x2="400" y2="60" stroke="#5b6486" stroke-width=".5" stroke-dasharray="2,2" opacity=".3"/>
+        <line x1="50" y1="120" x2="400" y2="120" stroke="#5b6486" stroke-width=".5" stroke-dasharray="2,2" opacity=".3"/>
+
+        <!-- y-ticks (CE 0.5 - 1.2) -->
+        <text x="44" y="188" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.5</text>
+        <text x="44" y="123" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.8</text>
+        <text x="44" y="63" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">1.1</text>
+        <text x="44" y="25" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">1.3</text>
+
+        <!-- x-ticks -->
+        <text x="50" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0</text>
+        <text x="167" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">500</text>
+        <text x="283" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1000</text>
+        <text x="400" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1500</text>
+
+        <!-- milestones lr -->
+        <line x1="225" y1="20" x2="225" y2="185" stroke="#f472b6" stroke-width="1" stroke-dasharray="3,3" opacity=".6"/>
+        <text x="227" y="32" fill="#f472b6" font-size="9" font-family="monospace">lr ÷10</text>
+        <line x1="342" y1="20" x2="342" y2="185" stroke="#f472b6" stroke-width="1" stroke-dasharray="3,3" opacity=".6"/>
+        <text x="344" y="32" fill="#f472b6" font-size="9" font-family="monospace">lr ÷10</text>
+
+        <!-- best iter -->
+        <line x1="330" y1="20" x2="330" y2="185" stroke="#34d399" stroke-width="1.5" opacity=".7"/>
+        <text x="332" y="178" fill="#34d399" font-size="9" font-family="monospace">★ best</text>
+
+        <!-- CE curve: mapping (iter -> x): x = 50 + iter*(350/1500); (loss -> y): y = 185 - (loss-0.5)*(165/0.7) -->
+        <!-- data: 50:1.16 100:0.70 150:0.63 200:0.61 300:0.59 500:0.57 750:0.57 1000:0.57 1200:0.57 1500:0.57 -->
+        <path d="M 62,30 L 73,138 L 85,154 L 97,160 L 120,166 L 167,170 L 225,171 L 283,172 L 330,172 L 400,173"
+              fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+        <path d="M 62,30 L 73,138 L 85,154 L 97,160 L 120,166 L 167,170 L 225,171 L 283,172 L 330,172 L 400,173 L 400,185 L 62,185 Z"
+              fill="url(#cegrad)"/>
+
+        <!-- points -->
+        <circle cx="62" cy="30" r="3" fill="#8b5cf6"/>
+        <circle cx="97" cy="160" r="3" fill="#8b5cf6"/>
+        <circle cx="330" cy="172" r="4" fill="#34d399" stroke="white" stroke-width="1.5"/>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-family:monospace;font-size:11px;color:var(--dim);margin-top:8px">
+        <span>iter 50: <b style="color:#fb7185">1.164</b></span>
+        <span>iter 1200: <b style="color:var(--green)">0.566</b></span>
+        <span>Δ: <b style="color:var(--cyan)">-51%</b></span>
+      </div>
+    </div>
+
+    <div class="os-chart">
+      <h3>📉 Loss Triplet — triplets fáciles &lt; 100 iter</h3>
+      <svg viewBox="0 0 420 220" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="trigrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#22d3ee" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line x1="50" y1="185" x2="400" y2="185" stroke="#5b6486" stroke-width="1"/>
+        <line x1="50" y1="20" x2="50" y2="185" stroke="#5b6486" stroke-width="1"/>
+        <text x="225" y="210" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle">iteración</text>
+        <text x="22" y="105" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle" transform="rotate(-90 22 105)">triplet loss</text>
+
+        <line x1="50" y1="60" x2="400" y2="60" stroke="#5b6486" stroke-width=".5" stroke-dasharray="2,2" opacity=".3"/>
+        <line x1="50" y1="120" x2="400" y2="120" stroke="#5b6486" stroke-width=".5" stroke-dasharray="2,2" opacity=".3"/>
+
+        <text x="44" y="188" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0</text>
+        <text x="44" y="123" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.03</text>
+        <text x="44" y="63" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.06</text>
+        <text x="44" y="25" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.08</text>
+
+        <text x="50" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0</text>
+        <text x="167" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">500</text>
+        <text x="283" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1000</text>
+        <text x="400" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1500</text>
+
+        <!-- triplet: 50:0.076 -> y=185-(.076*1900)=185-144=41; 100:0.017->y=153; 150:0.005->y=176; 200:0.002->y=181; resto 0->185 -->
+        <path d="M 62,41 L 73,153 L 85,176 L 97,181 L 110,184 L 400,185"
+              fill="none" stroke="#22d3ee" stroke-width="2.5"/>
+        <path d="M 62,41 L 73,153 L 85,176 L 97,181 L 110,184 L 400,185 L 62,185 Z"
+              fill="url(#trigrad)"/>
+
+        <circle cx="62" cy="41" r="3" fill="#22d3ee"/>
+        <circle cx="73" cy="153" r="3" fill="#22d3ee"/>
+        <circle cx="97" cy="181" r="3" fill="#22d3ee"/>
+
+        <!-- annotation -->
+        <text x="200" y="100" fill="#22d3ee" font-size="10" font-family="monospace" opacity=".8">→ todos los triplets satisfechos</text>
+        <text x="200" y="115" fill="#22d3ee" font-size="10" font-family="monospace" opacity=".8">   (active_frac → 0)</text>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-family:monospace;font-size:11px;color:var(--dim);margin-top:8px">
+        <span>iter 50: <b style="color:#fb7185">0.0763</b></span>
+        <span>iter 400+: <b style="color:var(--green)">0.0000</b></span>
+        <span>active@200: <b style="color:var(--cyan)">0%</b></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURVA VAL MARGIN -->
+  <div class="reveal os-chart" style="margin-bottom:30px">
+    <h3>📈 Validation Cross-Session — margen NR (probe en ropa diferente)</h3>
+    <svg viewBox="0 0 900 220" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="vgrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#34d399" stop-opacity=".4"/>
+          <stop offset="1" stop-color="#34d399" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <line x1="60" y1="185" x2="870" y2="185" stroke="#5b6486" stroke-width="1"/>
+      <line x1="60" y1="20" x2="60" y2="185" stroke="#5b6486" stroke-width="1"/>
+      <text x="465" y="210" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle">iteración</text>
+      <text x="28" y="105" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle" transform="rotate(-90 28 105)">margin = sim(correct) - sim(best wrong)</text>
+
+      <!-- grid -->
+      <line x1="60" y1="60" x2="870" y2="60" stroke="#5b6486" stroke-width=".5" stroke-dasharray="2,2" opacity=".3"/>
+      <line x1="60" y1="120" x2="870" y2="120" stroke="#5b6486" stroke-width=".5" stroke-dasharray="2,2" opacity=".3"/>
+
+      <!-- y-ticks -->
+      <text x="52" y="188" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0</text>
+      <text x="52" y="148" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.004</text>
+      <text x="52" y="108" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.008</text>
+      <text x="52" y="68" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.012</text>
+      <text x="52" y="28" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0.016</text>
+
+      <!-- x-ticks: iter 0, 200, 400, ..., 1400 -->
+      <!-- mapping: x = 60 + iter/1400 * 810 -->
+      <!-- iter 0 -> 60; 200 -> 176; 400 -> 291; 600 -> 407; 800 -> 523; 1000 -> 638; 1200 -> 754; 1400 -> 870 -->
+      <text x="60" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0</text>
+      <text x="176" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">200</text>
+      <text x="291" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">400</text>
+      <text x="407" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">600</text>
+      <text x="523" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">800</text>
+      <text x="638" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1000</text>
+      <text x="754" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1200</text>
+      <text x="870" y="200" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1400</text>
+
+      <!-- mapping y: y = 185 - margin*10000 (escala 0.016 max ≈ 160px) -->
+      <!-- 0:0.0005 -> 180; 200:0.0096 -> 89; 400:0.0106 -> 79; 600:0.0113 -> 72; 800:0.0117 -> 68; 1000:0.0116 -> 69; 1200:0.0118 -> 67; 1400:0.0118 -> 67 -->
+
+      <!-- area under curve NR -->
+      <path d="M 60,180 L 176,89 L 291,79 L 407,72 L 523,68 L 638,69 L 754,67 L 870,67 L 870,185 L 60,185 Z" fill="url(#vgrad)"/>
+
+      <!-- NR line -->
+      <path d="M 60,180 L 176,89 L 291,79 L 407,72 L 523,68 L 638,69 L 754,67 L 870,67"
+            fill="none" stroke="#34d399" stroke-width="2.5"/>
+
+      <!-- NN line (más alto, mapping 0:0.0014 -> 171; 200:0.0113 -> 72; 400:0.0124 -> 61; 600:0.0133 -> 52; 800:0.0138 -> 47; 1000:0.0136 -> 49; 1200:0.0138 -> 47; 1400:0.0138 -> 47) -->
+      <path d="M 60,171 L 176,72 L 291,61 L 407,52 L 523,47 L 638,49 L 754,47 L 870,47"
+            fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5,3" opacity=".75"/>
+
+      <!-- points -->
+      <g fill="#34d399">
+        <circle cx="60" cy="180" r="4"/>
+        <circle cx="176" cy="89" r="4"/>
+        <circle cx="291" cy="79" r="4"/>
+        <circle cx="407" cy="72" r="4"/>
+        <circle cx="523" cy="68" r="4"/>
+        <circle cx="638" cy="69" r="4"/>
+        <circle cx="754" cy="67" r="6" stroke="white" stroke-width="2"/>
+        <circle cx="870" cy="67" r="4"/>
+      </g>
+      <g fill="#22d3ee" opacity=".8">
+        <circle cx="60" cy="171" r="3"/>
+        <circle cx="176" cy="72" r="3"/>
+        <circle cx="291" cy="61" r="3"/>
+        <circle cx="407" cy="52" r="3"/>
+        <circle cx="523" cy="47" r="3"/>
+        <circle cx="638" cy="49" r="3"/>
+        <circle cx="754" cy="47" r="3"/>
+        <circle cx="870" cy="47" r="3"/>
+      </g>
+
+      <!-- milestone lr -->
+      <line x1="494" y1="20" x2="494" y2="185" stroke="#f472b6" stroke-width="1" stroke-dasharray="3,3" opacity=".5"/>
+      <text x="497" y="32" fill="#f472b6" font-size="10" font-family="monospace">iter 750: lr → 0.001</text>
+
+      <!-- best -->
+      <text x="758" y="58" fill="#34d399" font-size="11" font-family="monospace">★ best 0.0118</text>
+
+      <!-- legend -->
+      <rect x="700" y="20" width="160" height="32" rx="6" fill="rgba(0,0,0,.4)" stroke="#5b6486" stroke-width=".5"/>
+      <line x1="710" y1="30" x2="730" y2="30" stroke="#34d399" stroke-width="2.5"/>
+      <text x="735" y="33" fill="#34d399" font-size="10" font-family="monospace">NR · ropa distinta</text>
+      <line x1="710" y1="44" x2="730" y2="44" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="735" y="47" fill="#22d3ee" font-size="10" font-family="monospace">NN · misma ropa</text>
+    </svg>
+    <div style="margin-top:12px;padding:14px 16px;background:rgba(52,211,153,.06);border-left:3px solid var(--green);border-radius:8px;font-size:12px;color:var(--dim);font-family:monospace;line-height:1.7">
+      <b style="color:var(--green)">★ Best checkpoint en iter 1200</b> — margen NR = 0.0118 (sim_correct - sim_best_wrong).<br>
+      <b style="color:var(--cyan)">Métrica clave</b>: el modelo separa genuino vs impostor incluso cuando el sujeto cambia de ropa entre sesiones (probe rapido_s2 vs gallery normal_s1).
+    </div>
+  </div>
+
+  <!-- SPLITS -->
+  <div class="reveal" style="background:var(--panel);border:1px solid var(--panel-br);border-radius:20px;padding:30px;backdrop-filter:blur(15px)">
+    <h3 style="font-size:14px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;margin-bottom:20px">🔀 Split subject-disjoint · zero leakage</h3>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px">
+      <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.35);border-radius:14px;padding:18px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+          <h4 style="color:var(--violet);font-family:monospace;font-size:14px">TRAIN</h4>
+          <span style="font-size:24px;font-weight:800;color:var(--violet);font-family:monospace">13</span>
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--dim);line-height:1.7">brayannajera, carloscarrillo, carlospadilla, cesarvasquez, gilbertofelix, jesusantonioaguilarfelix, jesuscazarez, jorgeespinoza, josefelix, juliouriarte, luislopez, robertocastaño, rodrigoruiz</div>
+      </div>
+      <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.35);border-radius:14px;padding:18px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+          <h4 style="color:var(--amber);font-family:monospace;font-size:14px">VAL</h4>
+          <span style="font-size:24px;font-weight:800;color:var(--amber);font-family:monospace">3</span>
+        </div>
+        <div class="mono" style="font-size:11px;color:var(--dim);line-height:1.8">carlostorres<br>hectorsanchez<br>robertpereira</div>
+        <div style="font-size:10px;color:var(--dim2);margin-top:6px">early-stop · margin NR</div>
+      </div>
+      <div style="background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.35);border-radius:14px;padding:18px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+          <h4 style="color:var(--pink);font-family:monospace;font-size:14px">TEST</h4>
+          <span style="font-size:24px;font-weight:800;color:var(--pink);font-family:monospace">3</span>
+        </div>
+        <div class="mono" style="font-size:11px;color:var(--dim);line-height:1.8">alexbojorquez<br>jesusvalenzuela<br>ricardomora</div>
+        <div style="font-size:10px;color:var(--dim2);margin-top:6px">intocados durante train</div>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding:14px 16px;background:rgba(34,211,238,.05);border-left:3px solid var(--cyan);border-radius:8px;font-size:13px;color:var(--dim);line-height:1.7">
+      <b style="color:var(--cyan)">4 condiciones por sujeto:</b> <code class="mono" style="color:var(--pink)">normal_s1</code> · <code class="mono" style="color:var(--pink)">normal_s2</code> · <code class="mono" style="color:var(--pink)">rapido_s1</code> · <code class="mono" style="color:var(--pink)">rapido_s2</code> — sesiones distintas con cambio de ropa. El TripletSampler puede mezclar sesiones dentro del mismo batch → supervisión cross-clothing.
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVA -->
+<section id="cmp">
+  <div class="reveal">
+    <span class="sect-label">07 · Comparativa</span>
+    <h2>¿Por qué <span class="grad">GaitBase</span>?</h2>
+    <p class="sect-desc">Evaluamos 4 modelos del estado del arte. GaitBase ganó en precisión vs costo computacional para nuestro hardware (GTX 1650).</p>
+  </div>
+
+  <div class="reveal" style="overflow-x:auto">
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Input</th>
+          <th>EER</th>
+          <th>Tiempo embed</th>
+          <th>Estado</th>
+          <th>Decisión</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" style="color:var(--violet)">GaitBase</td>
+          <td>Silueta binaria</td>
+          <td>8.11%</td>
+          <td>~100 ms</td>
+          <td><span class="tag-prod">✓ PRODUCCIÓN</span></td>
+          <td>Mejor balance precisión / latencia / VRAM</td>
+        </tr>
+        <tr>
+          <td class="name">SkeletonGait++</td>
+          <td>Silueta + esqueleto</td>
+          <td>9.4%</td>
+          <td>~180 ms</td>
+          <td><span class="tag-no">descartado</span></td>
+          <td>Multimodal no mejoró — costo extra sin retorno</td>
+        </tr>
+        <tr>
+          <td class="name">ST-GCN</td>
+          <td>Solo esqueleto</td>
+          <td>15%+</td>
+          <td>~60 ms</td>
+          <td><span class="tag-no">descartado</span></td>
+          <td>RTMPose inestable a 5 m — pose ruidosa</td>
+        </tr>
+        <tr>
+          <td class="name">DeepGaitV2</td>
+          <td>Silueta binaria</td>
+          <td>~7%</td>
+          <td>~250 ms</td>
+          <td><span class="tag-no">no probado</span></td>
+          <td>Demasiado pesado para GTX 1650 4 GB</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- KEYPOINTS FAIL -->
+<section id="keypoints">
+  <div class="reveal">
+    <span class="sect-label">07b · Decisión con evidencia</span>
+    <h2>¿Por qué <span class="grad">fallaron</span> los keypoints?</h2>
+    <p class="sect-desc">SkeletonGait++ combina silueta + esqueleto (keypoints 2D). Lo probamos, midimos, y lo descartamos. Aquí el porqué visual y numérico.</p>
+  </div>
+
+  <!-- COMPARATIVA VISUAL -->
+  <div class="kp-why reveal">
+
+    <div class="kp-panel bad">
+      <h3>❌ Keypoints (SkeletonGait++)</h3>
+      <div class="kp-canvas">
+        <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
+          <!-- fondo oscuro con grid sutil -->
+          <rect width="300" height="200" fill="#0a0010"/>
+          <defs>
+            <pattern id="g1" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(239,68,68,.06)" stroke-width=".5"/>
+            </pattern>
+          </defs>
+          <rect width="300" height="200" fill="url(#g1)"/>
+
+          <!-- silueta de fondo muy tenue (referencia) -->
+          <g opacity=".1" fill="#ffffff" transform="translate(100,10) scale(1.1)">
+            <circle cx="52" cy="22" r="7"/>
+            <path d="M44 30 L60 30 L62 55 L58 60 L46 60 L42 55 Z"/>
+            <path d="M44 32 L38 50 L36 62 L40 63 L44 50 L46 36 Z"/>
+            <path d="M60 32 L66 48 L64 58 L60 59 L64 50 L62 35 Z"/>
+            <path d="M46 60 L58 60 L60 75 L54 75 L52 70 L50 75 L44 75 Z"/>
+            <path d="M47 75 L42 95 L40 110 L44 111 L48 92 L51 76 Z"/>
+            <path d="M56 75 L62 92 L66 109 L62 111 L58 90 L53 76 Z"/>
+          </g>
+
+          <!-- huesos / skeleton lines — lado visible (verde) -->
+          <g stroke="#34d399" stroke-width="1.5" fill="none" opacity=".8">
+            <!-- torso -->
+            <line x1="152" y1="46" x2="152" y2="90"/>
+            <!-- hombro izq → cadera izq -->
+            <line x1="135" y1="56" x2="140" y2="90"/>
+            <!-- brazo izq -->
+            <line x1="135" y1="56" x2="120" y2="78"/>
+            <line x1="120" y1="78" x2="112" y2="96"/>
+            <!-- pierna izq -->
+            <line x1="140" y1="90" x2="136" y2="120"/>
+            <line x1="136" y1="120" x2="132" y2="148"/>
+          </g>
+
+          <!-- huesos — lado OCULTO (rojo, estimados mal) -->
+          <g stroke="#ef4444" stroke-width="1.5" fill="none" opacity=".7" stroke-dasharray="4,3">
+            <!-- hombro der → cadera der -->
+            <line x1="168" y1="56" x2="163" y2="90"/>
+            <!-- brazo der (oculto detrás) -->
+            <line x1="168" y1="56" x2="182" y2="72"/>
+            <line x1="182" y1="72" x2="190" y2="88"/>
+            <!-- pierna der (oculta) -->
+            <line x1="163" y1="90" x2="167" y2="118"/>
+            <line x1="167" y1="118" x2="172" y2="146"/>
+          </g>
+
+          <!-- keypoints VISIBLES (verde) -->
+          <g fill="#34d399">
+            <circle cx="152" cy="32" r="5"/> <!-- cabeza -->
+            <circle cx="152" cy="46" r="4"/> <!-- cuello -->
+            <circle cx="135" cy="56" r="4"/> <!-- hombro izq -->
+            <circle cx="120" cy="78" r="4"/> <!-- codo izq -->
+            <circle cx="112" cy="96" r="4"/> <!-- muñeca izq -->
+            <circle cx="140" cy="90" r="4"/> <!-- cadera izq -->
+            <circle cx="136" cy="120" r="4"/> <!-- rodilla izq -->
+            <circle cx="132" cy="148" r="4"/> <!-- tobillo izq -->
+          </g>
+
+          <!-- keypoints OCULTOS (rojo con ?) -->
+          <g fill="#ef4444" opacity=".8">
+            <circle cx="168" cy="56" r="4"/> <!-- hombro der -->
+            <circle cx="182" cy="72" r="4"/> <!-- codo der -->
+            <circle cx="190" cy="88" r="4"/> <!-- muñeca der -->
+            <circle cx="163" cy="90" r="4"/> <!-- cadera der -->
+            <circle cx="167" cy="118" r="4"/> <!-- rodilla der -->
+            <circle cx="172" cy="146" r="4"/> <!-- tobillo der -->
+          </g>
+
+          <!-- iconos ? sobre los ocultos -->
+          <g fill="#ef4444" font-size="9" font-family="monospace" font-weight="700">
+            <text x="173" y="55">?</text>
+            <text x="187" y="71">?</text>
+            <text x="195" y="87">?</text>
+            <text x="168" y="89">?</text>
+            <text x="172" y="117">?</text>
+            <text x="177" y="145">?</text>
+          </g>
+
+          <!-- leyenda -->
+          <circle cx="16" cy="168" r="4" fill="#34d399"/>
+          <text x="24" y="172" fill="#34d399" font-size="9" font-family="monospace">visible (8 pts)</text>
+          <circle cx="16" cy="183" r="4" fill="#ef4444"/>
+          <text x="24" y="187" fill="#ef4444" font-size="9" font-family="monospace">oculto / estimado mal (9 pts)</text>
+
+          <!-- label vista -->
+          <rect x="218" y="6" width="76" height="16" rx="4" fill="rgba(239,68,68,.15)" stroke="rgba(239,68,68,.4)" stroke-width=".8"/>
+          <text x="256" y="18" text-anchor="middle" fill="#ef4444" font-size="9" font-family="monospace">vista lateral 90°</text>
+        </svg>
+      </div>
+      <div class="kp-verdict">
+        ⚠ En vista 90°, 9 de 17 keypoints quedan detrás del cuerpo — RTMPose los <b style="color:var(--red)">estima con alta incertidumbre</b> o los alucina.
+      </div>
+    </div>
+
+    <div class="kp-panel good">
+      <h3>✅ Silueta binaria (GaitBase)</h3>
+      <div class="kp-canvas">
+        <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
+          <rect width="300" height="200" fill="#000"/>
+          <defs>
+            <pattern id="g2" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(34,211,238,.08)" stroke-width=".5"/>
+            </pattern>
+          </defs>
+          <rect width="300" height="200" fill="url(#g2)"/>
+
+          <!-- silueta blanca completa centrada -->
+          <g fill="#ffffff" transform="translate(95,8) scale(1.12)">
+            <circle cx="52" cy="22" r="7.5"/>
+            <path d="M43 30 L61 30 L63 56 L59 61 L45 61 L41 56 Z"/>
+            <path d="M43 32 L36 50 L34 63 L39 64 L43 51 L46 36 Z"/>
+            <path d="M61 32 L67 48 L65 59 L60 60 L65 51 L63 35 Z"/>
+            <circle cx="34" cy="64" r="3"/>
+            <circle cx="65" cy="60" r="3"/>
+            <path d="M45 61 L59 61 L61 77 L55 77 L52 71 L49 77 L43 77 Z"/>
+            <path d="M46 77 L40 97 L38 112 L43 113 L47 94 L51 78 Z"/>
+            <path d="M57 77 L63 94 L67 111 L62 113 L58 92 L53 78 Z"/>
+            <ellipse cx="38" cy="113" rx="5" ry="2.5"/>
+            <ellipse cx="66" cy="112" rx="5" ry="2.5"/>
+          </g>
+
+          <!-- anotaciones de HPP -->
+          <g opacity=".6">
+            <line x1="240" y1="30" x2="258" y2="30" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="50" x2="258" y2="50" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="70" x2="258" y2="70" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="90" x2="258" y2="90" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="110" x2="258" y2="110" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="130" x2="258" y2="130" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="150" x2="258" y2="150" stroke="#22d3ee" stroke-width=".6"/>
+            <line x1="240" y1="170" x2="258" y2="170" stroke="#22d3ee" stroke-width=".6"/>
+          </g>
+          <text x="263" y="100" fill="#22d3ee" font-size="9" font-family="monospace" transform="rotate(90 263 100)">16 franjas HPP</text>
+
+          <!-- checkmarks de info -->
+          <g fill="#34d399" font-size="8" font-family="monospace">
+            <text x="10" y="168">✓ contorno completo</text>
+            <text x="10" y="180">✓ anchura de hombros / caderas</text>
+            <text x="10" y="192">✓ sin oclusión por vista</text>
+          </g>
+        </svg>
+      </div>
+      <div class="kp-verdict">
+        ✓ La silueta binaria captura <b style="color:var(--green)">todo el contorno del cuerpo</b> — ancho de hombros, postura, zancada — sin importar qué lado mira la cámara.
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 RAZONES -->
+  <div class="kp-reasons reveal">
+
+    <div class="kp-reason">
+      <span class="rnum">01</span>
+      <h4>Oclusión en vista 90°</h4>
+      <p>RTMPose y OpenPose están entrenados principalmente en vistas frontales. En perfil lateral, el brazo trasero, la pierna trasera y la cadera del lado alejado quedan <b>físicamente detrás del cuerpo</b>. La red los "alucina" en posiciones incorrectas.</p>
+      <div class="impact">→ 9 de 17 keypoints con alta incertidumbre</div>
+    </div>
+
+    <div class="kp-reason">
+      <span class="rnum">02</span>
+      <h4>Pérdida de información de forma</h4>
+      <p>17 puntos discretos no capturan lo que GaitBase sí usa: el <b>ancho real de hombros</b>, el contorno de la ropa, la proporción cabeza-cuerpo. La silueta conserva toda esa información; el esqueleto la descarta.</p>
+      <div class="impact">→ EER 9.4% vs 8.11% con solo silueta</div>
+    </div>
+
+    <div class="kp-reason">
+      <span class="rnum">03</span>
+      <h4>Doble costo, cero ganancia</h4>
+      <p>SkeletonGait++ requiere correr <b>RVM + RTMPose</b> en paralelo para cada frame. Dos redes en una GTX 1650 de 4 GB aumentan la latencia a ~180 ms y presionan la VRAM — todo para obtener peores métricas que solo silueta.</p>
+      <div class="impact">→ +80 ms latencia · EER peor · descartado</div>
+    </div>
+
+  </div>
+
+  <!-- RESULTADO NUMÉRICO -->
+  <div class="kp-result reveal">
+    <div>
+      <div class="label">Evidencia numérica</div>
+      <div class="nums">
+        <div class="metric-cmp">
+          <div class="val bad">9.4%</div>
+          <div class="sub">EER · SkeletonGait++<br>silueta + keypoints</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="metric-cmp">
+          <div class="val good">8.11%</div>
+          <div class="sub">EER · GaitBase<br>solo silueta</div>
+        </div>
+        <div class="metric-cmp">
+          <div class="val bad">~180ms</div>
+          <div class="sub">embed · SkeletonGait++<br>RVM + RTMPose</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="metric-cmp">
+          <div class="val good">~100ms</div>
+          <div class="sub">embed · GaitBase<br>solo RVM</div>
+        </div>
+      </div>
+    </div>
+    <div class="conclusion">
+      Agregar el esqueleto no solo <b style="color:var(--txt)">no ayudó</b> — activamente <b style="color:var(--red)">empeoró el EER en 1.3 puntos</b> y añadió 80 ms de latencia. La silueta sola ya contiene toda la firma de marcha que GaitBase necesita.
+    </div>
+  </div>
+</section>
+
+<!-- OPEN-SET -->
+<section id="openset">
+  <div class="reveal">
+    <span class="sect-label">08 · Open-Set Recognition</span>
+    <h2>El threshold <span class="grad">τ</span> decide</h2>
+    <p class="sect-desc">Closed-set asume que todo input está en la galería. Open-set permite el "no sé". Calibramos τ para que ningún impostor pase (FAR=0%).</p>
+  </div>
+
+  <div class="os-grid reveal">
+    <div class="os-chart">
+      <h3>📊 Distribución de Similitudes</h3>
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
+        <!-- ejes -->
+        <line x1="40" y1="170" x2="380" y2="170" stroke="#5b6486" stroke-width="1"/>
+        <line x1="40" y1="20" x2="40" y2="170" stroke="#5b6486" stroke-width="1"/>
+        <text x="200" y="195" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle">cosine similarity</text>
+        <text x="20" y="100" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle" transform="rotate(-90 20 100)">densidad</text>
+
+        <!-- impostor -->
+        <path d="M40,170 Q90,170 120,140 Q150,90 180,120 Q210,150 230,168 L230,170 Z" fill="rgba(245,158,11,.25)" stroke="#f59e0b" stroke-width="1.5"/>
+        <!-- genuino -->
+        <path d="M260,170 L260,150 Q290,90 320,30 Q345,50 365,120 Q375,160 380,170 Z" fill="rgba(52,211,153,.25)" stroke="#34d399" stroke-width="1.5"/>
+        <!-- threshold -->
+        <line x1="250" y1="20" x2="250" y2="170" stroke="#f472b6" stroke-width="2" stroke-dasharray="4,3"/>
+        <text x="255" y="32" fill="#f472b6" font-size="11" font-family="monospace">τ = 0.985</text>
+
+        <!-- labels -->
+        <rect x="100" y="25" width="65" height="20" rx="4" fill="rgba(245,158,11,.15)" stroke="#f59e0b" stroke-width="1"/>
+        <text x="132" y="39" fill="#f59e0b" font-size="10" font-family="monospace" text-anchor="middle">impostor</text>
+        <rect x="295" y="25" width="65" height="20" rx="4" fill="rgba(52,211,153,.15)" stroke="#34d399" stroke-width="1"/>
+        <text x="328" y="39" fill="#34d399" font-size="10" font-family="monospace" text-anchor="middle">genuino</text>
+
+        <!-- ticks -->
+        <text x="40" y="183" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0.95</text>
+        <text x="140" y="183" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0.97</text>
+        <text x="250" y="183" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0.985</text>
+        <text x="380" y="183" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1.00</text>
+      </svg>
+    </div>
+
+    <div class="os-chart">
+      <h3>📈 Curva ROC del Sistema</h3>
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
+        <line x1="40" y1="170" x2="380" y2="170" stroke="#5b6486" stroke-width="1"/>
+        <line x1="40" y1="20" x2="40" y2="170" stroke="#5b6486" stroke-width="1"/>
+        <text x="200" y="195" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle">FAR — False Accept Rate</text>
+        <text x="20" y="100" fill="#8993b8" font-size="11" font-family="monospace" text-anchor="middle" transform="rotate(-90 20 100)">TAR</text>
+
+        <!-- diagonal random -->
+        <line x1="40" y1="170" x2="380" y2="20" stroke="#5b6486" stroke-width="1" stroke-dasharray="3,3" opacity=".4"/>
+        <text x="370" y="35" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">random</text>
+
+        <!-- ROC -->
+        <path d="M40,170 Q45,60 80,40 Q160,28 250,25 Q340,24 380,22" fill="none" stroke="url(#rocgrad)" stroke-width="2.5"/>
+        <defs>
+          <linearGradient id="rocgrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#22d3ee"/>
+            <stop offset="1" stop-color="#8b5cf6"/>
+          </linearGradient>
+        </defs>
+
+        <!-- operating point -->
+        <circle cx="50" cy="44" r="6" fill="#f472b6" stroke="white" stroke-width="2"/>
+        <text x="80" y="48" fill="#f472b6" font-size="10" font-family="monospace">τ=0.985 · TAR=86.5% · FAR=0%</text>
+
+        <!-- ticks -->
+        <text x="40" y="183" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">0</text>
+        <text x="380" y="183" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="middle">1</text>
+        <text x="32" y="173" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">0</text>
+        <text x="32" y="25" fill="#5b6486" font-size="9" font-family="monospace" text-anchor="end">1</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="os-metrics reveal">
+    <div class="os-met eer"><div class="v">8.11%</div><div class="k">EER (Equal Error Rate)</div></div>
+    <div class="os-met tar"><div class="v">86.49%</div><div class="k">TAR @ FAR = 0%</div></div>
+    <div class="os-met far"><div class="v">0%</div><div class="k">FAR (sin falsos +)</div></div>
+  </div>
+</section>
+
+<!-- INFERENCIA EN VIVO -->
+<section id="live">
+  <div class="reveal">
+    <span class="sect-label">09 · Inferencia en Vivo</span>
+    <h2>FSM tracker en <span class="grad">tiempo real</span></h2>
+    <p class="sect-desc">El sistema acumula 60 frames (4 s @ 15 fps), embebe, compara, y confirma identidad solo si <b style="color:var(--cyan)">N=2 secuencias consecutivas</b> superan τ. Evita falsos positivos por frames ruidosos.</p>
+  </div>
+
+  <div class="live-board reveal">
+    <div class="live-grid">
+      <div>
+        <div class="fsm">
+          <span class="state idle">IDLE</span> <span class="arr">→</span> bbox detectado ≥15 frames <span class="arr">→</span><br>
+          <span class="state acc">ACCUMULATING</span> <span class="arr">→</span> buffer T=60 lleno <span class="arr">→</span><br>
+          <span class="state dec">DECIDING</span> · embed + cosine vs gallery <span class="arr">→</span><br>
+          <span class="state ok">CONFIRMED</span> si sim &gt; τ por N=2 ventanas <span class="arr">→</span><br>
+          <b style="color:var(--green)">→ CSV log:</b> ts, identidad, similitud<br><br>
+          <span style="color:#5b6486">// reset: bbox ausente &gt; 15 frames → IDLE</span>
+        </div>
+
+        <div style="margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div style="padding:14px;background:var(--bg2);border:1px solid var(--panel-br);border-radius:12px;text-align:center">
+            <div style="font-size:22px;color:var(--cyan);font-weight:800;font-family:monospace">60</div>
+            <div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px">frames / ventana</div>
+          </div>
+          <div style="padding:14px;background:var(--bg2);border:1px solid var(--panel-br);border-radius:12px;text-align:center">
+            <div style="font-size:22px;color:var(--violet);font-weight:800;font-family:monospace">50%</div>
+            <div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px">solapamiento</div>
+          </div>
+          <div style="padding:14px;background:var(--bg2);border:1px solid var(--panel-br);border-radius:12px;text-align:center">
+            <div style="font-size:22px;color:var(--green);font-weight:800;font-family:monospace">N=2</div>
+            <div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px">confirmación</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="bar">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <div class="title">infer_live.py · live log</div>
+        </div>
+        <div class="body" id="termbody">
+          <div><span class="ts">[09:14:02]</span> <span class="k">bbox</span> persona @ conf=0.94</div>
+          <div><span class="ts">[09:14:04]</span> <span class="k">acc</span> 30/60 frames</div>
+          <div><span class="ts">[09:14:06]</span> <span class="k">acc</span> 60/60 ✓</div>
+          <div><span class="ts">[09:14:06]</span> <span class="k">embed</span> 4096-D · L2=1.0</div>
+          <div><span class="ts">[09:14:06]</span> <span class="k">cosine</span> max=<span class="ok">0.9912</span> (sujeto_07)</div>
+          <div><span class="ts">[09:14:06]</span> <span class="k">τ</span>=0.9847 → <span class="ok">ACCEPT</span></div>
+          <div><span class="ts">[09:14:08]</span> <span class="k">window</span> 2/2 confirmed</div>
+          <div><span class="ts">[09:14:08]</span> <span class="ok">✓ ATTENDANCE</span> sujeto_07 · 0.9912</div>
+          <div><span class="ts">[09:14:30]</span> <span class="k">new</span> bbox detectado</div>
+          <div><span class="ts">[09:14:36]</span> <span class="k">cosine</span> max=<span class="warn">0.9403</span></div>
+          <div><span class="ts">[09:14:36]</span> <span class="k">τ</span>=0.9847 → <span class="warn">REJECT</span> (gap 0.0444)</div>
+          <div><span class="ts">[09:14:36]</span> → identidad: <span class="warn">UNKNOWN</span> (no enrolado)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="reveal">
+    <span class="sect-label">10 · Roadmap</span>
+    <h2>De cero a sistema <span class="grad">funcional</span></h2>
+    <p class="sect-desc">8 fases. 6 completadas, 1 en curso, 1 pendiente.</p>
+  </div>
+
+  <div class="roadmap reveal">
+    <div class="road-grid">
+      <div class="road done">
+        <div class="status">✓</div>
+        <div class="num">0</div>
+        <h5>Auditoría</h5>
+        <p>Estado del arte, modelos, datasets</p>
+      </div>
+      <div class="road done">
+        <div class="status">✓</div>
+        <div class="num">1</div>
+        <h5>Dataset</h5>
+        <p>Captura 19 sujetos, 2 sesiones</p>
+      </div>
+      <div class="road done">
+        <div class="status">✓</div>
+        <div class="num">2</div>
+        <h5>Extracción</h5>
+        <p>YOLO + RVM → siluetas binarias</p>
+      </div>
+      <div class="road done">
+        <div class="status">✓</div>
+        <div class="num">3</div>
+        <h5>Empaquetado</h5>
+        <p>Pickle batches por sujeto/sesión</p>
+      </div>
+      <div class="road done">
+        <div class="status">✓</div>
+        <div class="num">4</div>
+        <h5>Fine-tune</h5>
+        <p>GaitBase iter 1200 best</p>
+      </div>
+      <div class="road done">
+        <div class="status">✓</div>
+        <div class="num">5</div>
+        <h5>Open-set</h5>
+        <p>Calibración τ, multimodal descartado</p>
+      </div>
+      <div class="road curr">
+        <div class="status">⚡</div>
+        <div class="num">6</div>
+        <h5>Live demo</h5>
+        <p>Pipeline real-time, FSM, CSV log</p>
+      </div>
+      <div class="road pend">
+        <div class="status">⌛</div>
+        <div class="num">7</div>
+        <h5>Optim.</h5>
+        <p>TensorRT INT8 · SQLite · docs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section id="resultados">
+  <div class="reveal">
+    <span class="sect-label">11 · Resultados Finales</span>
+    <h2>Sistema listo para <span class="grad">demo</span></h2>
+    <p class="sect-desc">El proyecto cumple su objetivo: identificación automática de personas por marcha, con rechazo verificado de impostores.</p>
+  </div>
+
+  <div class="res-grid reveal">
+    <div class="res-panel">
+      <h3>🎯 Logros</h3>
+      <ul class="res-list">
+        <li>Pipeline end-to-end funcional: cámara → identidad en ~4 s</li>
+        <li>Verificación open-set real: rechaza desconocidos con FAR=0% absoluto</li>
+        <li>19 sujetos enrolados con multi-template (K≤4 por sujeto)</li>
+        <li>EER 8.11% sobre split val multi-sesión (ropa distinta)</li>
+        <li>~6-8 FPS sostenidos en GTX 1650 (4 GB VRAM)</li>
+        <li>Confirmación robusta por N=2 secuencias consecutivas</li>
+        <li>Log automático en CSV con timestamp + identidad + similitud</li>
+      </ul>
+    </div>
+    <div class="res-panel">
+      <h3>⚠️ Limitaciones aceptadas</h3>
+      <ul class="res-list warn">
+        <li>Par ricardomora ↔ hectorsanchez: confusión por mismo build corporal</li>
+        <li>Dataset pequeño (19 sujetos) limita la generalización</li>
+        <li>Solo vista lateral 90° — frontal/cenital requieren reentrenamiento</li>
+        <li>Cambio de cámara obliga a recalibrar τ</li>
+        <li>Multimodal (silueta + esqueleto) sin ganancia: descartado</li>
+      </ul>
+      <h3 style="margin-top:30px">🚀 Próximos pasos</h3>
+      <ul class="res-list future">
+        <li>Quantización INT8 / TensorRT → embed ~30 ms (vs ~100 ms actual)</li>
+        <li>Migrar CSV → SQLite para queries históricas</li>
+        <li>Validación end-to-end con sujetos reales (Fase 6.5)</li>
+        <li>Documentación final + manual de calibración de τ</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Proyecto Gait Recognition · <span class="grad">Pase de Lista por Marcha</span></div>
+  <div style="margin-top:8px">Fase 6.4 ✓ · Fase 6.5 en curso · 2026-05-10</div>
+  <div style="margin-top:14px;font-size:11px;color:var(--dim2)">Build: gaitbase_ft_multisession_best_iter1200.pt · τ=0.9847 · GTX 1650</div>
+</footer>
+
+<script>
+  // ===== HERO CANVAS particles =====
+  const c=document.getElementById('bg'),ctx=c.getContext('2d');
+  function rsz(){c.width=window.innerWidth;c.height=window.innerHeight}
+  rsz();window.addEventListener('resize',rsz);
+  const pts=Array.from({length:90},()=>({
+    x:Math.random()*c.width,y:Math.random()*c.height,
+    vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+    r:Math.random()*2+.5,
+    co:Math.random()>.5?'#22d3ee':(Math.random()>.5?'#8b5cf6':'#f472b6')
+  }));
+  function tick(){
+    ctx.clearRect(0,0,c.width,c.height);
+    for(let i=0;i<pts.length;i++){
+      const p=pts[i];
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>c.width)p.vx*=-1;
+      if(p.y<0||p.y>c.height)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.co;ctx.shadowBlur=8;ctx.shadowColor=p.co;ctx.fill();
+      for(let j=i+1;j<pts.length;j++){
+        const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);
+        if(d<120){
+          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+          ctx.strokeStyle=`rgba(120,180,255,${.15*(1-d/120)})`;
+          ctx.lineWidth=.6;ctx.shadowBlur=0;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // ===== reveal on scroll =====
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ===== counters =====
+  const counters=document.querySelectorAll('[data-count]');
+  const ioc=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target,target=parseFloat(el.dataset.count),dec=parseInt(el.dataset.decimals||0);
+        let cur=0,step=target/60;
+        const t=setInterval(()=>{
+          cur+=step;if(cur>=target){cur=target;clearInterval(t)}
+          el.textContent=cur.toFixed(dec);
+        },18);
+        ioc.unobserve(el);
+      }
+    });
+  },{threshold:.4});
+  counters.forEach(el=>ioc.observe(el));
+
+  // ===== pipeline detail toggle =====
+  const details={
+    cam:[['device','Logitech C920 USB'],['resolución','1280×720 @ 15 fps'],['lib','OpenCV VideoCapture'],['output','RGB uint8 tensor']],
+    yolo:[['modelo','YOLOv11n (Ultralytics)'],['rol','detector single-class persona'],['input','RGB 640×640'],['output','bbox xyxy + conf'],['policy','mayor área = persona objetivo']],
+    rvm:[['modelo','RVM MobileNetV3'],['rol','matting video → silueta'],['input','crop bbox 256×256'],['output','alpha 64×44 binarizado'],['repo','PeterL1n/RobustVideoMatting']],
+    gait:[['modelo','GaitBase (OpenGait)'],['backbone','ResNet-9 temporal'],['ckpt','gaitbase_ft_multisession_best_iter1200.pt'],['input','silueta [T,64,44]'],['output','embedding 4096-D L2-norm']],
+    cos:[['operación','max-sim vs gallery'],['gallery','19 sujetos × K≤4 templates'],['shape','(19, K, 4096)'],['output','sim ∈ [-1,1]']],
+    thr:[['threshold','τ = 0.9847'],['calibración','FAR=0% absoluto sobre val'],['regla','sim ≥ τ → identidad ; else unknown']],
+    att:[['fsm','idle → acc → deciding → confirmed'],['ventana','T=60 frames (4 s @ 15 fps)'],['stride','30 frames (50% overlap)'],['confirmación','N=2 secuencias consecutivas'],['log','CSV: ts,id,similarity']]
+  };
+  const detEl=document.getElementById('detail');
+  document.querySelectorAll('.pstep').forEach(p=>{
+    p.addEventListener('click',()=>{
+      const k=p.dataset.detail,d=details[k];
+      detEl.innerHTML=d.map(([a,b])=>`<span class="line"><span class="k">${a}:</span> <span class="v">${b}</span></span>`).join('');
+      detEl.classList.add('show');
+    });
+  });
+
+  // ===== terminal auto-scroll =====
+  const tb=document.getElementById('termbody');
+  if(tb){tb.scrollTop=tb.scrollHeight}
+</script>
+</body>
+</html>

@@ -1,50 +1,50 @@
 {
   "summary": {
     "n_videos": 37,
-    "n_with_sequence": 29,
-    "n_top1_correct": 29,
-    "n_accepted_correct": 29,
-    "rank1_acc": 1.0,
-    "accepted_rate_at_tau": 1.0,
-    "tau": 0.9847
+    "n_with_sequence": 37,
+    "n_top1_correct": 36,
+    "n_accepted_correct": 36,
+    "rank1_acc": 0.973,
+    "accepted_rate_at_tau": 0.973,
+    "tau": 0.85
   },
   "config_used": {
-    "tau": 0.9847,
+    "tau": 0.85,
     "window": 60,
     "stride": 30,
-    "target_fps": 15
+    "target_fps": 60
   },
   "rows": [
     {
       "video": "dataset2/alexbojorquez/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 4.23,
-      "fps": 17.75,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 17.41,
+      "fps": 8.61,
       "top1": "alexbojorquez",
       "top1_raw": "alexbojorquez",
-      "sim_top1": 0.9979,
+      "sim_top1": 0.9918,
       "unknown": false,
       "top5": [
         [
           "alexbojorquez",
-          0.9979
+          0.9918
         ],
         [
           "jesusvalenzuela",
-          0.9823
-        ],
-        [
-          "carlostorres",
-          0.9806
-        ],
-        [
-          "robertpereira",
-          0.9788
+          0.9832
         ],
         [
           "ricardomora",
-          0.9781
+          0.9788
+        ],
+        [
+          "robertpereira",
+          0.9778
+        ],
+        [
+          "carlostorres",
+          0.9764
         ]
       ],
       "expected_subject": "alexbojorquez",
@@ -53,49 +53,72 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\alexbojorquez\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.57,
-      "fps": 21.0,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/alexbojorquez/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 2,
+      "elapsed_s": 17.02,
+      "fps": 8.81,
+      "top1": "alexbojorquez",
+      "top1_raw": "alexbojorquez",
+      "sim_top1": 0.9892,
+      "unknown": false,
+      "top5": [
+        [
+          "alexbojorquez",
+          0.9892
+        ],
+        [
+          "hectorsanchez",
+          0.979
+        ],
+        [
+          "robertpereira",
+          0.9787
+        ],
+        [
+          "jesusvalenzuela",
+          0.9781
+        ],
+        [
+          "ricardomora",
+          0.9766
+        ]
+      ],
       "expected_subject": "alexbojorquez",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
       "video": "dataset2/brayannajera/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.61,
-      "fps": 20.8,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.18,
+      "fps": 10.58,
       "top1": "brayannajera",
       "top1_raw": "brayannajera",
-      "sim_top1": 0.9985,
+      "sim_top1": 0.9787,
       "unknown": false,
       "top5": [
         [
           "brayannajera",
-          0.9985
+          0.9787
         ],
         [
           "jesusvalenzuela",
-          0.9643
-        ],
-        [
-          "robertpereira",
-          0.952
+          0.9394
         ],
         [
           "gilbertofelix",
-          0.9489
+          0.9364
         ],
         [
-          "alexbojorquez",
-          0.9444
+          "robertpereira",
+          0.9356
+        ],
+        [
+          "jorgeespinoza",
+          0.9331
         ]
       ],
       "expected_subject": "brayannajera",
@@ -105,34 +128,34 @@
     },
     {
       "video": "dataset2/brayannajera/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.3,
-      "fps": 22.75,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.78,
+      "fps": 22.14,
       "top1": "brayannajera",
       "top1_raw": "brayannajera",
-      "sim_top1": 0.9981,
+      "sim_top1": 0.9911,
       "unknown": false,
       "top5": [
         [
           "brayannajera",
-          0.9981
+          0.9911
         ],
         [
           "jesusvalenzuela",
-          0.9688
+          0.9646
         ],
         [
           "robertpereira",
-          0.958
-        ],
-        [
-          "alexbojorquez",
-          0.9545
+          0.9568
         ],
         [
           "gilbertofelix",
-          0.952
+          0.9567
+        ],
+        [
+          "alexbojorquez",
+          0.9489
         ]
       ],
       "expected_subject": "brayannajera",
@@ -142,34 +165,34 @@
     },
     {
       "video": "dataset2/carloscarrillo/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.47,
-      "fps": 21.63,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.55,
+      "fps": 22.88,
       "top1": "carloscarrillo",
       "top1_raw": "carloscarrillo",
-      "sim_top1": 0.9977,
+      "sim_top1": 0.9932,
       "unknown": false,
       "top5": [
         [
           "carloscarrillo",
-          0.9977
-        ],
-        [
-          "alexbojorquez",
-          0.9753
+          0.9932
         ],
         [
           "jesusvalenzuela",
-          0.9736
+          0.9734
+        ],
+        [
+          "alexbojorquez",
+          0.9727
         ],
         [
           "robertpereira",
-          0.9659
+          0.9701
         ],
         [
-          "ricardomora",
-          0.9604
+          "hectorsanchez",
+          0.9617
         ]
       ],
       "expected_subject": "carloscarrillo",
@@ -178,49 +201,72 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\carloscarrillo\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.35,
-      "fps": 22.39,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/carloscarrillo/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.77,
+      "fps": 22.16,
+      "top1": "carloscarrillo",
+      "top1_raw": "carloscarrillo",
+      "sim_top1": 0.9876,
+      "unknown": false,
+      "top5": [
+        [
+          "carloscarrillo",
+          0.9876
+        ],
+        [
+          "jesusvalenzuela",
+          0.9781
+        ],
+        [
+          "alexbojorquez",
+          0.9774
+        ],
+        [
+          "robertpereira",
+          0.9717
+        ],
+        [
+          "hectorsanchez",
+          0.9686
+        ]
+      ],
       "expected_subject": "carloscarrillo",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
       "video": "dataset2/carlospadilla/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.64,
-      "fps": 20.6,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.67,
+      "fps": 22.49,
       "top1": "carlospadilla",
       "top1_raw": "carlospadilla",
-      "sim_top1": 0.9991,
+      "sim_top1": 0.9904,
       "unknown": false,
       "top5": [
         [
           "carlospadilla",
-          0.9991
+          0.9904
         ],
         [
           "jesusvalenzuela",
-          0.9375
-        ],
-        [
-          "alexbojorquez",
-          0.9323
-        ],
-        [
-          "robertpereira",
-          0.9319
+          0.9442
         ],
         [
           "gilbertofelix",
-          0.9281
+          0.9377
+        ],
+        [
+          "brayannajera",
+          0.9365
+        ],
+        [
+          "robertpereira",
+          0.9339
         ]
       ],
       "expected_subject": "carlospadilla",
@@ -230,34 +276,34 @@
     },
     {
       "video": "dataset2/carlospadilla/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.74,
-      "fps": 20.04,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.59,
+      "fps": 22.77,
       "top1": "carlospadilla",
       "top1_raw": "carlospadilla",
-      "sim_top1": 0.9987,
+      "sim_top1": 0.9791,
       "unknown": false,
       "top5": [
         [
           "carlospadilla",
-          0.9987
+          0.9791
         ],
         [
-          "alexbojorquez",
-          0.9405
+          "jorgeespinoza",
+          0.9443
         ],
         [
-          "jesusvalenzuela",
+          "brayannajera",
           0.9404
         ],
         [
-          "robertpereira",
-          0.9389
+          "jesusvalenzuela",
+          0.9358
         ],
         [
-          "carlostorres",
-          0.9368
+          "robertpereira",
+          0.935
         ]
       ],
       "expected_subject": "carlospadilla",
@@ -267,34 +313,34 @@
     },
     {
       "video": "dataset2/carlostorres/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.58,
-      "fps": 20.98,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 7.18,
+      "fps": 20.9,
       "top1": "carlostorres",
       "top1_raw": "carlostorres",
-      "sim_top1": 0.9976,
+      "sim_top1": 0.9891,
       "unknown": false,
       "top5": [
         [
           "carlostorres",
-          0.9976
+          0.9891
+        ],
+        [
+          "robertocastaño",
+          0.9721
         ],
         [
           "alexbojorquez",
-          0.9811
+          0.9702
         ],
         [
           "hectorsanchez",
-          0.9787
+          0.9685
         ],
         [
           "ricardomora",
-          0.9737
-        ],
-        [
-          "jesusvalenzuela",
-          0.9737
+          0.9663
         ]
       ],
       "expected_subject": "carlostorres",
@@ -304,34 +350,34 @@
     },
     {
       "video": "dataset2/carlostorres/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.53,
-      "fps": 21.25,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.97,
+      "fps": 21.52,
       "top1": "carlostorres",
       "top1_raw": "carlostorres",
-      "sim_top1": 0.9979,
+      "sim_top1": 0.9783,
       "unknown": false,
       "top5": [
         [
           "carlostorres",
-          0.9979
-        ],
-        [
-          "alexbojorquez",
-          0.9741
-        ],
-        [
-          "hectorsanchez",
-          0.9714
+          0.9783
         ],
         [
           "jesuscazarez",
-          0.9702
+          0.9589
+        ],
+        [
+          "hectorsanchez",
+          0.9586
+        ],
+        [
+          "alexbojorquez",
+          0.9586
         ],
         [
           "ricardomora",
-          0.9696
+          0.9558
         ]
       ],
       "expected_subject": "carlostorres",
@@ -341,34 +387,34 @@
     },
     {
       "video": "dataset2/cesarvasquez/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.43,
-      "fps": 21.84,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.78,
+      "fps": 22.12,
       "top1": "cesarvasquez",
       "top1_raw": "cesarvasquez",
-      "sim_top1": 0.9993,
+      "sim_top1": 0.9891,
       "unknown": false,
       "top5": [
         [
           "cesarvasquez",
-          0.9993
+          0.9891
         ],
         [
           "robertpereira",
-          0.9641
+          0.9629
         ],
         [
-          "luislopez",
-          0.9569
+          "gilbertofelix",
+          0.9571
         ],
         [
           "ricardomora",
-          0.9563
+          0.9536
         ],
         [
-          "alexbojorquez",
-          0.9521
+          "jesusvalenzuela",
+          0.9514
         ]
       ],
       "expected_subject": "cesarvasquez",
@@ -378,34 +424,34 @@
     },
     {
       "video": "dataset2/cesarvasquez/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.53,
-      "fps": 21.22,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 12.35,
+      "fps": 12.15,
       "top1": "cesarvasquez",
       "top1_raw": "cesarvasquez",
-      "sim_top1": 0.9981,
+      "sim_top1": 0.987,
       "unknown": false,
       "top5": [
         [
           "cesarvasquez",
-          0.9981
+          0.987
         ],
         [
           "robertpereira",
-          0.9659
-        ],
-        [
-          "ricardomora",
-          0.9588
+          0.9532
         ],
         [
           "luislopez",
-          0.9555
+          0.9426
         ],
         [
-          "alexbojorquez",
-          0.9532
+          "ricardomora",
+          0.9409
+        ],
+        [
+          "gilbertofelix",
+          0.9408
         ]
       ],
       "expected_subject": "cesarvasquez",
@@ -415,33 +461,33 @@
     },
     {
       "video": "dataset2/gilbertofelix/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.53,
-      "fps": 21.25,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 16.37,
+      "fps": 9.16,
       "top1": "gilbertofelix",
       "top1_raw": "gilbertofelix",
-      "sim_top1": 0.9994,
+      "sim_top1": 0.9944,
       "unknown": false,
       "top5": [
         [
           "gilbertofelix",
-          0.9994
+          0.9944
         ],
         [
           "robertpereira",
-          0.9662
+          0.9626
         ],
         [
           "jesusvalenzuela",
-          0.9634
-        ],
-        [
-          "ricardomora",
-          0.9516
+          0.961
         ],
         [
           "brayannajera",
+          0.9525
+        ],
+        [
+          "ricardomora",
           0.9509
         ]
       ],
@@ -452,34 +498,34 @@
     },
     {
       "video": "dataset2/gilbertofelix/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.66,
-      "fps": 20.51,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 12.19,
+      "fps": 12.3,
       "top1": "gilbertofelix",
       "top1_raw": "gilbertofelix",
-      "sim_top1": 0.997,
+      "sim_top1": 0.9957,
       "unknown": false,
       "top5": [
         [
           "gilbertofelix",
-          0.997
+          0.9957
         ],
         [
           "robertpereira",
-          0.9699
+          0.9656
         ],
         [
           "jesusvalenzuela",
-          0.963
+          0.9573
         ],
         [
           "ricardomora",
-          0.9568
+          0.95
         ],
         [
           "brayannajera",
-          0.9556
+          0.9475
         ]
       ],
       "expected_subject": "gilbertofelix",
@@ -489,34 +535,34 @@
     },
     {
       "video": "dataset2/hectorsanchez/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.61,
-      "fps": 20.79,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 11.4,
+      "fps": 13.16,
       "top1": "hectorsanchez",
       "top1_raw": "hectorsanchez",
-      "sim_top1": 0.9987,
+      "sim_top1": 0.9884,
       "unknown": false,
       "top5": [
         [
           "hectorsanchez",
-          0.9987
-        ],
-        [
-          "alexbojorquez",
-          0.9744
-        ],
-        [
-          "ricardomora",
-          0.9733
+          0.9884
         ],
         [
           "robertpereira",
-          0.9729
+          0.966
+        ],
+        [
+          "ricardomora",
+          0.9655
+        ],
+        [
+          "alexbojorquez",
+          0.9624
         ],
         [
           "jesusvalenzuela",
-          0.9665
+          0.9604
         ]
       ],
       "expected_subject": "hectorsanchez",
@@ -525,63 +571,109 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\hectorsanchez\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.52,
-      "fps": 21.34,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/hectorsanchez/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 11.75,
+      "fps": 12.76,
+      "top1": "hectorsanchez",
+      "top1_raw": "hectorsanchez",
+      "sim_top1": 0.9874,
+      "unknown": false,
+      "top5": [
+        [
+          "hectorsanchez",
+          0.9874
+        ],
+        [
+          "robertpereira",
+          0.9648
+        ],
+        [
+          "ricardomora",
+          0.9633
+        ],
+        [
+          "alexbojorquez",
+          0.9599
+        ],
+        [
+          "jesusvalenzuela",
+          0.9572
+        ]
+      ],
       "expected_subject": "hectorsanchez",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
-      "video": "dataset2\\jesusantonioaguilarfelix\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.51,
-      "fps": 21.4,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/jesusantonioaguilarfelix/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 2,
+      "elapsed_s": 8.31,
+      "fps": 18.05,
+      "top1": "jesusantonioaguilarfelix",
+      "top1_raw": "jesusantonioaguilarfelix",
+      "sim_top1": 0.9916,
+      "unknown": false,
+      "top5": [
+        [
+          "jesusantonioaguilarfelix",
+          0.9916
+        ],
+        [
+          "ricardomora",
+          0.9702
+        ],
+        [
+          "carlostorres",
+          0.9648
+        ],
+        [
+          "jesusvalenzuela",
+          0.9603
+        ],
+        [
+          "robertpereira",
+          0.9585
+        ]
+      ],
       "expected_subject": "jesusantonioaguilarfelix",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
       "video": "dataset2/jesuscazarez/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.38,
-      "fps": 22.17,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.41,
+      "fps": 23.4,
       "top1": "jesuscazarez",
       "top1_raw": "jesuscazarez",
-      "sim_top1": 0.9992,
+      "sim_top1": 0.989,
       "unknown": false,
       "top5": [
         [
           "jesuscazarez",
-          0.9992
+          0.989
         ],
         [
           "ricardomora",
-          0.9694
-        ],
-        [
-          "carlostorres",
-          0.9657
+          0.9745
         ],
         [
           "hectorsanchez",
-          0.9642
+          0.9683
+        ],
+        [
+          "carlostorres",
+          0.9632
         ],
         [
           "alexbojorquez",
-          0.9593
+          0.9612
         ]
       ],
       "expected_subject": "jesuscazarez",
@@ -590,49 +682,72 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\jesuscazarez\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.29,
-      "fps": 22.79,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/jesuscazarez/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 2,
+      "elapsed_s": 9.48,
+      "fps": 15.82,
+      "top1": "jesuscazarez",
+      "top1_raw": "jesuscazarez",
+      "sim_top1": 0.9935,
+      "unknown": false,
+      "top5": [
+        [
+          "jesuscazarez",
+          0.9935
+        ],
+        [
+          "ricardomora",
+          0.9703
+        ],
+        [
+          "carlostorres",
+          0.9644
+        ],
+        [
+          "hectorsanchez",
+          0.9602
+        ],
+        [
+          "alexbojorquez",
+          0.9545
+        ]
+      ],
       "expected_subject": "jesuscazarez",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
       "video": "dataset2/jesusvalenzuela/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.37,
-      "fps": 22.28,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 12.62,
+      "fps": 11.88,
       "top1": "jesusvalenzuela",
       "top1_raw": "jesusvalenzuela",
-      "sim_top1": 0.9986,
+      "sim_top1": 0.9792,
       "unknown": false,
       "top5": [
         [
           "jesusvalenzuela",
-          0.9986
-        ],
-        [
-          "robertpereira",
-          0.9758
-        ],
-        [
-          "alexbojorquez",
-          0.9745
-        ],
-        [
-          "juliouriarte",
-          0.974
+          0.9792
         ],
         [
           "brayannajera",
-          0.9732
+          0.9743
+        ],
+        [
+          "gilbertofelix",
+          0.9561
+        ],
+        [
+          "robertpereira",
+          0.9559
+        ],
+        [
+          "ricardomora",
+          0.9551
         ]
       ],
       "expected_subject": "jesusvalenzuela",
@@ -642,34 +757,34 @@
     },
     {
       "video": "dataset2/jesusvalenzuela/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.58,
-      "fps": 20.96,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 16.66,
+      "fps": 9.01,
       "top1": "jesusvalenzuela",
       "top1_raw": "jesusvalenzuela",
-      "sim_top1": 0.9984,
+      "sim_top1": 0.986,
       "unknown": false,
       "top5": [
         [
           "jesusvalenzuela",
-          0.9984
-        ],
-        [
-          "juliouriarte",
-          0.9819
-        ],
-        [
-          "alexbojorquez",
-          0.9785
+          0.986
         ],
         [
           "ricardomora",
-          0.9771
+          0.9673
         ],
         [
-          "robertpereira",
-          0.9752
+          "brayannajera",
+          0.9671
+        ],
+        [
+          "juliouriarte",
+          0.9667
+        ],
+        [
+          "alexbojorquez",
+          0.9657
         ]
       ],
       "expected_subject": "jesusvalenzuela",
@@ -679,34 +794,34 @@
     },
     {
       "video": "dataset2/jorgeespinoza/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.67,
-      "fps": 20.46,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.8,
+      "fps": 10.14,
       "top1": "jorgeespinoza",
       "top1_raw": "jorgeespinoza",
-      "sim_top1": 0.9991,
+      "sim_top1": 0.995,
       "unknown": false,
       "top5": [
         [
           "jorgeespinoza",
-          0.9991
+          0.995
         ],
         [
           "robertpereira",
-          0.9589
+          0.9577
         ],
         [
           "jesusvalenzuela",
-          0.9501
+          0.9491
         ],
         [
-          "luislopez",
-          0.9445
+          "brayannajera",
+          0.943
         ],
         [
-          "ricardomora",
-          0.9405
+          "gilbertofelix",
+          0.9416
         ]
       ],
       "expected_subject": "jorgeespinoza",
@@ -716,34 +831,34 @@
     },
     {
       "video": "dataset2/jorgeespinoza/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.56,
-      "fps": 21.04,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.49,
+      "fps": 23.12,
       "top1": "jorgeespinoza",
       "top1_raw": "jorgeespinoza",
-      "sim_top1": 0.999,
+      "sim_top1": 0.9932,
       "unknown": false,
       "top5": [
         [
           "jorgeespinoza",
-          0.999
+          0.9932
         ],
         [
           "robertpereira",
-          0.9619
+          0.9604
         ],
         [
           "jesusvalenzuela",
-          0.953
+          0.954
         ],
         [
-          "luislopez",
-          0.9495
+          "gilbertofelix",
+          0.9479
         ],
         [
-          "carlostorres",
-          0.9464
+          "ricardomora",
+          0.9466
         ]
       ],
       "expected_subject": "jorgeespinoza",
@@ -753,34 +868,34 @@
     },
     {
       "video": "dataset2/josefelix/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.52,
-      "fps": 21.32,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 11.49,
+      "fps": 13.05,
       "top1": "josefelix",
       "top1_raw": "josefelix",
-      "sim_top1": 0.9975,
+      "sim_top1": 0.9552,
       "unknown": false,
       "top5": [
         [
           "josefelix",
-          0.9975
+          0.9552
         ],
         [
           "ricardomora",
-          0.9677
+          0.9281
         ],
         [
           "carlostorres",
-          0.9584
+          0.9223
         ],
         [
-          "robertpereira",
-          0.9561
+          "cesarvasquez",
+          0.9219
         ],
         [
-          "hectorsanchez",
-          0.9505
+          "jesusvalenzuela",
+          0.9218
         ]
       ],
       "expected_subject": "josefelix",
@@ -790,34 +905,34 @@
     },
     {
       "video": "dataset2/josefelix/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.68,
-      "fps": 20.38,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.93,
+      "fps": 10.04,
       "top1": "josefelix",
       "top1_raw": "josefelix",
-      "sim_top1": 0.9961,
+      "sim_top1": 0.9913,
       "unknown": false,
       "top5": [
         [
           "josefelix",
-          0.9961
+          0.9913
         ],
         [
           "ricardomora",
-          0.9676
-        ],
-        [
-          "carlostorres",
-          0.9603
+          0.9597
         ],
         [
           "robertpereira",
-          0.9594
+          0.9523
         ],
         [
-          "alexbojorquez",
-          0.9527
+          "carlostorres",
+          0.95
+        ],
+        [
+          "gilbertofelix",
+          0.9454
         ]
       ],
       "expected_subject": "josefelix",
@@ -827,71 +942,71 @@
     },
     {
       "video": "dataset2/juliouriarte/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.19,
-      "fps": 23.55,
-      "top1": "juliouriarte",
-      "top1_raw": "juliouriarte",
-      "sim_top1": 0.9988,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 15.34,
+      "fps": 9.78,
+      "top1": "jesusvalenzuela",
+      "top1_raw": "jesusvalenzuela",
+      "sim_top1": 0.9801,
       "unknown": false,
       "top5": [
         [
-          "juliouriarte",
-          0.9988
-        ],
-        [
           "jesusvalenzuela",
-          0.9853
+          0.9801
         ],
         [
-          "alexbojorquez",
-          0.9721
+          "juliouriarte",
+          0.9763
+        ],
+        [
+          "robertpereira",
+          0.9624
         ],
         [
           "ricardomora",
-          0.9696
+          0.9618
         ],
         [
-          "carlostorres",
-          0.9684
+          "gilbertofelix",
+          0.9616
         ]
       ],
       "expected_subject": "juliouriarte",
       "expected_cond": "normal_1",
-      "top1_correct": true,
-      "accepted_correct": true
+      "top1_correct": false,
+      "accepted_correct": false
     },
     {
       "video": "dataset2/juliouriarte/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.3,
-      "fps": 22.72,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 13.97,
+      "fps": 10.74,
       "top1": "juliouriarte",
       "top1_raw": "juliouriarte",
-      "sim_top1": 0.999,
+      "sim_top1": 0.9876,
       "unknown": false,
       "top5": [
         [
           "juliouriarte",
-          0.999
+          0.9876
         ],
         [
           "jesusvalenzuela",
-          0.984
+          0.9817
         ],
         [
           "ricardomora",
-          0.9705
-        ],
-        [
-          "alexbojorquez",
-          0.9698
+          0.9689
         ],
         [
           "carlostorres",
-          0.9677
+          0.968
+        ],
+        [
+          "alexbojorquez",
+          0.9678
         ]
       ],
       "expected_subject": "juliouriarte",
@@ -901,34 +1016,34 @@
     },
     {
       "video": "dataset2/luislopez/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.83,
-      "fps": 19.6,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.69,
+      "fps": 10.21,
       "top1": "luislopez",
       "top1_raw": "luislopez",
-      "sim_top1": 0.9995,
+      "sim_top1": 0.9915,
       "unknown": false,
       "top5": [
         [
           "luislopez",
-          0.9995
+          0.9915
         ],
         [
           "robertpereira",
-          0.9801
+          0.974
         ],
         [
           "jesusvalenzuela",
-          0.9717
+          0.9633
         ],
         [
           "alexbojorquez",
-          0.969
+          0.9577
         ],
         [
-          "carlostorres",
-          0.962
+          "cesarvasquez",
+          0.9537
         ]
       ],
       "expected_subject": "luislopez",
@@ -938,34 +1053,34 @@
     },
     {
       "video": "dataset2/luislopez/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 4.13,
-      "fps": 18.15,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.52,
+      "fps": 10.33,
       "top1": "luislopez",
       "top1_raw": "luislopez",
-      "sim_top1": 0.9989,
+      "sim_top1": 0.9958,
       "unknown": false,
       "top5": [
         [
           "luislopez",
-          0.9989
+          0.9958
         ],
         [
           "robertpereira",
-          0.9818
+          0.98
         ],
         [
           "jesusvalenzuela",
-          0.9738
+          0.9706
         ],
         [
           "alexbojorquez",
-          0.973
+          0.9672
         ],
         [
           "hectorsanchez",
-          0.9665
+          0.9621
         ]
       ],
       "expected_subject": "luislopez",
@@ -975,34 +1090,34 @@
     },
     {
       "video": "dataset2/ricardomora/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.65,
-      "fps": 20.54,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.45,
+      "fps": 10.38,
       "top1": "ricardomora",
       "top1_raw": "ricardomora",
-      "sim_top1": 0.9986,
+      "sim_top1": 0.9918,
       "unknown": false,
       "top5": [
         [
           "ricardomora",
-          0.9986
-        ],
-        [
-          "alexbojorquez",
-          0.9792
+          0.9918
         ],
         [
           "hectorsanchez",
-          0.9789
+          0.9749
         ],
         [
-          "jesusvalenzuela",
-          0.9738
+          "alexbojorquez",
+          0.9746
         ],
         [
           "carlostorres",
-          0.9725
+          0.9722
+        ],
+        [
+          "jesuscazarez",
+          0.9689
         ]
       ],
       "expected_subject": "ricardomora",
@@ -1011,49 +1126,72 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\ricardomora\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.5,
-      "fps": 21.45,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/ricardomora/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 2,
+      "elapsed_s": 13.62,
+      "fps": 11.01,
+      "top1": "ricardomora",
+      "top1_raw": "ricardomora",
+      "sim_top1": 0.9895,
+      "unknown": false,
+      "top5": [
+        [
+          "ricardomora",
+          0.9895
+        ],
+        [
+          "hectorsanchez",
+          0.9788
+        ],
+        [
+          "alexbojorquez",
+          0.9742
+        ],
+        [
+          "carlostorres",
+          0.9685
+        ],
+        [
+          "jesusvalenzuela",
+          0.9668
+        ]
+      ],
       "expected_subject": "ricardomora",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
       "video": "dataset2/robertocastaño/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.67,
-      "fps": 20.46,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 10.08,
+      "fps": 14.88,
       "top1": "robertocastaño",
       "top1_raw": "robertocastaño",
-      "sim_top1": 0.9991,
+      "sim_top1": 0.9947,
       "unknown": false,
       "top5": [
         [
           "robertocastaño",
-          0.9991
-        ],
-        [
-          "alexbojorquez",
-          0.9645
+          0.9947
         ],
         [
           "carlostorres",
-          0.9643
+          0.9632
         ],
         [
           "jesusvalenzuela",
-          0.9605
+          0.9627
+        ],
+        [
+          "alexbojorquez",
+          0.962
         ],
         [
           "ricardomora",
-          0.9545
+          0.954
         ]
       ],
       "expected_subject": "robertocastaño",
@@ -1062,49 +1200,72 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\robertocastaño\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.66,
-      "fps": 20.52,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/robertocastaño/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 14.53,
+      "fps": 10.32,
+      "top1": "robertocastaño",
+      "top1_raw": "robertocastaño",
+      "sim_top1": 0.992,
+      "unknown": false,
+      "top5": [
+        [
+          "robertocastaño",
+          0.992
+        ],
+        [
+          "carlostorres",
+          0.9665
+        ],
+        [
+          "alexbojorquez",
+          0.962
+        ],
+        [
+          "jesusvalenzuela",
+          0.9589
+        ],
+        [
+          "ricardomora",
+          0.9534
+        ]
+      ],
       "expected_subject": "robertocastaño",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     },
     {
       "video": "dataset2/robertpereira/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.75,
-      "fps": 19.99,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 15.22,
+      "fps": 9.86,
       "top1": "robertpereira",
       "top1_raw": "robertpereira",
-      "sim_top1": 0.9991,
+      "sim_top1": 0.9938,
       "unknown": false,
       "top5": [
         [
           "robertpereira",
-          0.9991
+          0.9938
         ],
         [
           "luislopez",
-          0.9813
+          0.9781
         ],
         [
           "jesusvalenzuela",
-          0.9807
+          0.9773
+        ],
+        [
+          "gilbertofelix",
+          0.9699
         ],
         [
           "alexbojorquez",
-          0.9735
-        ],
-        [
-          "hectorsanchez",
-          0.9712
+          0.9684
         ]
       ],
       "expected_subject": "robertpereira",
@@ -1114,34 +1275,34 @@
     },
     {
       "video": "dataset2/robertpereira/rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.52,
-      "fps": 21.32,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 9.54,
+      "fps": 15.73,
       "top1": "robertpereira",
       "top1_raw": "robertpereira",
-      "sim_top1": 0.9975,
+      "sim_top1": 0.9926,
       "unknown": false,
       "top5": [
         [
           "robertpereira",
-          0.9975
+          0.9926
         ],
         [
           "jesusvalenzuela",
-          0.9763
-        ],
-        [
-          "alexbojorquez",
-          0.9755
+          0.9752
         ],
         [
           "luislopez",
-          0.9739
+          0.9724
         ],
         [
-          "hectorsanchez",
-          0.9737
+          "gilbertofelix",
+          0.9724
+        ],
+        [
+          "alexbojorquez",
+          0.9713
         ]
       ],
       "expected_subject": "robertpereira",
@@ -1151,34 +1312,34 @@
     },
     {
       "video": "dataset2/rodrigoruiz/normal_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 1,
-      "elapsed_s": 3.44,
-      "fps": 21.83,
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 6.89,
+      "fps": 21.76,
       "top1": "rodrigoruiz",
       "top1_raw": "rodrigoruiz",
-      "sim_top1": 0.9989,
+      "sim_top1": 0.9887,
       "unknown": false,
       "top5": [
         [
           "rodrigoruiz",
-          0.9989
+          0.9887
         ],
         [
           "ricardomora",
-          0.9688
+          0.9634
         ],
         [
           "hectorsanchez",
-          0.9639
-        ],
-        [
-          "alexbojorquez",
-          0.95
+          0.9562
         ],
         [
           "robertpereira",
-          0.9498
+          0.9444
+        ],
+        [
+          "jesusantonioaguilarfelix",
+          0.9434
         ]
       ],
       "expected_subject": "rodrigoruiz",
@@ -1187,18 +1348,41 @@
       "accepted_correct": true
     },
     {
-      "video": "dataset2\\rodrigoruiz\\rapido_1.mp4",
-      "n_frames": 75,
-      "n_sequences": 0,
-      "elapsed_s": 3.7,
-      "fps": 20.25,
-      "top1": null,
-      "sim_top1": null,
-      "top5": [],
+      "video": "dataset2/rodrigoruiz/rapido_1.mp4",
+      "n_frames": 150,
+      "n_sequences": 3,
+      "elapsed_s": 13.89,
+      "fps": 10.8,
+      "top1": "rodrigoruiz",
+      "top1_raw": "rodrigoruiz",
+      "sim_top1": 0.9923,
+      "unknown": false,
+      "top5": [
+        [
+          "rodrigoruiz",
+          0.9923
+        ],
+        [
+          "ricardomora",
+          0.9696
+        ],
+        [
+          "hectorsanchez",
+          0.9616
+        ],
+        [
+          "robertpereira",
+          0.9495
+        ],
+        [
+          "alexbojorquez",
+          0.9483
+        ]
+      ],
       "expected_subject": "rodrigoruiz",
       "expected_cond": "rapido_1",
-      "top1_correct": false,
-      "accepted_correct": false
+      "top1_correct": true,
+      "accepted_correct": true
     }
   ]
 }

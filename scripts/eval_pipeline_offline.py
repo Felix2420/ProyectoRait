@@ -139,9 +139,11 @@ def main() -> int:
     # Inicializar modelos UNA vez (compartidos entre videos)
     det = PersonDetector(weights=resolve(cfg["detector"]["weights"]),
                          conf=cfg["detector"]["conf"],
-                         iou=cfg["detector"]["iou"])
+                         iou=cfg["detector"]["iou"],
+                         imgsz=cfg["detector"].get("imgsz", 640))
     emb = GaitEmbedder(ckpt=resolve(cfg["embedder"]["ckpt"]),
-                       class_num=cfg["embedder"]["class_num"])
+                       class_num=cfg["embedder"]["class_num"],
+                       compile=cfg["embedder"].get("compile", False))
     mch = GalleryMatcher(gallery_npy=resolve(cfg["matcher"]["gallery_npy"]),
                          valid_mask_npy=resolve(cfg["matcher"]["valid_mask_npy"]),
                          index_json=resolve(cfg["matcher"]["index_json"]),

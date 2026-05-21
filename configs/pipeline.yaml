@@ -3,12 +3,13 @@
 
 camera:
   source: 0
-  target_fps: 15
+  target_fps: 60
 
 detector:
   weights: yolo11n.pt
   conf: 0.35
   iou: 0.5
+  imgsz: 640   # tamaño de entrada YOLO. Menor = más rápido. 640 suficiente para 720p
 
 tracker:
   warmup_frames: 15
@@ -19,18 +20,19 @@ segmenter:
   downsample_ratio: 0.25
 
 sequence:
-  window: 60
+  window: 90    # subido de 60 a 90 tras sensitivity 2026-05-20 (rank1 0.973->1.000 sin costo de FPS)
   stride: 30
 
 embedder:
   ckpt: checkpoints/finetune/gaitbase_ft_multisession_best_iter1200.pt
   class_num: 13
+  compile: false   # torch.compile requiere Triton (no disponible en Windows). Dejar false.
 
 matcher:
   gallery_npy: gallery/embeddings.npy
   valid_mask_npy: gallery/valid_mask.npy
   index_json: gallery/index.json
-  tau: 0.9847   # recalibrado en 6.2b (FAR=0%, TAR=100%, ALL LCO)
+  tau: 0.85   # recalibrado en 6.5 (condiciones en vivo, necesita validación formal)
 
 confirmation:
   n_consecutive: 2
